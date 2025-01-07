@@ -7,8 +7,8 @@
       :use-global-leaflet="false"
     >
       <LTileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&amp;copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         layer-type="base"
         name="OpenStreetMap"
       />
@@ -32,6 +32,12 @@
           </div>
         </LPopup>
       </LMarker>
+
+      <LGeoJson
+        v-if="departmentGeoJson"
+        :geojson="departmentGeoJson"
+        :options="geoJsonOptions"
+      />
     </LMap>
   </div>
 </template>
@@ -45,6 +51,7 @@ import {
   LMarker,
   LPopup,
   LIcon,
+  LGeoJson,
 } from "@vue-leaflet/vue-leaflet";
 
 import { ref, computed, onMounted, watch } from "vue";
@@ -63,6 +70,18 @@ const base = Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID);
 
 const records = ref([]);
 const cities = ref([]);
+
+const departmentGeoJson = ref(null);
+const geoJsonOptions = {
+  style: (feature) => {
+    return {
+      color: "#3388ff",
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.2,
+    };
+  },
+};
 
 const loadRecord = (zipcode) => {
   const record = records.value.find((rec) => rec.ZipCode === zipcode);
@@ -148,6 +167,38 @@ async function loadCities(zipcodes) {
   }
 }
 
+async function loadDepartmentBoundaries(departmentList) {
+  try {
+    // You can get French departments GeoJSON from IGN's API or other open data sources
+    const response = await axios.get(
+      "https://geo.api.gouv.fr/departements?fields=nom,code,centre"
+    );
+
+    // Filter only the departments we want
+    const filteredDepartments = response.data.filter((dept) =>
+      departmentList.includes(dept.code)
+    );
+
+    // Create GeoJSON from the filtered departments
+    departmentGeoJson.value = {
+      type: "FeatureCollection",
+      features: filteredDepartments.map((dept) => ({
+        type: "Feature",
+        properties: {
+          code: dept.code,
+          name: dept.nom,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [dept.centre.coordinates[0], dept.centre.coordinates[1]],
+        },
+      })),
+    };
+  } catch (error) {
+    console.error("Error loading department boundaries:", error);
+  }
+}
+
 base("draftBase")
   .select({
     // Selecting the first 3 records in Grid view:
@@ -186,6 +237,8 @@ watch(
     );
 
     loadCities(zipcodes);
+
+    // loadDepartmentBoundaries(["75"]);
   }
 );
 </script>
