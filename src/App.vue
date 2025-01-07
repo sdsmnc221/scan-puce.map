@@ -5,13 +5,26 @@
       :zoom="zoom"
       :center="[46.603354, 1.888334]"
       :use-global-leaflet="false"
+      :max-bounds="franceBounds"
+      :max-bounds-viscosity="1.0"
     >
       <LTileLayer
         url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
         attribution="attribution"
         layer-type="base"
         name="OpenStreetMap"
+        :bounds="franceBounds"
       />
+
+      <LRectangle
+        :bounds="[
+          [-90, -180],
+          [90, 180],
+        ]"
+        :options="maskOptions"
+      />
+
+      <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
       <LMarker
         v-for="city in cities"
@@ -32,12 +45,6 @@
           </div>
         </LPopup>
       </LMarker>
-
-      <LGeoJson
-        v-if="departmentGeoJson"
-        :geojson="departmentGeoJson"
-        :options="geoJsonOptions"
-      />
     </LMap>
   </div>
 </template>
@@ -52,7 +59,9 @@ import {
   LPopup,
   LIcon,
   LGeoJson,
+  LRectangle,
 } from "@vue-leaflet/vue-leaflet";
+import franceBoundaries from "../public/geojson/france.json";
 
 import { ref, computed, onMounted, watch } from "vue";
 import Airtable from "airtable";
@@ -60,8 +69,26 @@ import axios from "axios";
 import { flatten } from "lodash";
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
+const franceOutline = ref(franceBoundaries);
 const attribution =
   '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const franceBounds = [
+  [41.333, -4.795], // Southwest corner
+  [51.124, 9.56], // Northeast corner
+];
+const maskOptions = {
+  color: "#000",
+  fillColor: "#000",
+  fillOpacity: 0.12,
+  stroke: false,
+};
+const franceOptions = {
+  color: "#fff",
+  fillColor: "#fff",
+  fillOpacity: 0.32,
+  stroke: true,
+  weight: 0.32,
+};
 
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
