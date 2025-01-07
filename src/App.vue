@@ -7,8 +7,8 @@
       :use-global-leaflet="false"
     >
       <LTileLayer
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
+        attribution="attribution"
         layer-type="base"
         name="OpenStreetMap"
       />
@@ -60,6 +60,8 @@ import axios from "axios";
 import { flatten } from "lodash";
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
+const attribution =
+  '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
