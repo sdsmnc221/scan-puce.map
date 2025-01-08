@@ -148,40 +148,42 @@ const loadRecordByDeptCode = (deptCode) => {
   return record ?? null;
 };
 
+const loadCsvRecords = async (zipCodes) => {
+  // Create CSV content with header (the API expects 'q' as header for queries)
+  const csvHeader = "postcode\n";
+  const csvContent = csvHeader + zipCodes.join("\n");
+
+  if (!storedCsv.value[usingDptCode.value ? "dpt" : "zip"].length) {
+    // Create a Blob/File from the CSV content
+    const aCsvFile = new Blob([csvContent], { type: "text/csv" });
+
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob([csvContent], { type: "text/csv" }),
+      "zipCodes.csv"
+    );
+
+    // Make the request with formData
+    const response = await axios.post(
+      "https://api-adresse.data.gouv.fr/search/csv/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    storedCsv.value[usingDptCode.value ? "dpt" : "zip"] = response.data
+      .split("\n")
+      .slice(1); // Skip header row;
+  }
+};
+
 async function loadCities(zipCodes) {
   try {
-    // Create CSV content with header (the API expects 'q' as header for queries)
-    const csvHeader = "postcode\n";
-    const csvContent = csvHeader + zipCodes.join("\n");
-
-    let row;
-
-    if (!storedCsv.value[usingDptCode.value ? "dpt" : "zip"].length) {
-      // Create a Blob/File from the CSV content
-      const aCsvFile = new Blob([csvContent], { type: "text/csv" });
-
-      const formData = new FormData();
-      formData.append(
-        "data",
-        new Blob([csvContent], { type: "text/csv" }),
-        "zipCodes.csv"
-      );
-
-      // Make the request with formData
-      const response = await axios.post(
-        "https://api-adresse.data.gouv.fr/search/csv/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      storedCsv.value[usingDptCode.value ? "dpt" : "zip"] = response.data
-        .split("\n")
-        .slice(1); // Skip header row;
-    }
+    await loadCsvRecords(zipCodes);
 
     // Parse CSV response
     const rows = storedCsv.value[usingDptCode.value ? "dpt" : "zip"];
@@ -330,12 +332,12 @@ const postCodes = computed(() => {
 });
 
 watch(
-  [() => usingDptCode.value, records.value.length],
+  [() => usingDptCode.value, records.value],
   () => {
     console.log({ postCode: postCodes.value });
     loadCities(postCodes.value);
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 );
 </script>
 
