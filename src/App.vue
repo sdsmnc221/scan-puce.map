@@ -299,5 +299,10 @@ watch(
   bottom: 24px;
   left: 24px;
   z-index: 9999;
+
+  @media screen and (max-width: 768px) {
+    bottom: 0;
+    left: 0;
+  }
 }
 </style>
