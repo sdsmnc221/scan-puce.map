@@ -53,6 +53,13 @@
       container-class="w-full max-w-sm search-input"
       @update:model-value="onSearchInput"
     ></IInput>
+
+    <RippleButton
+      class="toggle-dpt"
+      @click="() => (usingDptCode = !usingDptCode)"
+    >
+      Affichage par {{ usingDptCode ? "Département" : "Commune" }}
+    </RippleButton>
   </div>
 </template>
 
@@ -76,6 +83,9 @@ import axios from "axios";
 import { flatten } from "lodash";
 
 import IInput from "./components/IInput.vue";
+import RippleButton from "./components/RippleButton.vue";
+
+const usingDptCode = ref(false);
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
@@ -109,6 +119,11 @@ const base = Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID);
 const records = ref([]);
 const cities = ref([]);
 
+const storedCsv = ref({
+  dpt: [],
+  zip: [],
+});
+
 const departmentGeoJson = ref(null);
 const geoJsonOptions = {
   style: (feature) => {
@@ -139,31 +154,39 @@ async function loadCities(zipCodes) {
     const csvHeader = "postcode\n";
     const csvContent = csvHeader + zipCodes.join("\n");
 
-    console.log(zipCodes);
+    let row;
 
-    // Create a Blob/File from the CSV content
-    const aCsvFile = new Blob([csvContent], { type: "text/csv" });
+    if (!storedCsv.value[usingDptCode.value ? "dpt" : "zip"].length) {
+      // Create a Blob/File from the CSV content
+      const aCsvFile = new Blob([csvContent], { type: "text/csv" });
 
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([csvContent], { type: "text/csv" }),
-      "zipCodes.csv"
-    );
+      const formData = new FormData();
+      formData.append(
+        "data",
+        new Blob([csvContent], { type: "text/csv" }),
+        "zipCodes.csv"
+      );
 
-    // Make the request with formData
-    const response = await axios.post(
-      "https://api-adresse.data.gouv.fr/search/csv/",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+      // Make the request with formData
+      const response = await axios.post(
+        "https://api-adresse.data.gouv.fr/search/csv/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      storedCsv.value[usingDptCode.value ? "dpt" : "zip"] = response.data
+        .split("\n")
+        .slice(1); // Skip header row;
+    }
 
     // Parse CSV response
-    const rows = response.data.split("\n").slice(1); // Skip header row
+    const rows = storedCsv.value[usingDptCode.value ? "dpt" : "zip"];
+
+    console.log(storedCsv.value);
 
     const zipCodesResults = rows
       .filter((row) => row.length > 0 && !row.includes("not-found"))
@@ -191,7 +214,9 @@ async function loadCities(zipCodes) {
             result_status,
           ] = row.split(",");
 
-          const record = loadRecordByDeptCode(postcode);
+          const record = usingDptCode.value
+            ? loadRecordByDeptCode(postcode)
+            : loadRecordByZipCode(postcode);
 
           if (!latitude || !longitude) {
             return null;
@@ -288,25 +313,29 @@ const onSearchInput = (inputValue) => {
   loadCities(zipCodes);
 };
 
-watch(
-  () => records.value.length,
-  () => {
-    const zipCodes = flatten(
-      records.value
-        .filter((rec) => !!rec.ZipCode)
-        .map((rec) => rec.ZipCode.split(","))
-    );
-
-    const dptCodes = flatten(
+const postCodes = computed(() => {
+  if (usingDptCode.value) {
+    return flatten(
       records.value
         .filter((rec) => !!rec.Dept)
         .map((rec) => rec.Dept.split(","))
     ).map((dpt) => dpt + "000");
-
-    loadCities(dptCodes);
-
-    // loadDepartmentBoundaries(["75"]);
+  } else {
+    return flatten(
+      records.value
+        .filter((rec) => !!rec.ZipCode)
+        .map((rec) => rec.ZipCode.split(","))
+    );
   }
+});
+
+watch(
+  [() => usingDptCode.value, records.value.length],
+  () => {
+    console.log({ postCode: postCodes.value });
+    loadCities(postCodes.value);
+  },
+  { immediate: true }
 );
 </script>
 
@@ -318,8 +347,17 @@ watch(
   bottom: 24px;
   left: 24px;
   z-index: 9999;
+}
 
-  @media screen and (max-width: 768px) {
+.toggle-dpt {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+@media screen and (max-width: 768px) {
+  .search-input {
     bottom: 0;
     left: 0;
   }
