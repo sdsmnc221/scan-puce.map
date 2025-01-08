@@ -443,7 +443,7 @@ watch(
   position: fixed;
   bottom: 24px;
   left: 24px;
-  z-index: 9999;
+  z-index: 99;
 }
 
 .toggle-dpt {

@@ -2,7 +2,7 @@
   <Transition name="slide-up">
     <div
       v-if="supportsPWA && !isInstalled"
-      class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
+      class="pwa-prompt fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
       <div class="flex-1">
         <h3 class="font-semibold text-gray-900 dark:text-white">
@@ -15,7 +15,7 @@
       <div class="flex space-x-2">
         <button
           @click="handleInstall"
-          class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+          class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors"
         >
           Installer
         </button>
@@ -98,6 +98,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.pwa-prompt {
+  z-index: 100;
+}
+
 .slide-up-enter-active,
 .slide-up-leave-active {
   transition: all 0.3s ease-out;
