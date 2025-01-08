@@ -118,6 +118,7 @@ const base = Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID);
 
 const records = ref([]);
 const cities = ref([]);
+const keyword = ref("");
 
 const storedCsv = ref({
   dpt: [],
@@ -188,7 +189,7 @@ async function loadCities(zipCodes) {
     // Parse CSV response
     const rows = storedCsv.value[usingDptCode.value ? "dpt" : "zip"];
 
-    console.log(storedCsv.value);
+    console.log(keyword.value, zipCodes);
 
     const zipCodesResults = rows
       .filter((row) => row.length > 0 && !row.includes("not-found"))
@@ -220,7 +221,11 @@ async function loadCities(zipCodes) {
             ? loadRecordByDeptCode(postcode)
             : loadRecordByZipCode(postcode);
 
-          if (!latitude || !longitude) {
+          if (
+            !latitude ||
+            !longitude ||
+            (keyword.value && !postcode.includes(keyword.value))
+          ) {
             return null;
           }
 
@@ -306,38 +311,45 @@ base("draftBase")
   );
 
 const onSearchInput = (inputValue) => {
-  const zipCodes = flatten(
-    records.value
-      .filter((rec) => !!rec.ZipCode)
-      .map((rec) => rec.ZipCode.split(","))
-  ).filter((zc) => zc.includes(inputValue));
-
-  loadCities(zipCodes);
+  keyword.value = inputValue;
 };
 
 const postCodes = computed(() => {
+  let postCodes;
   if (usingDptCode.value) {
-    return flatten(
+    postCodes = flatten(
       records.value
         .filter((rec) => !!rec.Dept)
         .map((rec) => rec.Dept.split(","))
     ).map((dpt) => dpt + "000");
   } else {
-    return flatten(
+    postCodes = flatten(
       records.value
         .filter((rec) => !!rec.ZipCode)
         .map((rec) => rec.ZipCode.split(","))
     );
   }
+
+  return keyword.value
+    ? postCodes.filter((zc) => zc.includes(keyword.value))
+    : postCodes;
 });
 
 watch(
   [() => usingDptCode.value, records.value],
   () => {
-    console.log({ postCode: postCodes.value });
     loadCities(postCodes.value);
   },
   { immediate: true, deep: true }
+);
+
+watch(
+  () => keyword.value,
+  () => {
+    console.log({ keyword: keyword.value });
+    console.log({ postCode: postCodes.value });
+    loadCities(postCodes.value);
+  }
 );
 </script>
 
