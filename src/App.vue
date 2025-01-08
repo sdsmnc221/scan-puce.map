@@ -28,7 +28,7 @@
 
       <LMarker
         v-for="city in cities"
-        :key="city.zipcode"
+        :key="city.zipCode"
         :lat-lng="[city.lat, city.lng]"
       >
         <LIcon
@@ -37,7 +37,7 @@
           :icon-anchor="[12, 41]"
         />
         <LPopup>
-          <div>{{ city.name }} {{ city.zipcode }}</div>
+          <div>{{ city.name }} {{ city.zipCode }}</div>
           <div v-if="city.record">
             <a :href="city.record.LinkToPost" target="_blank">
               {{ city.record.Author }}</a
@@ -121,17 +121,25 @@ const geoJsonOptions = {
   },
 };
 
-const loadRecord = (zipcode) => {
-  const record = records.value.find((rec) => rec.ZipCode === zipcode);
+const loadRecordByZipCode = (zipCode) => {
+  const record = records.value.find((rec) => rec.ZipCode === zipCode);
 
   return record ?? null;
 };
 
-async function loadCities(zipcodes) {
+const loadRecordByDeptCode = (deptCode) => {
+  const record = records.value.find((rec) => rec.Dept === deptCode.slice(0, 2));
+
+  return record ?? null;
+};
+
+async function loadCities(zipCodes) {
   try {
     // Create CSV content with header (the API expects 'q' as header for queries)
     const csvHeader = "postcode\n";
-    const csvContent = csvHeader + zipcodes.join("\n");
+    const csvContent = csvHeader + zipCodes.join("\n");
+
+    console.log(zipCodes);
 
     // Create a Blob/File from the CSV content
     const aCsvFile = new Blob([csvContent], { type: "text/csv" });
@@ -140,7 +148,7 @@ async function loadCities(zipcodes) {
     formData.append(
       "data",
       new Blob([csvContent], { type: "text/csv" }),
-      "zipcodes.csv"
+      "zipCodes.csv"
     );
 
     // Make the request with formData
@@ -157,8 +165,8 @@ async function loadCities(zipcodes) {
     // Parse CSV response
     const rows = response.data.split("\n").slice(1); // Skip header row
 
-    const zipcodesResults = rows
-      .filter((row) => row.length > 0)
+    const zipCodesResults = rows
+      .filter((row) => row.length > 0 && !row.includes("not-found"))
       .map((row) => {
         try {
           const [
@@ -183,10 +191,14 @@ async function loadCities(zipcodes) {
             result_status,
           ] = row.split(",");
 
-          const record = loadRecord(postcode);
+          const record = loadRecordByDeptCode(postcode);
+
+          if (!latitude || !longitude) {
+            return null;
+          }
 
           return {
-            zipcode: postcode,
+            zipCode: postcode,
             lat: parseFloat(latitude),
             lng: parseFloat(longitude),
             name: result_city.replace(/"/g, ""), // Remove quotes from label,
@@ -196,9 +208,10 @@ async function loadCities(zipcodes) {
           console.error("Error parsing row:", row, rowError);
           return null;
         }
-      });
+      })
+      .filter((record) => !!record);
 
-    cities.value = zipcodesResults;
+    cities.value = zipCodesResults;
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -278,13 +291,19 @@ const onSearchInput = (inputValue) => {
 watch(
   () => records.value.length,
   () => {
-    const zipcodes = flatten(
+    const zipCodes = flatten(
       records.value
         .filter((rec) => !!rec.ZipCode)
         .map((rec) => rec.ZipCode.split(","))
     );
 
-    loadCities(zipcodes);
+    const dptCodes = flatten(
+      records.value
+        .filter((rec) => !!rec.Dept)
+        .map((rec) => rec.Dept.split(","))
+    ).map((dpt) => dpt + "000");
+
+    loadCities(dptCodes);
 
     // loadDepartmentBoundaries(["75"]);
   }
