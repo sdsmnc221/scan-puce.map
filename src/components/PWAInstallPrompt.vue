@@ -1,7 +1,7 @@
 <template>
   <Transition name="slide-up">
     <div
-      v-if="supportsPWA && !isInstalled"
+      v-if="supportsPWA && (!isInstalled || isPrompted)"
       class="pwa-prompt fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
       <div class="flex-1">
@@ -35,6 +35,7 @@ interface BeforeInstallPromptEvent extends Event {
 const supportsPWA = ref(false);
 const promptInstall = ref<BeforeInstallPromptEvent | null>(null);
 const isInstalled = ref(false);
+const isPrompted = ref(false);
 
 const checkInstalled = () => {
   if (window.matchMedia("(display-mode: standalone)").matches) {
@@ -68,6 +69,8 @@ const handleInstall = async () => {
     if (outcome === "accepted") {
       isInstalled.value = true;
     }
+
+    isPrompted.value = true;
   } catch (error) {
     console.error("Error during installation:", error);
   } finally {
