@@ -75,7 +75,7 @@ import {
   LGeoJson,
   LRectangle,
 } from "@vue-leaflet/vue-leaflet";
-import franceBoundaries from "../public/geojson/france.json";
+import franceBoundaries from "./geojson/france.json";
 
 import { ref, computed, onMounted, watch } from "vue";
 import Airtable from "airtable";
