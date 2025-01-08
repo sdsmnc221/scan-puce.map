@@ -177,7 +177,9 @@ const loadCsvRecords = async (zipCodes) => {
   const csvHeader = "postcode\n";
   const csvContent = csvHeader + zipCodes.join("\n");
 
-  if (!storedCsv.value[usingDptCode.value ? "dpt" : "zip"].length) {
+  let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+
+  if (!store.value[usingDptCode.value ? "dpt" : "zip"].length) {
     // Create a Blob/File from the CSV content
     const aCsvFile = new Blob([csvContent], { type: "text/csv" });
 
@@ -199,7 +201,7 @@ const loadCsvRecords = async (zipCodes) => {
       }
     );
 
-    storedCsv.value[usingDptCode.value ? "dpt" : "zip"] = response.data
+    store.value[usingDptCode.value ? "dpt" : "zip"] = response.data
       .split("\n")
       .slice(1); // Skip header row;
   }
