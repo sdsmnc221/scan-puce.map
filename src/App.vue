@@ -46,6 +46,13 @@
         </LPopup>
       </LMarker>
     </LMap>
+
+    <IInput
+      id="inputDemo"
+      placeholder="Code postal, code de département..."
+      container-class="w-full max-w-sm search-input"
+      @update:model-value="onSearchInput"
+    ></IInput>
   </div>
 </template>
 
@@ -67,6 +74,8 @@ import { ref, computed, onMounted, watch } from "vue";
 import Airtable from "airtable";
 import axios from "axios";
 import { flatten } from "lodash";
+
+import IInput from "./components/IInput.vue";
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
@@ -256,6 +265,16 @@ base("draftBase")
     }
   );
 
+const onSearchInput = (inputValue) => {
+  const zipCodes = flatten(
+    records.value
+      .filter((rec) => !!rec.ZipCode)
+      .map((rec) => rec.ZipCode.split(","))
+  ).filter((zc) => zc.includes(inputValue));
+
+  loadCities(zipCodes);
+};
+
 watch(
   () => records.value.length,
   () => {
@@ -271,3 +290,14 @@ watch(
   }
 );
 </script>
+
+<style lang="scss">
+@import "./output.css";
+
+.search-input {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9999;
+}
+</style>
