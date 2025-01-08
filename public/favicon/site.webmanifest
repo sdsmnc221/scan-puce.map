@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Carte Réseau Lecteur Puce France",
+  "short_name": "Carte Scan-puce",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
