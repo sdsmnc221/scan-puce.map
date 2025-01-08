@@ -93,6 +93,7 @@ pre {
   word-wrap: break-word;
   max-height: 400px;
   overflow-y: auto;
+  text-align: left;
 }
 
 code {
