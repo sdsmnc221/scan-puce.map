@@ -64,6 +64,18 @@
     >
       Affichage par {{ usingDptCode ? "Département" : "Commune" }}
     </RippleButton>
+
+    <RippleButton
+      class="toggle-base text-sm rounded-xl bg-yellow-300"
+      @click="() => (usingFilloutBase = !usingFilloutBase)"
+    >
+      Base :
+      {{
+        usingFilloutBase
+          ? "En cours d'alimentation"
+          : "Test (Entrées manuelles)"
+      }}
+    </RippleButton>
   </div>
 </template>
 
@@ -91,6 +103,7 @@ import RippleButton from "./components/RippleButton.vue";
 import { Badge } from "@/components/ui/badge";
 
 const usingDptCode = ref(false);
+const usingFilloutBase = ref(false);
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
@@ -119,13 +132,18 @@ Airtable.configure({
   apiKey: import.meta.env.VITE_AIRTABLE_ACCESS_TOKEN,
 });
 
-const base = Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID);
+const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
 const records = ref([]);
 const cities = ref([]);
 const keyword = ref("");
 
 const storedCsv = ref({
+  dpt: [],
+  zip: [],
+});
+
+const storedFilloutCsv = ref({
   dpt: [],
   zip: [],
 });
@@ -192,9 +210,9 @@ async function loadCities(zipCodes) {
     await loadCsvRecords(zipCodes);
 
     // Parse CSV response
-    const rows = storedCsv.value[usingDptCode.value ? "dpt" : "zip"];
 
-    console.log(keyword.value, zipCodes);
+    let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+    const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
 
     const zipCodesResults = rows
       .filter((row) => row.length > 0 && !row.includes("not-found"))
@@ -287,48 +305,21 @@ async function loadDepartmentBoundaries(departmentList) {
   }
 }
 
-base("draftBase")
-  .select({
-    // Selecting the first 3 records in Grid view:
-    maxRecords: 100,
-    view: "Grid view",
-  })
-  .eachPage(
-    function page(recs, fetchNextPage) {
-      // This function (`page`) will get called for each page of records.
-
-      recs.forEach(function (record) {
-        records.value.push(record.fields);
-      });
-
-      // To fetch the next page of records, call `fetchNextPage`.
-      // If there are more records, `page` will get called again.
-      // If there are no more records, `done` will get called.
-
-      fetchNextPage();
-    },
-    function done(err) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-    }
-  );
-
 const onSearchInput = (inputValue) => {
   keyword.value = inputValue;
 };
 
 const postCodes = computed(() => {
-  let postCodes;
+  let codes;
+  console.log(records.value);
   if (usingDptCode.value) {
-    postCodes = flatten(
+    codes = flatten(
       records.value
         .filter((rec) => !!rec.Dept)
         .map((rec) => rec.Dept.split(","))
     ).map((dpt) => dpt + "000");
   } else {
-    postCodes = flatten(
+    codes = flatten(
       records.value
         .filter((rec) => !!rec.ZipCode)
         .map((rec) => rec.ZipCode.split(","))
@@ -336,12 +327,12 @@ const postCodes = computed(() => {
   }
 
   return keyword.value
-    ? postCodes.filter((zc) => zc.includes(keyword.value))
-    : postCodes;
+    ? codes.filter((zc) => zc.includes(keyword.value))
+    : codes;
 });
 
 watch(
-  [() => usingDptCode.value, records.value],
+  [() => usingDptCode.value, () => records.value],
   () => {
     loadCities(postCodes.value);
   },
@@ -355,6 +346,43 @@ watch(
     console.log({ postCode: postCodes.value });
     loadCities(postCodes.value);
   }
+);
+
+watch(
+  () => usingFilloutBase.value,
+  () => {
+    records.value = [];
+
+    base
+      .value(usingFilloutBase.value ? "filloutBase" : "draftBase")
+      .select({
+        // Selecting the first 3 records in Grid view:
+        maxRecords: 100,
+        view: "Grid view",
+      })
+      .eachPage(
+        function page(recs, fetchNextPage) {
+          // This function (`page`) will get called for each page of records.
+
+          recs.forEach(function (record) {
+            records.value.push(record.fields);
+          });
+
+          // To fetch the next page of records, call `fetchNextPage`.
+          // If there are more records, `page` will get called again.
+          // If there are no more records, `done` will get called.
+
+          fetchNextPage();
+        },
+        function done(err) {
+          if (err) {
+            console.error(err);
+            return;
+          }
+        }
+      );
+  },
+  { immediate: true }
 );
 </script>
 
@@ -371,6 +399,13 @@ watch(
 .toggle-dpt {
   position: fixed;
   top: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+.toggle-base {
+  position: fixed;
+  bottom: 48px;
   right: 24px;
   z-index: 9999;
 }
