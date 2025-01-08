@@ -179,7 +179,11 @@ const loadCsvRecords = async (zipCodes) => {
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
-  if (!store.value[usingDptCode.value ? "dpt" : "zip"].length) {
+  if (
+    !store.value[usingDptCode.value ? "dpt" : "zip"].length &&
+    store.value[usingDptCode.value ? "dpt" : "zip"].length !==
+      records.value.length
+  ) {
     // Create a Blob/File from the CSV content
     const aCsvFile = new Blob([csvContent], { type: "text/csv" });
 
