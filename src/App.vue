@@ -76,6 +76,20 @@
           : "Test (Entrées manuelles)"
       }}
     </RippleButton>
+
+    <Sheet>
+      <SheetTrigger class="toggle-embed">
+        <RippleButton class="text-sm rounded-xl"> Embed </RippleButton>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Code à copier-coller</SheetTitle>
+          <SheetDescription>
+            <CodeEmbed :code="iframeCode" language="html"></CodeEmbed>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   </div>
 </template>
 
@@ -101,6 +115,15 @@ import { flatten } from "lodash";
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
 import { Badge } from "@/components/ui/badge";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import CodeEmbed from "./components/CodeEmbed.vue";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(false);
@@ -126,6 +149,16 @@ const franceOptions = {
   stroke: true,
   weight: 0.32,
 };
+const iframeCode = `<iframe 
+    src="https://scan-puce.antr.tech" 
+    width="100%" 
+    height="600px" 
+    frameborder="0"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    sandbox="allow-scripts allow-same-origin allow-popups">
+</iframe>`;
 
 Airtable.configure({
   endpointUrl: "https://api.airtable.com",
@@ -399,6 +432,10 @@ watch(
 <style lang="scss">
 @import "./output.css";
 
+.leaflet-container {
+  z-index: 10;
+}
+
 .search-input {
   position: fixed;
   bottom: 24px;
@@ -410,14 +447,21 @@ watch(
   position: fixed;
   top: 24px;
   right: 24px;
-  z-index: 9999;
+  z-index: 49;
 }
 
 .toggle-base {
   position: fixed;
   bottom: 48px;
   right: 24px;
-  z-index: 9999;
+  z-index: 49;
+}
+
+.toggle-embed {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  z-index: 49;
 }
 
 @media screen and (max-width: 768px) {
