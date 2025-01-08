@@ -91,6 +91,8 @@
       </SheetContent>
     </Sheet>
   </div>
+
+  <PWAInstallPrompt></PWAInstallPrompt>
 </template>
 
 <script setup>
@@ -124,6 +126,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import CodeEmbed from "./components/CodeEmbed.vue";
+import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(false);
