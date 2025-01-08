@@ -32,7 +32,7 @@
         :lat-lng="[city.lat, city.lng]"
       >
         <LIcon
-          icon-url="/pin.png"
+          :icon-url="`/pin${city?.record?.AccessICAD ? '-icad' : ''}.png`"
           :icon-size="[25, 25]"
           :icon-anchor="[12, 41]"
         />
@@ -42,6 +42,10 @@
             <a :href="city.record.LinkToPost" target="_blank">
               {{ city.record.Author }}</a
             >
+
+            <div class="mt-4" v-if="city.record.AccessICAD">
+              <Badge>Accès ICAD</Badge>
+            </div>
           </div>
         </LPopup>
       </LMarker>
@@ -84,6 +88,7 @@ import { flatten } from "lodash";
 
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
+import { Badge } from "@/components/ui/badge";
 
 const usingDptCode = ref(false);
 
