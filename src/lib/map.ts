@@ -3,18 +3,6 @@ interface LatLngExpression {
   lng: number;
 }
 
-interface City {
-  name: string;
-  zipCode: string;
-  lat: number;
-  lng: number;
-  record?: {
-    AccessICAD?: boolean;
-    LinkToPost?: string;
-    Author?: string;
-  };
-}
-
 interface Zone {
   zipCodes: string[];
   coordinates: LatLngExpression[];
@@ -113,7 +101,7 @@ const getZoneOptions = (zone: Zone) => ({
   weight: 2,
 });
 
-const extractNumbers = (postalCode) => {
+const extractNumbers = (postalCode: string) => {
   return postalCode.replace(/[^0-9]/g, "");
 };
 
