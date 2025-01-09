@@ -193,13 +193,15 @@ const geoJsonOptions = {
 };
 
 const loadRecordByZipCode = (zipCode) => {
-  const record = records.value.find((rec) => rec.ZipCode === zipCode);
+  const record = records.value.find((rec) => rec.ZipCode.includes(zipCode));
 
   return record ?? null;
 };
 
 const loadRecordByDeptCode = (deptCode) => {
-  const record = records.value.find((rec) => rec.Dept === deptCode.slice(0, 2));
+  const record = records.value.find((rec) =>
+    rec.Dept.includes(deptCode.slice(0, 2))
+  );
 
   return record ?? null;
 };
@@ -353,20 +355,22 @@ const onSearchInput = (inputValue) => {
 
 const postCodes = computed(() => {
   let codes;
-  console.log(records.value);
+
   if (usingDptCode.value) {
     codes = flatten(
       records.value
         .filter((rec) => !!rec.Dept)
-        .map((rec) => rec.Dept.split(","))
+        .map((rec) => rec.Dept.replaceAll(" ", "").split(","))
     ).map((dpt) => dpt + "000");
   } else {
     codes = flatten(
       records.value
         .filter((rec) => !!rec.ZipCode)
-        .map((rec) => rec.ZipCode.split(","))
+        .map((rec) => rec.ZipCode.replaceAll(" ", "").split(","))
     );
   }
+
+  console.log(codes);
 
   return keyword.value
     ? codes.filter((zc) => zc.includes(keyword.value))
@@ -384,8 +388,6 @@ watch(
 watch(
   () => keyword.value,
   () => {
-    console.log({ keyword: keyword.value });
-    console.log({ postCode: postCodes.value });
     loadCities(postCodes.value);
   }
 );
