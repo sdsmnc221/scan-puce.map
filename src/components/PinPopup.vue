@@ -3,7 +3,7 @@
     {{ location.zipCode }}
   </h2>
   <h3
-    class="text-xs font-semibold"
+    class="text-sm font-semibold"
     v-if="!location.postcodes && !location.cityNames"
   >
     {{ communes }}
