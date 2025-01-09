@@ -26,16 +26,30 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <LPolygon
-        v-for="(zone, index) in processedZones"
-        :key="index"
-        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
-        :options="getZoneOptions(zone)"
+      <template
+        v-for="zone in processedZones"
+        :key="`communes-${zone.postcodes.join('-')}`"
       >
-        <LPopup>
-          <PinPopup :location="zone"></PinPopup>
-        </LPopup>
-      </LPolygon>
+        <template
+          v-for="postcode in zone.postcodes"
+          :key="`commune-${postcode}`"
+        >
+          <LPolygon
+            v-if="communesContours[postcode]"
+            :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
+            :options="{
+              color: zone.color,
+              fillColor: zone.color,
+              fillOpacity: 0.1,
+              weight: 1,
+            }"
+          >
+            <LPopup>
+              <PinPopup :location="zone"></PinPopup>
+            </LPopup>
+          </LPolygon>
+        </template>
+      </template>
 
       <LMarker
         v-for="city in cities"
@@ -179,6 +193,9 @@ const records = ref([]);
 const cities = ref([]);
 const keyword = ref("");
 
+const communesContours = ref({});
+const communesNames = ref({});
+
 const storedCsv = ref({
   dpt: [],
   zip: [],
@@ -226,10 +243,62 @@ const loadRecordByDeptCode = (deptCode) => {
   return record ?? null;
 };
 
+const loadCommunesForPostcode = async (postcode) => {
+  try {
+    const response = await axios.get(
+      `https://geo.api.gouv.fr/communes?codePostal=${postcode}&fields=nom,code,codesPostaux,contour`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching communes for ${postcode}:`, error);
+    return [];
+  }
+};
+
+const fetchCommunesContours = async (postcode) => {
+  const communes = await loadCommunesForPostcode(postcode);
+
+  if (communes.length > 0) {
+    communesNames.value[postcode] = communes.map((c) => c.nom);
+
+    const allPoints = communes.flatMap((commune) => {
+      if (commune.contour) {
+        return commune.contour.coordinates[0];
+      }
+      return [];
+    });
+
+    if (allPoints.length > 0) {
+      communesContours.value[postcode] = allPoints;
+    }
+  }
+};
+
 const loadCsvRecords = async (zipCodes) => {
-  // Create CSV content with header (the API expects 'q' as header for queries)
-  const csvHeader = "postcode\n";
-  const csvContent = csvHeader + zipCodes.join("\n");
+  // Create CSV content with header - add name of commune to help filter
+  const csvHeader = "postcode,city\n";
+  // Get communes data for each postal code
+  const communesData = await Promise.all(
+    zipCodes.map(async (zipCode) => {
+      try {
+        // First get all communes for this postal code
+        const communesResponse = await axios.get(
+          `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
+        );
+
+        // Create CSV rows for each commune with same postal code
+        return communesResponse.data.map(
+          (commune) => `${zipCode},${commune.nom}`
+        );
+      } catch (error) {
+        console.error(`Error fetching communes for ${zipCode}:`, error);
+        return [`${zipCode},`]; // Return empty commune name if error
+      }
+    })
+  );
+
+  // Flatten array and create CSV content
+  const csvContent = csvHeader + communesData.flat().join("\n");
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
@@ -237,9 +306,7 @@ const loadCsvRecords = async (zipCodes) => {
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
     records.value.length
   ) {
-    // Create a Blob/File from the CSV content
-    const aCsvFile = new Blob([csvContent], { type: "text/csv" });
-
+    // Create formData with the new CSV content
     const formData = new FormData();
     formData.append(
       "data",
@@ -260,7 +327,7 @@ const loadCsvRecords = async (zipCodes) => {
 
     store.value[usingDptCode.value ? "dpt" : "zip"] = response.data
       .split("\n")
-      .slice(1); // Skip header row;
+      .slice(1); // Skip header row
   }
 };
 
@@ -271,6 +338,7 @@ const processCsv = (rows) => {
       try {
         const [
           postcode,
+          city,
           latitude,
           longitude,
           result_label,
@@ -329,42 +397,56 @@ async function loadCities(zipCodes) {
 
     const zipCodesResults = processCsv(rows);
 
-    cities.value = zipCodesResults;
+    const groupedZipCodes = zipCodesResults.reduce((acc, current) => {
+      const existingEntry = acc.find(
+        (entry) => entry.zipCode === current.zipCode
+      );
+
+      if (existingEntry) {
+        // Add the commune to existing entry
+        existingEntry.communes.push({
+          name: current.name,
+          lat: current.lat,
+          lng: current.lng,
+        });
+
+        // Recalculate center
+        const totalLat = existingEntry.communes.reduce(
+          (sum, commune) => sum + commune.lat,
+          0
+        );
+        const totalLng = existingEntry.communes.reduce(
+          (sum, commune) => sum + commune.lng,
+          0
+        );
+        existingEntry.lat = totalLat / existingEntry.communes.length;
+        existingEntry.lng = totalLng / existingEntry.communes.length;
+      } else {
+        // Create new entry
+        acc.push({
+          zipCode: current.zipCode,
+          record: current.record,
+          lat: current.lat, // Initial center is the first commune
+          lng: current.lng,
+          communes: [
+            {
+              name: current.name,
+              lat: current.lat,
+              lng: current.lng,
+            },
+          ],
+        });
+      }
+
+      return acc;
+    }, []);
+
+    cities.value = groupedZipCodes;
+
+    console.log(groupedZipCodes);
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
-  }
-}
-
-async function loadDepartmentBoundaries(departmentList) {
-  try {
-    // You can get French departments GeoJSON from IGN's API or other open data sources
-    const response = await axios.get(
-      "https://geo.api.gouv.fr/departements?fields=nom,code,centre"
-    );
-
-    // Filter only the departments we want
-    const filteredDepartments = response.data.filter((dept) =>
-      departmentList.includes(dept.code)
-    );
-
-    // Create GeoJSON from the filtered departments
-    departmentGeoJson.value = {
-      type: "FeatureCollection",
-      features: filteredDepartments.map((dept) => ({
-        type: "Feature",
-        properties: {
-          code: dept.code,
-          name: dept.nom,
-        },
-        geometry: {
-          type: "Point",
-          coordinates: [dept.centre.coordinates[0], dept.centre.coordinates[1]],
-        },
-      })),
-    };
-  } catch (error) {
-    console.error("Error loading department boundaries:", error);
   }
 }
 
@@ -521,6 +603,18 @@ watch(
     processedZones.value = computeZones();
   },
   { deep: true, flush: "sync" }
+);
+
+watch(
+  () => zones.value,
+  async (newZones) => {
+    for (const zone of newZones) {
+      for (const postcode of zone.postcodes) {
+        await fetchCommunesContours(postcode);
+      }
+    }
+  },
+  { immediate: true }
 );
 </script>
 
