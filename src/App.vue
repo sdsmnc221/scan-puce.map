@@ -26,21 +26,6 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <LMarker
-        v-for="city in cities"
-        :key="city.zipCode"
-        :lat-lng="[city.lat, city.lng]"
-      >
-        <LIcon
-          :icon-url="`/pin${city?.record?.AccessICAD ? '-icad' : ''}.png`"
-          :icon-size="[25, 25]"
-          :icon-anchor="[12.5, 12.5]"
-        />
-        <LPopup>
-          <PinPopup :location="city"> </PinPopup>
-        </LPopup>
-      </LMarker>
-
       <LPolygon
         v-for="(zone, index) in processedZones"
         :key="`zone-commun-${index}`"
@@ -58,6 +43,21 @@
           </LPopup>
         </LMarker>
       </LPolygon>
+
+      <LMarker
+        v-for="city in cities"
+        :key="city.zipCode"
+        :lat-lng="[city.lat, city.lng]"
+      >
+        <LIcon
+          :icon-url="`/pin${city?.record?.AccessICAD ? '-icad' : ''}.png`"
+          :icon-size="[25, 25]"
+          :icon-anchor="[12.5, 12.5]"
+        />
+        <LPopup>
+          <PinPopup :location="city"> </PinPopup>
+        </LPopup>
+      </LMarker>
     </LMap>
 
     <IInput

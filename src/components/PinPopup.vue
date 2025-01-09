@@ -1,17 +1,15 @@
 <template>
   <h2 class="font-semibold text-sm">
-    {{ location.zipCode }}
+    {{ location.zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
   <h3
-    class="text-sm font-semibold"
+    class="text-xs font-semibold"
     v-if="!location.postcodes && !location.cityNames"
   >
     {{ communes }}
   </h3>
   <h3 class="text-xs font-semibold" v-else>
-    <span>{{ location.postcodes?.join(", ") }}</span>
-    <br />
-    <span>{{ location.cityNames?.join(", ") }}</span>
+    {{ location.cityNames?.join(", ") }}
   </h3>
 
   <div class="mt-2" v-if="location.record">
