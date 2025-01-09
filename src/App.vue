@@ -70,11 +70,7 @@
       @click="() => (usingFilloutBase = !usingFilloutBase)"
     >
       Base :
-      {{
-        usingFilloutBase
-          ? "En cours d'alimentation"
-          : "Test (Entrées manuelles)"
-      }}
+      {{ usingFilloutBase ? "En cours d'alimentation" : "Test" }}
     </RippleButton>
 
     <Sheet>
@@ -129,7 +125,7 @@ import CodeEmbed from "./components/CodeEmbed.vue";
 import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
 
 const usingDptCode = ref(false);
-const usingFilloutBase = ref(false);
+const usingFilloutBase = ref(true);
 
 const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
