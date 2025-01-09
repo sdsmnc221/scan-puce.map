@@ -1,6 +1,6 @@
 <template>
   <h2 class="font-semibold text-sm">
-    {{ location.zipCode || "Zone " + location.postcodes?.join(", ") }}
+    {{ zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
   <h3
     class="text-xs font-semibold"
@@ -25,6 +25,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { uniqBy } from "lodash";
 import { Badge } from "../components/ui/badge";
 
 type Props = {
@@ -40,13 +41,24 @@ type Props = {
       AccessICAD?: boolean;
     };
   };
+  isDpt?: boolean;
 };
 
 const props = defineProps<Props>();
 
+const zipCode = computed(() => {
+  return props.isDpt
+    ? "Zone " + props.location.zipCode?.slice(0, 2)
+    : props.location.zipCode;
+});
+
 const communes = computed(() => {
+  if (props.location.zipCode?.includes("95")) console.log(props.location);
   return (
-    props.location.name || props.location.communes.map((c) => c.name).join(", ")
+    props.location.name ||
+    uniqBy(props.location.communes, "name")
+      .map((c) => c.name)
+      .join(", ")
   );
 });
 </script>

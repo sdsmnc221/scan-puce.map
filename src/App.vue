@@ -55,7 +55,7 @@
           :icon-anchor="[12.5, 12.5]"
         />
         <LPopup>
-          <PinPopup :location="city"> </PinPopup>
+          <PinPopup :location="city" :is-dpt="usingDptCode"> </PinPopup>
         </LPopup>
       </LMarker>
     </LMap>
@@ -400,8 +400,14 @@ async function loadCities(zipCodes) {
         (entry) => entry.zipCode === current.zipCode
       );
 
-      if (existingEntry) {
+      if (
+        existingEntry &&
+        existingEntry.communes.find((c) => c.name !== current.name)
+      ) {
+        if (existingEntry.zipCode.includes("95"))
+          console.log(existingEntry.communes);
         // Add the commune to existing entry
+
         existingEntry.communes.push({
           name: current.name,
           lat: current.lat,
