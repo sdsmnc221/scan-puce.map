@@ -53,7 +53,6 @@ const zipCode = computed(() => {
 });
 
 const communes = computed(() => {
-  if (props.location.zipCode?.includes("95")) console.log(props.location);
   return (
     props.location.name ||
     uniqBy(props.location.communes, "name")
