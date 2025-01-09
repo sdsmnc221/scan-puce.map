@@ -202,15 +202,26 @@ const geoJsonOptions = {
 };
 
 const loadRecordByZipCode = (zipCode) => {
-  const record = records.value.find((rec) => rec.ZipCode.includes(zipCode));
+  const record = records.value.find((rec) => {
+    // Split in case there are multiple zip codes
+    const zipCodes = rec.ZipCode.split(",").map((code) => code.trim());
+    // Check for exact match
+    return zipCodes.includes(zipCode);
+  });
 
   return record ?? null;
 };
 
 const loadRecordByDeptCode = (deptCode) => {
-  const record = records.value.find((rec) =>
-    rec.Dept.includes(deptCode.slice(0, 2))
-  );
+  const deptPrefix = deptCode.slice(0, 2);
+
+  const record = records.value.find((rec) => {
+    // Split the Dept field in case it contains multiple codes
+
+    const deptCodes = rec.Dept.split(",").map((code) => code.trim());
+    // Check for exact match with the prefix
+    return deptCodes.includes(deptPrefix);
+  });
 
   return record ?? null;
 };
@@ -420,9 +431,16 @@ const computeZones = () => {
 
     const citiesDetails = zone.postcodes
       .map((city) => {
-        return zipCodesResults.find((entry) =>
-          entry.zipCode.includes(city.slice(0, 2))
-        );
+        return zipCodesResults.find((entry) => {
+          // Split in case there are multiple zip codes
+          const entryCodes = entry.zipCode
+            .split(",")
+            .map((code) => code.trim());
+          // Check for exact match with either full code or department code
+          return (
+            entryCodes.includes(city) || entryCodes.includes(city.slice(0, 2))
+          );
+        });
       })
       .filter((entry) => !!entry);
 
