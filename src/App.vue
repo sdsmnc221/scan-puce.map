@@ -26,6 +26,17 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
+      <LPolygon
+        v-for="(zone, index) in processedZones"
+        :key="index"
+        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
+        :options="getZoneOptions(zone)"
+      >
+        <LPopup>
+          <PinPopup :location="zone"></PinPopup>
+        </LPopup>
+      </LPolygon>
+
       <LMarker
         v-for="city in cities"
         :key="city.zipCode"
@@ -37,16 +48,7 @@
           :icon-anchor="[12, 41]"
         />
         <LPopup>
-          <div>{{ city.name }} {{ city.zipCode }}</div>
-          <div v-if="city.record">
-            <a :href="city.record.LinkToPost" target="_blank">
-              {{ city.record.Author }}</a
-            >
-
-            <div class="mt-4" v-if="city.record.AccessICAD">
-              <Badge>Accès ICAD</Badge>
-            </div>
-          </div>
+          <PinPopup :location="city"> </PinPopup>
         </LPopup>
       </LMarker>
     </LMap>
@@ -100,6 +102,7 @@ import {
   LMarker,
   LPopup,
   LIcon,
+  LPolygon,
   LGeoJson,
   LRectangle,
 } from "@vue-leaflet/vue-leaflet";
@@ -109,6 +112,11 @@ import { ref, computed, onMounted, watch } from "vue";
 import Airtable from "airtable";
 import axios from "axios";
 import { flatten } from "lodash";
+import {
+  createPolygonFromPoints,
+  getZoneOptions,
+  extractNumbers,
+} from "./lib/map";
 
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
@@ -123,6 +131,7 @@ import {
 } from "@/components/ui/sheet";
 import CodeEmbed from "./components/CodeEmbed.vue";
 import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
+import PinPopup from "./components/PinPopup.vue";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
@@ -148,10 +157,10 @@ const franceOptions = {
   stroke: true,
   weight: 0.32,
 };
-const iframeCode = `<iframe 
-    src="https://scan-puce.antr.tech" 
-    width="100%" 
-    height="600px" 
+const iframeCode = `<iframe
+    src="https://scan-puce.antr.tech"
+    width="100%"
+    height="600px"
     frameborder="0"
     allowfullscreen
     loading="lazy"
@@ -213,11 +222,6 @@ const loadCsvRecords = async (zipCodes) => {
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
-  console.log(
-    store.value[usingDptCode.value ? "dpt" : "zip"].length,
-    records.value.length
-  );
-
   if (
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
     records.value.length
@@ -249,6 +253,60 @@ const loadCsvRecords = async (zipCodes) => {
   }
 };
 
+const processCsv = (rows) => {
+  return rows
+    .filter((row) => row.length > 0 && !row.includes("not-found"))
+    .map((row) => {
+      try {
+        const [
+          postcode,
+          latitude,
+          longitude,
+          result_label,
+          result_score,
+          result_score_next,
+          result_type,
+          result_id,
+          result_housenumber,
+          result_name,
+          result_street,
+          result_postcode,
+          result_city,
+          result_context,
+          result_citycode,
+          result_oldcitycode,
+          result_oldcity,
+          result_district,
+          result_status,
+        ] = row.split(",");
+
+        const record = usingDptCode.value
+          ? loadRecordByDeptCode(postcode)
+          : loadRecordByZipCode(postcode);
+
+        if (
+          !latitude ||
+          !longitude ||
+          (keyword.value && !postcode.includes(keyword.value))
+        ) {
+          return null;
+        }
+
+        return {
+          zipCode: postcode,
+          lat: parseFloat(latitude),
+          lng: parseFloat(longitude),
+          name: result_city.replace(/"/g, ""), // Remove quotes from label,
+          record,
+        };
+      } catch (rowError) {
+        console.error("Error parsing row:", row, rowError);
+        return null;
+      }
+    })
+    .filter((record) => !!record);
+};
+
 async function loadCities(zipCodes) {
   try {
     await loadCsvRecords(zipCodes);
@@ -258,57 +316,7 @@ async function loadCities(zipCodes) {
     let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
 
-    const zipCodesResults = rows
-      .filter((row) => row.length > 0 && !row.includes("not-found"))
-      .map((row) => {
-        try {
-          const [
-            postcode,
-            latitude,
-            longitude,
-            result_label,
-            result_score,
-            result_score_next,
-            result_type,
-            result_id,
-            result_housenumber,
-            result_name,
-            result_street,
-            result_postcode,
-            result_city,
-            result_context,
-            result_citycode,
-            result_oldcitycode,
-            result_oldcity,
-            result_district,
-            result_status,
-          ] = row.split(",");
-
-          const record = usingDptCode.value
-            ? loadRecordByDeptCode(postcode)
-            : loadRecordByZipCode(postcode);
-
-          if (
-            !latitude ||
-            !longitude ||
-            (keyword.value && !postcode.includes(keyword.value))
-          ) {
-            return null;
-          }
-
-          return {
-            zipCode: postcode,
-            lat: parseFloat(latitude),
-            lng: parseFloat(longitude),
-            name: result_city.replace(/"/g, ""), // Remove quotes from label,
-            record,
-          };
-        } catch (rowError) {
-          console.error("Error parsing row:", row, rowError);
-          return null;
-        }
-      })
-      .filter((record) => !!record);
+    const zipCodesResults = processCsv(rows);
 
     cities.value = zipCodesResults;
   } catch (error) {
@@ -353,7 +361,7 @@ const onSearchInput = (inputValue) => {
   keyword.value = inputValue;
 };
 
-const postCodes = computed(() => {
+const postcodes = computed(() => {
   let codes;
 
   if (usingDptCode.value) {
@@ -370,17 +378,77 @@ const postCodes = computed(() => {
     );
   }
 
-  console.log(codes);
+  return keyword.value
+    ? codes.filter((zc) => zc.includes(keyword.value))
+    : codes;
+});
+
+const zones = computed(() => {
+  let codes;
+
+  if (usingDptCode.value) {
+    codes = records.value
+      .filter((rec) => rec.Dept.includes(","))
+      .map((rec) => ({
+        postcodes: rec.Dept.replaceAll(" ", "")
+          .split(",")
+          .map((dpt) => {
+            const dptCode = extractNumbers(dpt);
+            return dptCode.length === 2 ? dptCode + "000" : dptCode;
+          }),
+        record: rec,
+      }));
+  } else {
+    codes = records.value
+      .filter((rec) => rec.ZipCode.includes(","))
+      .map((rec) => ({
+        postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
+        record: rec,
+      }));
+  }
 
   return keyword.value
     ? codes.filter((zc) => zc.includes(keyword.value))
     : codes;
 });
 
+const computeZones = () => {
+  return zones.value.map((zone, index) => {
+    const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+    const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
+    const zipCodesResults = processCsv(rows);
+
+    const citiesDetails = zone.postcodes
+      .map((city) => {
+        return zipCodesResults.find((entry) =>
+          entry.zipCode.includes(city.slice(0, 2))
+        );
+      })
+      .filter((entry) => !!entry);
+
+    const coordinates = citiesDetails.map((city) => ({
+      lat: city.lat,
+      lng: city.lng,
+    }));
+
+    const cityNames = citiesDetails.map((city) => city.name);
+
+    return {
+      postcodes: zone.postcodes,
+      coordinates: createPolygonFromPoints(coordinates), // Changed this line
+      cityNames,
+      color: "#FFCA3A",
+      record: zone.record,
+    };
+  });
+};
+
+const processedZones = ref(computeZones());
+
 watch(
   [() => usingDptCode.value, () => records.value],
   () => {
-    loadCities(postCodes.value);
+    loadCities(postcodes.value);
   },
   { immediate: true, deep: true }
 );
@@ -388,7 +456,7 @@ watch(
 watch(
   () => keyword.value,
   () => {
-    loadCities(postCodes.value);
+    loadCities(postcodes.value);
   }
 );
 
@@ -427,6 +495,14 @@ watch(
       );
   },
   { immediate: true }
+);
+
+watch(
+  [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
+  () => {
+    processedZones.value = computeZones();
+  },
+  { deep: true, flush: "sync" }
 );
 </script>
 
