@@ -12,13 +12,20 @@
     {{ location.cityNames?.join(", ") }}
   </h3>
 
-  <div class="mt-2" v-if="location.record">
-    <a class="text-sm" :href="location.record.LinkToPost" target="_blank">
-      {{ location.record.Author }}</a
+  <div class="mt-2" v-if="location.records">
+    <div
+      v-for="record in location.records"
+      :key="`${zipCode || location.postcodes?.join('-')}-record-${
+        record.Author
+      }`"
     >
+      <a class="text-sm" :href="record.LinkToPost" target="_blank">
+        {{ record.Author }}</a
+      >
 
-    <div class="text-xs mt-4" v-if="location.record.AccessICAD">
-      <Badge>Accès ICAD</Badge>
+      <div class="text-xs mt-4" v-if="record.AccessICAD">
+        <Badge>Accès ICAD</Badge>
+      </div>
     </div>
   </div>
 </template>
@@ -35,11 +42,11 @@ type Props = {
     zipCode?: string;
     cityNames?: string[];
     postcodes?: string[];
-    record: {
+    records: {
       Author: string;
       LinkToPost: string;
       AccessICAD?: boolean;
-    };
+    }[];
   };
   isDpt?: boolean;
 };

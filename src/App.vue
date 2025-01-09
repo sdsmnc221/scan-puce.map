@@ -50,7 +50,9 @@
         :lat-lng="[city.lat, city.lng]"
       >
         <LIcon
-          :icon-url="`/pin${city?.record?.AccessICAD ? '-icad' : ''}.png`"
+          :icon-url="`/pin${
+            city?.records?.some((r) => r.AccessICAD === true) ? '-icad' : ''
+          }.png`"
           :icon-size="[25, 25]"
           :icon-anchor="[12.5, 12.5]"
         />
@@ -220,13 +222,13 @@ const loadRecordByZipCode = (zipCode) => {
     return zipCodes.includes(zipCode);
   });
 
-  return record ?? null;
+  return [record] ?? null;
 };
 
 const loadRecordByDeptCode = (deptCode) => {
   const deptPrefix = deptCode.slice(0, 2);
 
-  const record = records.value.find((rec) => {
+  const records_ = records.value.filter((rec) => {
     // Split the Dept field in case it contains multiple codes
 
     const deptCodes = rec.Dept.split(",").map((code) => code.trim());
@@ -234,7 +236,7 @@ const loadRecordByDeptCode = (deptCode) => {
     return deptCodes.includes(deptPrefix);
   });
 
-  return record ?? null;
+  return records_ ?? null;
 };
 
 const loadCommunesForPostcode = async (postcode) => {
@@ -357,7 +359,7 @@ const processCsv = (rows) => {
           result_status,
         ] = row.split(",");
 
-        const record = usingDptCode.value
+        const records_ = usingDptCode.value
           ? loadRecordByDeptCode(postcode)
           : loadRecordByZipCode(postcode);
 
@@ -374,7 +376,7 @@ const processCsv = (rows) => {
           lat: parseFloat(latitude),
           lng: parseFloat(longitude),
           name: result_city.replace(/"/g, ""), // Remove quotes from label,
-          record,
+          records: records_,
         };
       } catch (rowError) {
         console.error("Error parsing row:", row, rowError);
@@ -404,7 +406,7 @@ async function loadCities(zipCodes) {
         existingEntry &&
         existingEntry.communes.find((c) => c.name !== current.name)
       ) {
-        // Add the commune to existing entry
+        // Add the commune to existing entryg
         existingEntry.communes.push({
           name: current.name,
           lat: current.lat,
@@ -426,7 +428,7 @@ async function loadCities(zipCodes) {
         // Create new entry
         acc.push({
           zipCode: current.zipCode,
-          record: current.record,
+          records: current.records,
           lat: current.lat, // Initial center is the first commune
           lng: current.lng,
           communes: [
@@ -488,14 +490,14 @@ const zones = computed(() => {
             const dptCode = extractNumbers(dpt);
             return dptCode.length === 2 ? dptCode + "000" : dptCode;
           }),
-        record: rec,
+        records: [rec],
       }));
   } else {
     codes = records.value
       .filter((rec) => rec.ZipCode.includes(","))
       .map((rec) => ({
         postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
-        record: rec,
+        records: [rec],
       }));
   }
 
@@ -543,7 +545,7 @@ const computeZones = () => {
         coordinates: allContourPoints,
         cityNames: citiesDetails.map((city) => city.name),
         color: "#FFCA3A",
-        record: zone.record,
+        records: zone.records,
       };
     }
 
@@ -559,7 +561,7 @@ const computeZones = () => {
       coordinates: createPolygonFromPoints(coordinates), // Changed this line
       cityNames,
       color: "#FFCA3A",
-      record: zone.record,
+      records: zone.records,
     };
   });
 };
