@@ -16,12 +16,12 @@
     <!-- Preview Section -->
     <div class="preview-container">
       <div class="preview-header">
-        <h3 class="preview-title">Preview</h3>
+        <h3 class="preview-title">Aperçu</h3>
         <button
           class="preview-toggle"
           @click="isPreviewVisible = !isPreviewVisible"
         >
-          {{ isPreviewVisible ? "Hide Preview" : "Show Preview" }}
+          {{ isPreviewVisible ? "Afficher" : "Cacher" }} l'aperçu
         </button>
       </div>
 
