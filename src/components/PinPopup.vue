@@ -15,11 +15,11 @@
   </h3>
 
   <div class="mt-2" v-if="location.record">
-    <a :href="location.record.LinkToPost" target="_blank">
+    <a class="text-sm" :href="location.record.LinkToPost" target="_blank">
       {{ location.record.Author }}</a
     >
 
-    <div class="mt-4" v-if="location.record.AccessICAD">
+    <div class="text-xs mt-4" v-if="location.record.AccessICAD">
       <Badge>Accès ICAD</Badge>
     </div>
   </div>
