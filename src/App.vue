@@ -26,30 +26,16 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <template
-        v-for="zone in processedZones"
-        :key="`communes-${zone.postcodes.join('-')}`"
+      <LPolygon
+        v-for="(zone, index) in processedZones"
+        :key="`zone-commun-${index}`"
+        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
+        :options="getZoneOptions(zone)"
       >
-        <template
-          v-for="postcode in zone.postcodes"
-          :key="`commune-${postcode}`"
-        >
-          <LPolygon
-            v-if="communesContours[postcode]"
-            :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
-            :options="{
-              color: zone.color,
-              fillColor: zone.color,
-              fillOpacity: 0.1,
-              weight: 1,
-            }"
-          >
-            <LPopup>
-              <PinPopup :location="zone"></PinPopup>
-            </LPopup>
-          </LPolygon>
-        </template>
-      </template>
+        <LPopup>
+          <PinPopup :location="zone"></PinPopup>
+        </LPopup>
+      </LPolygon>
 
       <LMarker
         v-for="city in cities"
@@ -262,8 +248,12 @@ const fetchCommunesContours = async (postcode) => {
     communesNames.value[postcode] = communes.map((c) => c.nom);
 
     const allPoints = communes.flatMap((commune) => {
-      if (commune.contour) {
-        return commune.contour.coordinates[0];
+      if (commune.contour && commune.contour.coordinates.length > 0) {
+        // GeoJSON coordinates are in [longitude, latitude] order
+        return commune.contour.coordinates[0].map((coord) => [
+          coord[0],
+          coord[1],
+        ]);
       }
       return [];
     });
@@ -271,6 +261,8 @@ const fetchCommunesContours = async (postcode) => {
     if (allPoints.length > 0) {
       communesContours.value[postcode] = allPoints;
     }
+
+    console.log(communesContours.value);
   }
 };
 
@@ -442,8 +434,6 @@ async function loadCities(zipCodes) {
     }, []);
 
     cities.value = groupedZipCodes;
-
-    console.log(groupedZipCodes);
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -526,6 +516,26 @@ const computeZones = () => {
       })
       .filter((entry) => !!entry);
 
+    // First try to use commune contours if available
+    const hasContours = zone.postcodes.some(
+      (postcode) => communesContours.value[postcode]
+    );
+
+    if (hasContours) {
+      // Use the contours for coordinates
+      const allContourPoints = zone.postcodes
+        .filter((postcode) => communesContours.value[postcode])
+        .flatMap((postcode) => communesContours.value[postcode]);
+
+      return {
+        postcodes: zone.postcodes,
+        coordinates: allContourPoints,
+        cityNames: citiesDetails.map((city) => city.name),
+        color: "#FFCA3A",
+        record: zone.record,
+      };
+    }
+
     const coordinates = citiesDetails.map((city) => ({
       lat: city.lat,
       lng: city.lng,
@@ -598,23 +608,28 @@ watch(
 );
 
 watch(
-  [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
+  [
+    () => storedCsv.value,
+    () => storedFilloutCsv.value,
+    () => zones.value,
+    () => communesContours.value,
+  ],
   () => {
     processedZones.value = computeZones();
+
+    console.log(processedZones.value);
   },
   { deep: true, flush: "sync" }
 );
 
 watch(
-  () => zones.value,
-  async (newZones) => {
-    for (const zone of newZones) {
-      for (const postcode of zone.postcodes) {
-        await fetchCommunesContours(postcode);
-      }
+  () => cities.value,
+  async () => {
+    for (const commune of cities.value) {
+      await fetchCommunesContours(commune.zipCode);
     }
   },
-  { immediate: true }
+  { deep: true }
 );
 </script>
 
