@@ -93,6 +93,18 @@ const isLeftTurn = (
   );
 };
 
+const getZoneCenter = (coordinates: LatLngExpression[]) => {
+  if (!coordinates || coordinates.length === 0) return [0, 0];
+
+  const lats = coordinates.map((coord) => coord.lat);
+  const lngs = coordinates.map((coord) => coord.lng);
+
+  const centerLat = (Math.max(...lats) + Math.min(...lats)) / 2;
+  const centerLng = (Math.max(...lngs) + Math.min(...lngs)) / 2;
+
+  return [centerLat, centerLng];
+};
+
 // Zone styling options
 const getZoneOptions = (zone: Zone) => ({
   color: zone.color,
@@ -105,4 +117,9 @@ const extractNumbers = (postalCode: string) => {
   return postalCode.replace(/[^0-9]/g, "");
 };
 
-export { createPolygonFromPoints, getZoneOptions, extractNumbers };
+export {
+  createPolygonFromPoints,
+  getZoneOptions,
+  extractNumbers,
+  getZoneCenter,
+};

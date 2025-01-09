@@ -26,17 +26,6 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <LPolygon
-        v-for="(zone, index) in processedZones"
-        :key="`zone-commun-${index}`"
-        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
-        :options="getZoneOptions(zone)"
-      >
-        <LPopup>
-          <PinPopup :location="zone"></PinPopup>
-        </LPopup>
-      </LPolygon>
-
       <LMarker
         v-for="city in cities"
         :key="city.zipCode"
@@ -45,12 +34,30 @@
         <LIcon
           :icon-url="`/pin${city?.record?.AccessICAD ? '-icad' : ''}.png`"
           :icon-size="[25, 25]"
-          :icon-anchor="[12, 41]"
+          :icon-anchor="[12.5, 12.5]"
         />
         <LPopup>
           <PinPopup :location="city"> </PinPopup>
         </LPopup>
       </LMarker>
+
+      <LPolygon
+        v-for="(zone, index) in processedZones"
+        :key="`zone-commun-${index}`"
+        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
+        :options="getZoneOptions(zone)"
+      >
+        <LMarker :lat-lng="getZoneCenter(zone.coordinates)">
+          <LIcon
+            icon-url="pin-zone.png"
+            :icon-size="[32, 32]"
+            :icon-anchor="[16, 16]"
+          />
+          <LPopup>
+            <PinPopup :location="zone"></PinPopup>
+          </LPopup>
+        </LMarker>
+      </LPolygon>
     </LMap>
 
     <IInput
@@ -67,13 +74,13 @@
       Affichage par {{ usingDptCode ? "Département" : "Commune" }}
     </RippleButton>
 
-    <RippleButton
+    <!-- <RippleButton
       class="toggle-base text-sm rounded-xl bg-yellow-300"
       @click="() => (usingFilloutBase = !usingFilloutBase)"
     >
       Base :
       {{ usingFilloutBase ? "En cours d'alimentation" : "Test" }}
-    </RippleButton>
+    </RippleButton> -->
 
     <Sheet>
       <SheetTrigger class="toggle-embed">
@@ -116,6 +123,7 @@ import {
   createPolygonFromPoints,
   getZoneOptions,
   extractNumbers,
+  getZoneCenter,
 } from "./lib/map";
 
 import IInput from "./components/IInput.vue";
@@ -261,8 +269,6 @@ const fetchCommunesContours = async (postcode) => {
     if (allPoints.length > 0) {
       communesContours.value[postcode] = allPoints;
     }
-
-    console.log(communesContours.value);
   }
 };
 
@@ -491,7 +497,9 @@ const zones = computed(() => {
   }
 
   return keyword.value
-    ? codes.filter((zc) => zc.includes(keyword.value))
+    ? codes.filter((zc) => {
+        return zc.postcodes.some((c) => c.includes(keyword.value));
+      })
     : codes;
 });
 
@@ -608,28 +616,11 @@ watch(
 );
 
 watch(
-  [
-    () => storedCsv.value,
-    () => storedFilloutCsv.value,
-    () => zones.value,
-    () => communesContours.value,
-  ],
+  [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
   () => {
     processedZones.value = computeZones();
-
-    console.log(processedZones.value);
   },
   { deep: true, flush: "sync" }
-);
-
-watch(
-  () => cities.value,
-  async () => {
-    for (const commune of cities.value) {
-      await fetchCommunesContours(commune.zipCode);
-    }
-  },
-  { deep: true }
 );
 </script>
 
@@ -663,7 +654,7 @@ watch(
 
 .toggle-embed {
   position: fixed;
-  bottom: 96px;
+  bottom: 48px;
   right: 24px;
   z-index: 49;
 }
