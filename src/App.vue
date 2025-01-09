@@ -404,10 +404,7 @@ async function loadCities(zipCodes) {
         existingEntry &&
         existingEntry.communes.find((c) => c.name !== current.name)
       ) {
-        if (existingEntry.zipCode.includes("95"))
-          console.log(existingEntry.communes);
         // Add the commune to existing entry
-
         existingEntry.communes.push({
           name: current.name,
           lat: current.lat,
