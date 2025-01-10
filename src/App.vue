@@ -100,6 +100,8 @@
   </div>
 
   <PWAInstallPrompt></PWAInstallPrompt>
+
+  <Analytics />
 </template>
 
 <script setup>
@@ -128,6 +130,7 @@ import {
   getZoneCenter,
 } from "./lib/map";
 
+import { Analytics } from "@vercel/analytics/vue";
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
 import { Badge } from "@/components/ui/badge";
