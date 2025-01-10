@@ -100,8 +100,6 @@
   </div>
 
   <PWAInstallPrompt></PWAInstallPrompt>
-
-  <Analytics />
 </template>
 
 <script setup>
@@ -119,9 +117,10 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import franceBoundaries from "./geojson/france.json";
 
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch, nextTick } from "vue";
 import Airtable from "airtable";
 import axios from "axios";
+import { inject } from "@vercel/analytics";
 import { flatten } from "lodash";
 import {
   createPolygonFromPoints,
@@ -130,7 +129,6 @@ import {
   getZoneCenter,
 } from "./lib/map";
 
-import { Analytics } from "@vercel/analytics/vue";
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
 import { Badge } from "@/components/ui/badge";
@@ -570,6 +568,12 @@ const computeZones = () => {
 };
 
 const processedZones = ref(computeZones());
+
+onMounted(() => {
+  nextTick(() => {
+    inject();
+  });
+});
 
 watch(
   [() => usingDptCode.value, () => records.value],
