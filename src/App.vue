@@ -188,6 +188,7 @@ Airtable.configure({
 const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
 const records = ref([]);
+const loadRecordsDone = ref(false);
 const cities = ref([]);
 const keyword = ref("");
 
@@ -254,66 +255,29 @@ const getDepartmentName = (zipcode) => {
   return franceDepartments[deptCode] || null;
 };
 
-const loadCommunesForPostcode = async (postcode) => {
+const fetchCommunes = async (postcodes) => {
   try {
     const response = await axios.get(
-      `https://geo.api.gouv.fr/communes?codePostal=${postcode}&fields=nom,code,codesPostaux,contour`
+      `https://geo.api.gouv.fr/communes?codePostal=${postcodes.join(
+        ","
+      )}&fields=nom,code,codesPostaux,contour`
     );
     return response.data;
   } catch (error) {
-    console.error(`Error fetching communes for ${postcode}:`, error);
+    console.error(`Error fetching communes for ${postcodes}:`, error);
     return [];
   }
 };
 
-const fetchCommunesContours = async (postcode) => {
-  const communes = await loadCommunesForPostcode(postcode);
-
-  if (communes.length > 0) {
-    communesNames.value[postcode] = communes.map((c) => c.nom);
-
-    const allPoints = communes.flatMap((commune) => {
-      if (commune.contour && commune.contour.coordinates.length > 0) {
-        // GeoJSON coordinates are in [longitude, latitude] order
-        return commune.contour.coordinates[0].map((coord) => [
-          coord[0],
-          coord[1],
-        ]);
-      }
-      return [];
-    });
-
-    if (allPoints.length > 0) {
-      communesContours.value[postcode] = allPoints;
-    }
-  }
-};
-
-const loadCsvRecords = async (zipCodes) => {
+const fetchCsvRecords = async (zipCodes, communesData) => {
   // Create CSV content with header - add name of commune to help filter
   const csvHeader = "postcode,city\n";
-  // Get communes data for each postal code
-  const communesData = await Promise.all(
-    zipCodes.map(async (zipCode) => {
-      try {
-        // First get all communes for this postal code
-        const communesResponse = await axios.get(
-          `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
-        );
-
-        // Create CSV rows for each commune with same postal code
-        return communesResponse.data.map(
-          (commune) => `${zipCode},${commune.nom}`
-        );
-      } catch (error) {
-        console.error(`Error fetching communes for ${zipCode}:`, error);
-        return [`${zipCode},`]; // Return empty commune name if error
-      }
-    })
-  );
 
   // Flatten array and create CSV content
-  const csvContent = csvHeader + communesData.flat().join("\n");
+  const csvContent =
+    communesData?.length > 0
+      ? communesData.flat().join("\n")
+      : zipCodes.map((z) => `${z}, ""`).join("\n");
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
@@ -331,6 +295,7 @@ const loadCsvRecords = async (zipCodes) => {
     );
 
     // Make the request with formData
+    console.log("fetch csv");
     const response = await axios.post(
       "https://api-adresse.data.gouv.fr/search/csv/",
       formData,
@@ -345,6 +310,37 @@ const loadCsvRecords = async (zipCodes) => {
       .split("\n")
       .slice(1); // Skip header row
   }
+};
+
+const loadCsvRecords = async (zipCodes) => {
+  await fetchCsvRecords(zipCodes, null);
+
+  await fetchCommunes(zipCodes);
+
+  //PromisesAllIfOnePromiseIsErrorThenStopImmediately
+  const promisesAllStrict = async (promises) => {
+    try {
+      const results = await Promise.all(promises);
+      return results;
+    } catch (error) {
+      console.error("One promise failed, stopping all:", error);
+      throw error; // Re-throw to maintain the error state
+    }
+  };
+
+  // let communesData = await promisesAllStrict(
+  //   zipCodes.map(async (zipCode) => {
+  //     // First get all communes for this postal code
+  //     const communesResponse = await axios.get(
+  //       `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
+  //     );
+
+  //     // Create CSV rows for each commune with same postal code
+  //     return communesResponse.data.map(
+  //       (commune) => `${zipCode},${commune.nom}`
+  //     );
+  //   })
+  // );
 };
 
 const processCsv = (rows) => {
@@ -572,7 +568,6 @@ const computeZones = () => {
         coordinates: allContourPoints,
         cityNames: citiesDetails.map((city) => city.name),
         color: "#FFCA3A",
-        records: zone.records,
       };
     }
 
@@ -589,7 +584,6 @@ const computeZones = () => {
       coordinates: createPolygonFromPoints(coordinates), // Changed this line
       cityNames,
       color: "#FFCA3A",
-      records: zone.records,
     };
   });
 };
@@ -601,21 +595,6 @@ onMounted(() => {
     inject();
   });
 });
-
-watch(
-  [() => usingDptCode.value, () => records.value],
-  () => {
-    loadCities(postcodes.value);
-  },
-  { immediate: true, deep: true }
-);
-
-watch(
-  () => keyword.value,
-  () => {
-    loadCities(postcodes.value);
-  }
-);
 
 watch(
   () => usingFilloutBase.value,
@@ -637,6 +616,8 @@ watch(
             records.value.push(record.fields);
           });
 
+          loadRecordsDone.value = true;
+
           // To fetch the next page of records, call `fetchNextPage`.
           // If there are more records, `page` will get called again.
           // If there are no more records, `done` will get called.
@@ -646,12 +627,21 @@ watch(
         function done(err) {
           if (err) {
             console.error(err);
+            loadRecordsDone.value = false;
             return;
           }
         }
       );
   },
   { immediate: true }
+);
+
+watch(
+  [() => usingDptCode.value, () => loadRecordsDone.value, () => keyword.value],
+  () => {
+    loadCities(postcodes.value);
+  },
+  { immediate: true, deep: true, flush: "sync" }
 );
 
 watch(
