@@ -2,9 +2,13 @@
   <h2 class="font-semibold text-sm">
     {{ zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
+
+  <h3 class="text-xs font-semibold" v-if="isDpt">
+    {{ location.departmentName }}
+  </h3>
   <h3
     class="text-xs font-semibold"
-    v-if="!location.postcodes && !location.cityNames"
+    v-else-if="!location.postcodes && !location.cityNames"
   >
     {{ communes }}
   </h3>
@@ -42,6 +46,8 @@ type Props = {
     zipCode?: string;
     cityNames?: string[];
     postcodes?: string[];
+    departmentCode: string;
+    departmentName: string;
     records: {
       Author: string;
       LinkToPost: string;
@@ -55,7 +61,7 @@ const props = defineProps<Props>();
 
 const zipCode = computed(() => {
   return props.isDpt
-    ? "Zone " + props.location.zipCode?.slice(0, 2)
+    ? "Zone " + props.location.departmentCode
     : props.location.zipCode;
 });
 

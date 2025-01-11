@@ -116,6 +116,7 @@ import {
   LRectangle,
 } from "@vue-leaflet/vue-leaflet";
 import franceBoundaries from "./geojson/france.json";
+import franceDepartments from "./geojson/dptFr.json";
 
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import Airtable from "airtable";
@@ -238,6 +239,17 @@ const loadRecordByDeptCode = (deptCode) => {
   });
 
   return records_ ?? null;
+};
+
+const getDepartmentCode = (zipcode) => {
+  if (!zipcode) return null;
+  return zipcode.substring(0, 2);
+};
+
+// Function to get department name from zipcode
+const getDepartmentName = (zipcode) => {
+  const deptCode = getDepartmentCode(zipcode);
+  return franceDepartments[deptCode] || null;
 };
 
 const loadCommunesForPostcode = async (postcode) => {
@@ -364,6 +376,8 @@ const processCsv = (rows) => {
           ? loadRecordByDeptCode(postcode)
           : loadRecordByZipCode(postcode);
 
+        const departmentName = getDepartmentName(postcode);
+
         if (
           !latitude ||
           !longitude ||
@@ -377,6 +391,8 @@ const processCsv = (rows) => {
           lat: parseFloat(latitude),
           lng: parseFloat(longitude),
           name: result_city.replace(/"/g, ""), // Remove quotes from label,
+          departmentName,
+          departmentCode: getDepartmentCode(postcode),
           records: records_,
         };
       } catch (rowError) {
@@ -428,6 +444,7 @@ async function loadCities(zipCodes) {
       } else {
         // Create new entry
         acc.push({
+          ...current,
           zipCode: current.zipCode,
           records: current.records,
           lat: current.lat, // Initial center is the first commune
@@ -542,6 +559,7 @@ const computeZones = () => {
         .flatMap((postcode) => communesContours.value[postcode]);
 
       return {
+        ...zone,
         postcodes: zone.postcodes,
         coordinates: allContourPoints,
         cityNames: citiesDetails.map((city) => city.name),
@@ -558,6 +576,7 @@ const computeZones = () => {
     const cityNames = citiesDetails.map((city) => city.name);
 
     return {
+      ...zone,
       postcodes: zone.postcodes,
       coordinates: createPolygonFromPoints(coordinates), // Changed this line
       cityNames,
