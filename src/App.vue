@@ -117,6 +117,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import franceBoundaries from "./geojson/france.json";
 import franceDepartments from "./geojson/dptFr.json";
+import franceCommunes from "./geojson/communesFr.json";
 
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import Airtable from "airtable";
@@ -129,6 +130,7 @@ import {
   extractNumbers,
   getZoneCenter,
 } from "./lib/map";
+import { transformToCapitalize } from "./lib/lexique";
 
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
@@ -255,27 +257,39 @@ const getDepartmentName = (zipcode) => {
   return franceDepartments[deptCode] || null;
 };
 
-const fetchCsvRecords = async (zipCodes, communesData) => {
+const findCommunesByZipCodes = (zipCodes) => {
+  if (!zipCodes || !zipCodes.length) return [];
+
+  // Create a Set for faster lookup
+  const zipCodeSet = new Set(zipCodes);
+
+  return franceCommunes.filter((commune) => zipCodeSet.has(commune.CodePostal));
+};
+
+const fetchCsvRecords = async (zipCodes) => {
   if (!zipCodes) return;
+
+  const communes = [];
+  for (const zipCode of zipCodes) {
+    const communesOfSameZip = franceCommunes
+      .filter((c) => c.CodePostal == zipCode)
+      .map((c) => ({
+        postcode: c.CodePostal,
+        city: transformToCapitalize(c.NomCommune),
+      }));
+
+    communesOfSameZip.forEach((c) => {
+      communes.push(c);
+    });
+  }
+  const csvRows = communes.map((match) => `${match.postcode},"${match.city}"`);
 
   // Create CSV content with header - add name of commune to help filter
   const csvHeader = "postcode,city\n";
-
-  // Flatten array and create CSV content
-  const csvContent =
-    communesData?.length > 0
-      ? communesData.flat().join("\n")
-      : zipCodes.map((z) => `${z}, ""`).join("\n");
+  const csvContent = csvRows.join("\n");
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
-  console.log(
-    store.value,
-    csvRowsCount.value,
-    csvRowsCount.value === 0 ||
-      store.value[usingDptCode.value ? "dpt" : "zip"].length !==
-        csvRowsCount.value
-  );
   if (
     csvRowsCount.value == 0 ||
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
@@ -290,7 +304,7 @@ const fetchCsvRecords = async (zipCodes, communesData) => {
     );
 
     // Make the request with formData
-    console.log("fetch csv");
+
     const response = await axios.post(
       "https://api-adresse.data.gouv.fr/search/csv/",
       formData,
@@ -305,45 +319,6 @@ const fetchCsvRecords = async (zipCodes, communesData) => {
       .split("\n")
       .slice(1); // Skip header row
   }
-};
-
-const loadCsvRecords = async (zipCodes) => {
-  await fetchCsvRecords(zipCodes.value, null);
-
-  // PromisesAllIfOnePromiseIsErrorThenStopImmediately;
-  // const promisesAllStrict = async (promises) => {
-  //   try {
-  //     const results = await Promise.all(promises);
-  //     return results;
-  //   } catch (error) {
-  //     console.error("One promise failed, stopping all:", error);
-  //     throw error; // Re-throw to maintain the error state
-  //   }
-  // };
-
-  // const communesData = await promisesAllStrict(
-  //   zipCodes.value.map(async (zipCode) => {
-  //     console.log("fetch commune for", zipCode);
-
-  //     try {
-  //       // First get all communes for this postal code
-  //       const communesResponse = await axios.get(
-  //         `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
-  //       );
-
-  //       // Create CSV rows for each commune with same postal code
-  //       return communesResponse.data.map(
-  //         (commune) => `${zipCode},${commune.nom}`
-  //       );
-  //     } catch (error) {
-  //       return `${zipCode}`;
-  //     }
-  //   })
-  // );
-
-  // await fetchCsvRecords(null, communesData);
-
-  return;
 };
 
 const processCsv = (rows) => {
@@ -411,12 +386,12 @@ const processCsv = (rows) => {
 
 async function loadCities(zipCodes) {
   try {
+    await fetchCsvRecords(zipCodes);
+
     // Parse CSV response
     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
     const zipCodesResults = processCsv(rows);
-
-    console.log({ zipCodesResults });
 
     cities.value = zipCodesResults.reduce((acc, current) => {
       const existingEntry = acc.find(
@@ -638,10 +613,7 @@ watch(
 watch(
   [() => usingDptCode.value, () => loadRecordsDone.value, () => keyword.value],
   async () => {
-    await loadCsvRecords(postcodes);
     loadCities(postcodes.value);
-
-    console.log(cities.value);
   },
   { immediate: true, deep: true, flush: "sync" }
 );
