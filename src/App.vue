@@ -255,21 +255,9 @@ const getDepartmentName = (zipcode) => {
   return franceDepartments[deptCode] || null;
 };
 
-const fetchCommunes = async (postcodes) => {
-  try {
-    const response = await axios.get(
-      `https://geo.api.gouv.fr/communes?codePostal=${postcodes.join(
-        ","
-      )}&fields=nom,code,codesPostaux,contour`
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching communes for ${postcodes}:`, error);
-    return [];
-  }
-};
-
 const fetchCsvRecords = async (zipCodes, communesData) => {
+  if (!zipCodes) return;
+
   // Create CSV content with header - add name of commune to help filter
   const csvHeader = "postcode,city\n";
 
@@ -281,8 +269,15 @@ const fetchCsvRecords = async (zipCodes, communesData) => {
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
-  if (
+  console.log(
+    store.value,
+    csvRowsCount.value,
     csvRowsCount.value === 0 ||
+      store.value[usingDptCode.value ? "dpt" : "zip"].length !==
+        csvRowsCount.value
+  );
+  if (
+    csvRowsCount.value == 0 ||
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
       csvRowsCount.value
   ) {
@@ -313,34 +308,42 @@ const fetchCsvRecords = async (zipCodes, communesData) => {
 };
 
 const loadCsvRecords = async (zipCodes) => {
-  await fetchCsvRecords(zipCodes, null);
+  await fetchCsvRecords(zipCodes.value, null);
 
-  await fetchCommunes(zipCodes);
+  // PromisesAllIfOnePromiseIsErrorThenStopImmediately;
+  // const promisesAllStrict = async (promises) => {
+  //   try {
+  //     const results = await Promise.all(promises);
+  //     return results;
+  //   } catch (error) {
+  //     console.error("One promise failed, stopping all:", error);
+  //     throw error; // Re-throw to maintain the error state
+  //   }
+  // };
 
-  //PromisesAllIfOnePromiseIsErrorThenStopImmediately
-  const promisesAllStrict = async (promises) => {
-    try {
-      const results = await Promise.all(promises);
-      return results;
-    } catch (error) {
-      console.error("One promise failed, stopping all:", error);
-      throw error; // Re-throw to maintain the error state
-    }
-  };
+  // const communesData = await promisesAllStrict(
+  //   zipCodes.value.map(async (zipCode) => {
+  //     console.log("fetch commune for", zipCode);
 
-  // let communesData = await promisesAllStrict(
-  //   zipCodes.map(async (zipCode) => {
-  //     // First get all communes for this postal code
-  //     const communesResponse = await axios.get(
-  //       `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
-  //     );
+  //     try {
+  //       // First get all communes for this postal code
+  //       const communesResponse = await axios.get(
+  //         `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
+  //       );
 
-  //     // Create CSV rows for each commune with same postal code
-  //     return communesResponse.data.map(
-  //       (commune) => `${zipCode},${commune.nom}`
-  //     );
+  //       // Create CSV rows for each commune with same postal code
+  //       return communesResponse.data.map(
+  //         (commune) => `${zipCode},${commune.nom}`
+  //       );
+  //     } catch (error) {
+  //       return `${zipCode}`;
+  //     }
   //   })
   // );
+
+  // await fetchCsvRecords(null, communesData);
+
+  return;
 };
 
 const processCsv = (rows) => {
@@ -408,16 +411,14 @@ const processCsv = (rows) => {
 
 async function loadCities(zipCodes) {
   try {
-    await loadCsvRecords(zipCodes);
-
     // Parse CSV response
-
-    let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+    const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
-
     const zipCodesResults = processCsv(rows);
 
-    const groupedZipCodes = zipCodesResults.reduce((acc, current) => {
+    console.log({ zipCodesResults });
+
+    cities.value = zipCodesResults.reduce((acc, current) => {
       const existingEntry = acc.find(
         (entry) => entry.zipCode === current.zipCode
       );
@@ -465,8 +466,6 @@ async function loadCities(zipCodes) {
 
       return acc;
     }, []);
-
-    cities.value = groupedZipCodes;
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -638,8 +637,11 @@ watch(
 
 watch(
   [() => usingDptCode.value, () => loadRecordsDone.value, () => keyword.value],
-  () => {
+  async () => {
+    await loadCsvRecords(postcodes);
     loadCities(postcodes.value);
+
+    console.log(cities.value);
   },
   { immediate: true, deep: true, flush: "sync" }
 );
