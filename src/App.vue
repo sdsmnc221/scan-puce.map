@@ -425,6 +425,7 @@ async function loadCities(zipCodes) {
       ) {
         // Add the commune to existing entryg
         existingEntry.communes.push({
+          ...current,
           name: current.name,
           lat: current.lat,
           lng: current.lng,
