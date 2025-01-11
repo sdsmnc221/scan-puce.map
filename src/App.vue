@@ -46,7 +46,7 @@
 
       <LMarker
         v-for="city in cities"
-        :key="city.zipCode"
+        :key="`commune-${city.zipCode}`"
         :lat-lng="[city.lat, city.lng]"
       >
         <LIcon
@@ -386,6 +386,8 @@ const processCsv = (rows) => {
 
 async function loadCities(zipCodes) {
   try {
+    cities.value = [];
+
     await fetchCsvRecords(zipCodes);
 
     // Parse CSV response
@@ -611,11 +613,18 @@ watch(
 );
 
 watch(
-  [() => usingDptCode.value, () => loadRecordsDone.value, () => keyword.value],
+  [() => usingDptCode.value, () => loadRecordsDone.value],
   async () => {
     loadCities(postcodes.value);
   },
   { immediate: true, deep: true, flush: "sync" }
+);
+
+watch(
+  () => keyword.value,
+  () => {
+    loadCities(postcodes.value);
+  }
 );
 
 watch(
