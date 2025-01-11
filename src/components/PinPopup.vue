@@ -19,7 +19,9 @@
     >
       <div class="text-sm">
         <a :href="record.LinkToPost" target="_blank"> {{ record.Author }}</a>
-        <span v-if="record.CommuneName">({{ record.CommuneName.trim() }})</span>
+        <span v-if="record.CommuneName">
+          ({{ record.CommuneName.trim() }})</span
+        >
       </div>
 
       <div class="text-xs mt-4" v-if="record.AccessICAD">
@@ -60,6 +62,7 @@ const zipCode = computed(() => {
   return props.isDpt
     ? "Zone " + props.location.departmentCode
     : props.location.zipCode;
+  g;
 });
 
 const communes = computed(() => {
