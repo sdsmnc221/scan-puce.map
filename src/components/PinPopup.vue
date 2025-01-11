@@ -6,14 +6,8 @@
   <h3 class="text-xs font-semibold" v-if="isDpt">
     {{ location.departmentName }}
   </h3>
-  <h3
-    class="text-xs font-semibold"
-    v-else-if="!location.postcodes && !location.cityNames"
-  >
+  <h3 class="text-xs font-semibold" v-if="communes">
     {{ communes }}
-  </h3>
-  <h3 class="text-xs font-semibold" v-else>
-    {{ location.cityNames?.join(", ") }}
   </h3>
 
   <div class="mt-2" v-if="location.records">
@@ -35,9 +29,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { uniqBy } from "lodash";
+import { computed, onMounted } from "vue";
+
 import { Badge } from "../components/ui/badge";
+import { uniqBy } from "lodash";
 
 type Props = {
   location: {
@@ -66,11 +61,10 @@ const zipCode = computed(() => {
 });
 
 const communes = computed(() => {
-  return (
-    props.location.name ||
-    uniqBy(props.location.communes, "name")
-      .map((c) => c.name)
-      .join(", ")
-  );
+  return props.isDpt
+    ? ""
+    : uniqBy(props.location.communes, "name")
+        .map((c) => c.name)
+        .join(", ");
 });
 </script>
