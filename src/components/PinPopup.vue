@@ -62,7 +62,6 @@ const zipCode = computed(() => {
   return props.isDpt
     ? "Zone " + props.location.departmentCode
     : props.location.zipCode;
-  g;
 });
 
 const communes = computed(() => {
