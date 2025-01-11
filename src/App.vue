@@ -204,6 +204,8 @@ const storedFilloutCsv = ref({
   zip: [],
 });
 
+const csvRowsCount = ref(0);
+
 const departmentGeoJson = ref(null);
 const geoJsonOptions = {
   style: (feature) => {
@@ -316,8 +318,9 @@ const loadCsvRecords = async (zipCodes) => {
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
   if (
+    csvRowsCount.value === 0 ||
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
-    records.value.length
+      csvRowsCount.value
   ) {
     // Create formData with the new CSV content
     const formData = new FormData();
@@ -345,7 +348,9 @@ const loadCsvRecords = async (zipCodes) => {
 };
 
 const processCsv = (rows) => {
-  return rows
+  csvRowsCount.value = rows.length;
+
+  const data = rows
     .filter((row) => row.length > 0 && !row.includes("not-found"))
     .map((row) => {
       try {
@@ -401,6 +406,8 @@ const processCsv = (rows) => {
       }
     })
     .filter((record) => !!record);
+
+  return data;
 };
 
 async function loadCities(zipCodes) {
