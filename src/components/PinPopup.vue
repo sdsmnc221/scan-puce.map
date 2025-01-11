@@ -17,9 +17,10 @@
         record.Author
       }`"
     >
-      <a class="text-sm" :href="record.LinkToPost" target="_blank">
-        {{ record.Author }}</a
-      >
+      <div class="text-sm">
+        <a :href="record.LinkToPost" target="_blank"> {{ record.Author }}</a>
+        <span v-if="record.CommuneName">({{ record.CommuneName.trim() }})</span>
+      </div>
 
       <div class="text-xs mt-4" v-if="record.AccessICAD">
         <Badge>Accès ICAD</Badge>
@@ -29,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 import { Badge } from "../components/ui/badge";
 import { uniqBy } from "lodash";
@@ -47,6 +48,7 @@ type Props = {
       Author: string;
       LinkToPost: string;
       AccessICAD?: boolean;
+      CommuneName?: string;
     }[];
   };
   isDpt?: boolean;
