@@ -12,30 +12,51 @@
 
   <div class="mt-2" v-if="location.records">
     <div
-      v-for="record in location.records"
+      v-for="(record, index) in location.records"
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
         record.Author
       }`"
     >
-      <div class="text-sm">
-        <a :href="record.LinkToPost" target="_blank"> {{ record.Author }}</a>
-        <span v-if="record.CommuneName">
-          ({{ record.CommuneName.trim() }})</span
+      <div class="text-sm block mt-4">
+        <component
+          :is="!hasLink ? 'div' : 'a'"
+          :href="record.LinkToPost"
+          target="_blank"
         >
-      </div>
+          <span>{{ record.Author }}</span>
 
-      <div class="text-xs mt-4" v-if="record.AccessICAD">
-        <Badge>Accès ICAD</Badge>
+          <span v-if="record.CommuneName">
+            {{ ` (${record.CommuneName.trim()}) ` }}</span
+          >
+        </component>
+
+        <div class="flex flex-row align-center">
+          <TextHighlight
+            v-if="needToContactAdmin"
+            style="font-size: 10px"
+            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-bold mr-2 w-[152px]"
+            @mouseenter="() => (hoveredIndex = index)"
+            @mouseleave="() => (hoveredIndex = null)"
+          >
+            <span v-if="hoveredIndex === index">{{ contactAdmin }}</span>
+            <span v-else> {{ TEXT_CONTACT_ADMIN }}</span>
+          </TextHighlight>
+
+          <Badge v-if="record.AccessICAD" style="font-size: 10px"
+            >Accès ICAD</Badge
+          >
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, Ref } from "vue";
+import { uniqBy } from "lodash";
 
 import { Badge } from "../components/ui/badge";
-import { uniqBy } from "lodash";
+import TextHighlight from "./TextHighlight.vue";
 
 type Props = {
   location: {
@@ -51,12 +72,18 @@ type Props = {
       LinkToPost: string;
       AccessICAD?: boolean;
       CommuneName?: string;
+      Tel: string;
+      Email: string;
     }[];
   };
   isDpt?: boolean;
 };
 
+const TEXT_CONTACT_ADMIN = "Prise de contact via Admin";
+
 const props = defineProps<Props>();
+
+const hoveredIndex: Ref<null | number> = ref(null);
 
 const zipCode = computed(() => {
   return props.isDpt
@@ -71,4 +98,16 @@ const communes = computed(() => {
         .map((c) => c.name)
         .join(", ");
 });
+
+const hasLink = computed(() =>
+  props.location.records?.some((r) => r.LinkToPost?.includes("https"))
+);
+
+const needToContactAdmin = computed(() =>
+  props.location.records?.some(
+    (r) => !r.LinkToPost?.includes("https") && (r.Tel || r.Email)
+  )
+);
+
+const contactAdmin = computed(() => import.meta.env.VITE_ADMIN);
 </script>
