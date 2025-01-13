@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, Ref } from "vue";
+import { computed, ref, type Ref } from "vue";
 import { uniqBy } from "lodash";
 
 import { Badge } from "../components/ui/badge";
