@@ -4,7 +4,7 @@
       ref="map"
       id="map"
       :zoom="zoom"
-      :center="[46.603354, 1.888334]"
+      :center="centerFrance"
       :use-global-leaflet="false"
       :max-bounds="franceBounds"
       :max-bounds-viscosity="1.0"
@@ -33,7 +33,15 @@
         :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
         :options="getZoneOptions(zone)"
       >
-        <LMarker :lat-lng="getZoneCenter(zone.coordinates)">
+        <LMarker
+          :lat-lng="getZoneCenter(zone.coordinates)"
+          @click="
+            (e) => {
+              centerOnMarker(getZoneCenter(zone.coordinates));
+              targetPopup(e);
+            }
+          "
+        >
           <LIcon
             icon-url="pin-zone.png"
             :icon-size="[32, 32]"
@@ -50,6 +58,12 @@
           v-for="city in mapCities"
           :key="`commune-${city.zipCode}`"
           :lat-lng="[city.lat, city.lng]"
+          @click="
+            (e) => {
+              centerOnMarker(city.lat, city.lng);
+              targetPopup(e);
+            }
+          "
         >
           <LIcon
             :icon-url="`/pin${
@@ -153,8 +167,10 @@ import PinPopup from "./components/PinPopup.vue";
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
 
-const zoom = ref(6); // Kept zoom level at 6 which is good for viewing France
+const defaultZoom = 6;
+const zoom = ref(defaultZoom); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
+const centerFrance = [46.603354, 1.888334];
 const attribution =
   '&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const franceBounds = [
@@ -193,6 +209,7 @@ Airtable.configure({
 const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
 const map = ref(null);
+
 const records = ref([]);
 const loadRecordsDone = ref(false);
 const cities = ref([]);
@@ -591,8 +608,20 @@ const computeZones = () => {
 
 const processedZones = ref(computeZones());
 
-const handleMapError = (error) => {
-  console.error("Map error:", error);
+const centerOnMarker = (lat, lng) => {
+  map.value?.leafletObject?.setView([lat, lng], 10);
+};
+
+const resetMapView = () => {
+  map.value?.leafletObject?.setView(centerFrance, defaultZoom);
+};
+
+const targetPopup = (e) => {
+  nextTick(() => {
+    e.target._popup._closeButton?.addEventListener("click", (target) => {
+      resetMapView();
+    });
+  });
 };
 
 onMounted(() => {
@@ -674,11 +703,9 @@ watch(
     try {
       await nextTick();
       if (!map.value?._leaflet_id) {
-        // Force re-render by reassigning cities
-        // cities.value = [...cities.value];
         console.log("error map display");
 
-        map.value = document.querySelector("#map");
+        // map.value = document.querySelector("#map");
 
         mapCities.value = [];
         nextTick(() => {
