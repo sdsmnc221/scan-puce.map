@@ -122,7 +122,7 @@ import franceBoundaries from "./geojson/france.json";
 import franceDepartments from "./geojson/dptFr.json";
 import franceCommunes from "./geojson/communesFr.json";
 
-import { ref, computed, onMounted, watch, nextTick } from "vue";
+import { ref, computed, onMounted, watch, nextTick, onUnmounted } from "vue";
 import Airtable from "airtable";
 import axios from "axios";
 import { inject } from "@vercel/analytics";
@@ -197,6 +197,8 @@ const records = ref([]);
 const loadRecordsDone = ref(false);
 const cities = ref([]);
 const mapCities = ref([]);
+
+const searchTimeout = ref(null);
 const keyword = ref("");
 
 const communesContours = ref({});
@@ -445,24 +447,29 @@ async function loadCities() {
       return acc;
     }, []);
 
-    const filteredCitiesByKeyword = processedCitiesRecords.filter((city) => {
-      return (
-        city.zipCode.includes(keyword.value) ||
-        (usingDptCode.value
-          ? city.departmentName
-              .toLowerCase()
-              .includes(keyword.value.toLowerCase())
-          : city.communes.some((commune) =>
-              commune.name.toLowerCase().includes(keyword.value.toLowerCase())
-            ))
-      );
-    });
+    if (keyword.value) {
+      const filteredCitiesByKeyword = processedCitiesRecords.filter((city) => {
+        return (
+          city.zipCode.includes(keyword.value) ||
+          (usingDptCode.value
+            ? city.departmentName
+                .toLowerCase()
+                .includes(keyword.value.toLowerCase())
+            : city.communes.some((commune) =>
+                commune.name.toLowerCase().includes(keyword.value.toLowerCase())
+              ))
+        );
+      });
 
-    cities.value = [];
+      cities.value = [];
 
-    nextTick(() => {
-      cities.value = new Set(filteredCitiesByKeyword);
-    });
+      nextTick(() => {
+        cities.value = new Set(filteredCitiesByKeyword);
+      });
+    } else {
+      cities.value = [];
+      cities.value = processedCitiesRecords;
+    }
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -470,7 +477,11 @@ async function loadCities() {
 }
 
 const onSearchInput = (inputValue) => {
-  keyword.value = inputValue;
+  if (searchTimeout.value) clearTimeout(searchTimeout.value);
+
+  searchTimeout.value = setTimeout(() => {
+    keyword.value = inputValue;
+  }, 480);
 };
 
 const postcodes = computed(() => {
@@ -588,6 +599,10 @@ onMounted(() => {
   nextTick(() => {
     inject();
   });
+});
+
+onUnmounted(() => {
+  if (searchTimeout.value) clearTimeout(searchTimeout.value);
 });
 
 watch(
