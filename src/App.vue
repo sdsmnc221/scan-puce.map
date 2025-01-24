@@ -46,7 +46,7 @@
 
       <LMarker
         v-for="city in cities"
-        :key="city.zipCode"
+        :key="`commune-${city.zipCode}`"
         :lat-lng="[city.lat, city.lng]"
       >
         <LIcon
@@ -116,6 +116,8 @@ import {
   LRectangle,
 } from "@vue-leaflet/vue-leaflet";
 import franceBoundaries from "./geojson/france.json";
+import franceDepartments from "./geojson/dptFr.json";
+import franceCommunes from "./geojson/communesFr.json";
 
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import Airtable from "airtable";
@@ -128,6 +130,7 @@ import {
   extractNumbers,
   getZoneCenter,
 } from "./lib/map";
+import { transformToCapitalize } from "./lib/lexique";
 
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
@@ -187,6 +190,7 @@ Airtable.configure({
 const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
 const records = ref([]);
+const loadRecordsDone = ref(false);
 const cities = ref([]);
 const keyword = ref("");
 
@@ -202,6 +206,8 @@ const storedFilloutCsv = ref({
   dpt: [],
   zip: [],
 });
+
+const csvRowsCount = ref(0);
 
 const departmentGeoJson = ref(null);
 const geoJsonOptions = {
@@ -240,72 +246,54 @@ const loadRecordByDeptCode = (deptCode) => {
   return records_ ?? null;
 };
 
-const loadCommunesForPostcode = async (postcode) => {
-  try {
-    const response = await axios.get(
-      `https://geo.api.gouv.fr/communes?codePostal=${postcode}&fields=nom,code,codesPostaux,contour`
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching communes for ${postcode}:`, error);
-    return [];
-  }
+const getDepartmentCode = (zipcode) => {
+  if (!zipcode) return null;
+  return zipcode.substring(0, 2);
 };
 
-const fetchCommunesContours = async (postcode) => {
-  const communes = await loadCommunesForPostcode(postcode);
+// Function to get department name from zipcode
+const getDepartmentName = (zipcode) => {
+  const deptCode = getDepartmentCode(zipcode);
+  return franceDepartments[deptCode] || null;
+};
 
-  if (communes.length > 0) {
-    communesNames.value[postcode] = communes.map((c) => c.nom);
+const findCommunesByZipCodes = (zipCodes) => {
+  if (!zipCodes || !zipCodes.length) return [];
 
-    const allPoints = communes.flatMap((commune) => {
-      if (commune.contour && commune.contour.coordinates.length > 0) {
-        // GeoJSON coordinates are in [longitude, latitude] order
-        return commune.contour.coordinates[0].map((coord) => [
-          coord[0],
-          coord[1],
-        ]);
-      }
-      return [];
+  // Create a Set for faster lookup
+  const zipCodeSet = new Set(zipCodes);
+
+  return franceCommunes.filter((commune) => zipCodeSet.has(commune.CodePostal));
+};
+
+const fetchCsvRecords = async (zipCodes) => {
+  if (!zipCodes) return;
+
+  const communes = [];
+  for (const zipCode of zipCodes) {
+    const communesOfSameZip = franceCommunes
+      .filter((c) => c.CodePostal == zipCode)
+      .map((c) => ({
+        postcode: c.CodePostal,
+        city: transformToCapitalize(c.NomCommune),
+      }));
+
+    communesOfSameZip.forEach((c) => {
+      communes.push(c);
     });
-
-    if (allPoints.length > 0) {
-      communesContours.value[postcode] = allPoints;
-    }
   }
-};
+  const csvRows = communes.map((match) => `${match.postcode},"${match.city}"`);
 
-const loadCsvRecords = async (zipCodes) => {
   // Create CSV content with header - add name of commune to help filter
   const csvHeader = "postcode,city\n";
-  // Get communes data for each postal code
-  const communesData = await Promise.all(
-    zipCodes.map(async (zipCode) => {
-      try {
-        // First get all communes for this postal code
-        const communesResponse = await axios.get(
-          `https://geo.api.gouv.fr/communes?codePostal=${zipCode}&fields=nom,code,codesPostaux`
-        );
-
-        // Create CSV rows for each commune with same postal code
-        return communesResponse.data.map(
-          (commune) => `${zipCode},${commune.nom}`
-        );
-      } catch (error) {
-        console.error(`Error fetching communes for ${zipCode}:`, error);
-        return [`${zipCode},`]; // Return empty commune name if error
-      }
-    })
-  );
-
-  // Flatten array and create CSV content
-  const csvContent = csvHeader + communesData.flat().join("\n");
+  const csvContent = csvRows.join("\n");
 
   let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
   if (
+    csvRowsCount.value == 0 ||
     store.value[usingDptCode.value ? "dpt" : "zip"].length !==
-    records.value.length
+      csvRowsCount.value
   ) {
     // Create formData with the new CSV content
     const formData = new FormData();
@@ -333,7 +321,9 @@ const loadCsvRecords = async (zipCodes) => {
 };
 
 const processCsv = (rows) => {
-  return rows
+  csvRowsCount.value = rows.length;
+
+  const data = rows
     .filter((row) => row.length > 0 && !row.includes("not-found"))
     .map((row) => {
       try {
@@ -364,6 +354,8 @@ const processCsv = (rows) => {
           ? loadRecordByDeptCode(postcode)
           : loadRecordByZipCode(postcode);
 
+        const departmentName = getDepartmentName(postcode);
+
         if (
           !latitude ||
           !longitude ||
@@ -377,6 +369,8 @@ const processCsv = (rows) => {
           lat: parseFloat(latitude),
           lng: parseFloat(longitude),
           name: result_city.replace(/"/g, ""), // Remove quotes from label,
+          departmentName,
+          departmentCode: getDepartmentCode(postcode),
           records: records_,
         };
       } catch (rowError) {
@@ -385,20 +379,22 @@ const processCsv = (rows) => {
       }
     })
     .filter((record) => !!record);
+
+  return data;
 };
 
 async function loadCities(zipCodes) {
   try {
-    await loadCsvRecords(zipCodes);
+    cities.value = [];
+
+    await fetchCsvRecords(zipCodes);
 
     // Parse CSV response
-
-    let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+    const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
-
     const zipCodesResults = processCsv(rows);
 
-    const groupedZipCodes = zipCodesResults.reduce((acc, current) => {
+    cities.value = zipCodesResults.reduce((acc, current) => {
       const existingEntry = acc.find(
         (entry) => entry.zipCode === current.zipCode
       );
@@ -409,6 +405,7 @@ async function loadCities(zipCodes) {
       ) {
         // Add the commune to existing entryg
         existingEntry.communes.push({
+          ...current,
           name: current.name,
           lat: current.lat,
           lng: current.lng,
@@ -428,6 +425,7 @@ async function loadCities(zipCodes) {
       } else {
         // Create new entry
         acc.push({
+          ...current,
           zipCode: current.zipCode,
           records: current.records,
           lat: current.lat, // Initial center is the first commune
@@ -444,8 +442,6 @@ async function loadCities(zipCodes) {
 
       return acc;
     }, []);
-
-    cities.value = groupedZipCodes;
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -542,11 +538,11 @@ const computeZones = () => {
         .flatMap((postcode) => communesContours.value[postcode]);
 
       return {
+        ...zone,
         postcodes: zone.postcodes,
         coordinates: allContourPoints,
         cityNames: citiesDetails.map((city) => city.name),
         color: "#FFCA3A",
-        records: zone.records,
       };
     }
 
@@ -558,11 +554,11 @@ const computeZones = () => {
     const cityNames = citiesDetails.map((city) => city.name);
 
     return {
+      ...zone,
       postcodes: zone.postcodes,
       coordinates: createPolygonFromPoints(coordinates), // Changed this line
       cityNames,
       color: "#FFCA3A",
-      records: zone.records,
     };
   });
 };
@@ -574,21 +570,6 @@ onMounted(() => {
     inject();
   });
 });
-
-watch(
-  [() => usingDptCode.value, () => records.value],
-  () => {
-    loadCities(postcodes.value);
-  },
-  { immediate: true, deep: true }
-);
-
-watch(
-  () => keyword.value,
-  () => {
-    loadCities(postcodes.value);
-  }
-);
 
 watch(
   () => usingFilloutBase.value,
@@ -610,6 +591,8 @@ watch(
             records.value.push(record.fields);
           });
 
+          loadRecordsDone.value = true;
+
           // To fetch the next page of records, call `fetchNextPage`.
           // If there are more records, `page` will get called again.
           // If there are no more records, `done` will get called.
@@ -619,12 +602,28 @@ watch(
         function done(err) {
           if (err) {
             console.error(err);
+            loadRecordsDone.value = false;
             return;
           }
         }
       );
   },
   { immediate: true }
+);
+
+watch(
+  [() => usingDptCode.value, () => loadRecordsDone.value],
+  async () => {
+    loadCities(postcodes.value);
+  },
+  { immediate: true, deep: true, flush: "sync" }
+);
+
+watch(
+  () => keyword.value,
+  () => {
+    loadCities(postcodes.value);
+  }
 );
 
 watch(
