@@ -37,7 +37,8 @@
           :lat-lng="getZoneCenter(zone.coordinates)"
           @click="
             (e) => {
-              centerOnMarker(getZoneCenter(zone.coordinates));
+              const { lat, lng } = e.latlng;
+              centerOnMarker([lat, lng]);
               targetPopup(e);
             }
           "
@@ -60,7 +61,7 @@
           :lat-lng="[city.lat, city.lng]"
           @click="
             (e) => {
-              centerOnMarker(city.lat, city.lng);
+              centerOnMarker([city.lat, city.lng]);
               targetPopup(e);
             }
           "
@@ -608,7 +609,7 @@ const computeZones = () => {
 
 const processedZones = ref(computeZones());
 
-const centerOnMarker = (lat, lng) => {
+const centerOnMarker = ([lat, lng]) => {
   map.value?.leafletObject?.setView([lat, lng], 10);
 };
 
