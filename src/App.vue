@@ -2,6 +2,7 @@
   <div style="height: 100vh; width: 100vw">
     <LMap
       ref="map"
+      id="map"
       :zoom="zoom"
       :center="[46.603354, 1.888334]"
       :use-global-leaflet="false"
@@ -44,22 +45,24 @@
         </LMarker>
       </LPolygon>
 
-      <LMarker
-        v-for="city in cities"
-        :key="`commune-${city.zipCode}`"
-        :lat-lng="[city.lat, city.lng]"
-      >
-        <LIcon
-          :icon-url="`/pin${
-            city?.records?.some((r) => r.AccessICAD === true) ? '-icad' : ''
-          }.png`"
-          :icon-size="[25, 25]"
-          :icon-anchor="[12.5, 12.5]"
-        />
-        <LPopup>
-          <PinPopup :location="city" :is-dpt="usingDptCode"> </PinPopup>
-        </LPopup>
-      </LMarker>
+      <template v-if="mapCities?.length">
+        <LMarker
+          v-for="city in mapCities"
+          :key="`commune-${city.zipCode}`"
+          :lat-lng="[city.lat, city.lng]"
+        >
+          <LIcon
+            :icon-url="`/pin${
+              city?.records?.some((r) => r.AccessICAD === true) ? '-icad' : ''
+            }.png`"
+            :icon-size="[25, 25]"
+            :icon-anchor="[12.5, 12.5]"
+          />
+          <LPopup>
+            <PinPopup :location="city" :is-dpt="usingDptCode"> </PinPopup>
+          </LPopup>
+        </LMarker>
+      </template>
     </LMap>
 
     <IInput
@@ -189,9 +192,11 @@ Airtable.configure({
 
 const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
+const map = ref(null);
 const records = ref([]);
 const loadRecordsDone = ref(false);
 const cities = ref([]);
+const mapCities = ref([]);
 const keyword = ref("");
 
 const communesContours = ref({});
@@ -356,11 +361,7 @@ const processCsv = (rows) => {
 
         const departmentName = getDepartmentName(postcode);
 
-        if (
-          !latitude ||
-          !longitude ||
-          (keyword.value && !postcode.includes(keyword.value))
-        ) {
+        if (!latitude || !longitude) {
           return null;
         }
 
@@ -383,8 +384,9 @@ const processCsv = (rows) => {
   return data;
 };
 
-async function loadCities(zipCodes) {
+async function loadCities() {
   try {
+    const zipCodes = postcodes.value;
     cities.value = [];
 
     await fetchCsvRecords(zipCodes);
@@ -394,7 +396,7 @@ async function loadCities(zipCodes) {
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
     const zipCodesResults = processCsv(rows);
 
-    cities.value = zipCodesResults.reduce((acc, current) => {
+    const processedCitiesRecords = zipCodesResults.reduce((acc, current) => {
       const existingEntry = acc.find(
         (entry) => entry.zipCode === current.zipCode
       );
@@ -442,6 +444,25 @@ async function loadCities(zipCodes) {
 
       return acc;
     }, []);
+
+    const filteredCitiesByKeyword = processedCitiesRecords.filter((city) => {
+      return (
+        city.zipCode.includes(keyword.value) ||
+        (usingDptCode.value
+          ? city.departmentName
+              .toLowerCase()
+              .includes(keyword.value.toLowerCase())
+          : city.communes.some((commune) =>
+              commune.name.toLowerCase().includes(keyword.value.toLowerCase())
+            ))
+      );
+    });
+
+    cities.value = [];
+
+    nextTick(() => {
+      cities.value = new Set(filteredCitiesByKeyword);
+    });
   } catch (error) {
     console.error("Error loading cities:", error);
     cities.value = []; // Set empty array in case of error
@@ -469,9 +490,7 @@ const postcodes = computed(() => {
     );
   }
 
-  return keyword.value
-    ? codes.filter((zc) => zc.includes(keyword.value))
-    : codes;
+  return codes;
 });
 
 const zones = computed(() => {
@@ -498,11 +517,7 @@ const zones = computed(() => {
       }));
   }
 
-  return keyword.value
-    ? codes.filter((zc) => {
-        return zc.postcodes.some((c) => c.includes(keyword.value));
-      })
-    : codes;
+  return codes;
 });
 
 const computeZones = () => {
@@ -565,6 +580,10 @@ const computeZones = () => {
 
 const processedZones = ref(computeZones());
 
+const handleMapError = (error) => {
+  console.error("Map error:", error);
+};
+
 onMounted(() => {
   nextTick(() => {
     inject();
@@ -614,7 +633,7 @@ watch(
 watch(
   [() => usingDptCode.value, () => loadRecordsDone.value],
   async () => {
-    loadCities(postcodes.value);
+    loadCities();
   },
   { immediate: true, deep: true, flush: "sync" }
 );
@@ -622,7 +641,7 @@ watch(
 watch(
   () => keyword.value,
   () => {
-    loadCities(postcodes.value);
+    loadCities();
   }
 );
 
@@ -630,6 +649,37 @@ watch(
   [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
   () => {
     processedZones.value = computeZones();
+  },
+  { deep: true, flush: "sync" }
+);
+
+watch(
+  cities,
+  async () => {
+    try {
+      await nextTick();
+      if (!map.value?._leaflet_id) {
+        // Force re-render by reassigning cities
+        // cities.value = [...cities.value];
+        console.log("error map display");
+
+        map.value = document.querySelector("#map");
+
+        mapCities.value = [];
+        nextTick(() => {
+          mapCities.value = [...cities.value];
+        });
+      }
+
+      mapCities.value = [];
+
+      nextTick(() => {
+        mapCities.value = [...cities.value];
+      });
+    } catch (error) {
+      console.error("Map error:", error);
+      // cities.value = [...cities.value];
+    }
   },
   { deep: true, flush: "sync" }
 );
