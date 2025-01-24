@@ -264,14 +264,14 @@ const geoJsonOptions = {
 };
 
 const loadRecordByZipCode = (zipCode) => {
-  const record = records.value.find((rec) => {
+  const records_ = records.value.filter((rec) => {
     // Split in case there are multiple zip codes
     const zipCodes = rec.ZipCode.split(",").map((code) => code.trim());
     // Check for exact match
     return zipCodes.includes(zipCode);
   });
 
-  return [record] ?? null;
+  return records_ ?? null;
 };
 
 const loadRecordByDeptCode = (deptCode) => {
