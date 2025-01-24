@@ -94,23 +94,33 @@
       Affichage par {{ usingDptCode ? "Département" : "Commune" }}
     </RippleButton>
 
-    <!-- <RippleButton
-      class="toggle-base text-sm rounded-xl bg-yellow-300"
-      @click="() => (usingFilloutBase = !usingFilloutBase)"
-    >
-      Base :
-      {{ usingFilloutBase ? "En cours d'alimentation" : "Test" }}
-    </RippleButton> -->
-
     <Sheet>
       <SheetTrigger class="toggle-embed">
-        <RippleButton class="text-sm rounded-xl"> Embed </RippleButton>
+        <RippleButton class="text-xs rounded-xl"> Embed </RippleButton>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Code à copier-coller</SheetTitle>
           <SheetDescription>
             <CodeEmbed :code="iframeCode" language="html"></CodeEmbed>
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+
+    <Sheet>
+      <SheetTrigger class="toggle-legal">
+        <RippleButton class="text-xs rounded-xl bg-yellow-100">
+          Mentions légales & Politique de confidentialité
+        </RippleButton>
+      </SheetTrigger>
+      <SheetContent class="legal-sheet">
+        <SheetHeader>
+          <SheetTitle
+            >Mentions légales & Politique de confidentialité</SheetTitle
+          >
+          <SheetDescription>
+            <LegalNotice></LegalNotice>
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
@@ -164,6 +174,7 @@ import {
 import CodeEmbed from "./components/CodeEmbed.vue";
 import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
 import PinPopup from "./components/PinPopup.vue";
+import LegalNotice from "./components/LegalNotice.vue";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
@@ -749,24 +760,33 @@ watch(
   z-index: 49;
 }
 
-.toggle-base {
+.toggle-legal {
   position: fixed;
-  bottom: 48px;
+  bottom: 50px;
   right: 24px;
   z-index: 49;
 }
 
 .toggle-embed {
   position: fixed;
-  bottom: 48px;
+  bottom: 100px;
   right: 24px;
   z-index: 49;
+}
+
+.legal-sheet {
+  width: 50vw;
+  max-width: unset;
 }
 
 @media screen and (max-width: 768px) {
   .search-input {
     bottom: 0;
     left: 0;
+  }
+
+  .legal-sheet {
+    width: 100vw;
   }
 }
 </style>
