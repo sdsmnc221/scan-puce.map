@@ -65,6 +65,7 @@
               targetPopup(e);
             }
           "
+          @ready="loading = false"
         >
           <LIcon
             :icon-url="`/pin${
@@ -128,6 +129,8 @@
   </div>
 
   <PWAInstallPrompt></PWAInstallPrompt>
+
+  <MapLoader :loading="loading"></MapLoader>
 </template>
 
 <script setup>
@@ -175,6 +178,7 @@ import CodeEmbed from "./components/CodeEmbed.vue";
 import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
 import PinPopup from "./components/PinPopup.vue";
 import LegalNotice from "./components/LegalNotice.vue";
+import MapLoader from "./components/MapLoader.vue";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
@@ -221,6 +225,8 @@ Airtable.configure({
 const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
 
 const map = ref(null);
+
+const loading = ref(true);
 
 const records = ref([]);
 const loadRecordsDone = ref(false);
@@ -417,6 +423,8 @@ const processCsv = (rows) => {
 
 async function loadCities() {
   try {
+    loading.value = true;
+
     const zipCodes = postcodes.value;
     cities.value = [];
 
