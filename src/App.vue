@@ -502,6 +502,10 @@ async function loadCities() {
 
       nextTick(() => {
         cities.value = new Set(filteredCitiesByKeyword);
+
+        setTimeout(() => {
+          loading.value = false;
+        }, 640);
       });
     } else {
       cities.value = [];
