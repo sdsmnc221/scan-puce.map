@@ -167,12 +167,11 @@ const getContactDetails = (record: Record): ContactDetails => {
         contact.link = record.LinkToPost;
         contact.admin = false;
       } else {
-        contact.admin = true;
+        contact.needUpdate = true;
       }
       break;
 
     case "ViaAdmin":
-      contact.admin = true;
       break;
     default:
       break;
