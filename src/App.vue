@@ -666,8 +666,6 @@ watch(
     base
       .value(usingFilloutBase.value ? "filloutBase" : "draftBase")
       .select({
-        // Selecting the first 3 records in Grid view:
-        maxRecords: 100,
         view: "Grid view",
       })
       .eachPage(
@@ -677,8 +675,6 @@ watch(
           recs.forEach(function (record) {
             records.value.push(record.fields);
           });
-
-          loadRecordsDone.value = true;
 
           // To fetch the next page of records, call `fetchNextPage`.
           // If there are more records, `page` will get called again.
@@ -690,6 +686,9 @@ watch(
           if (err) {
             console.error(err);
             loadRecordsDone.value = false;
+            return;
+          } else {
+            loadRecordsDone.value = true;
             return;
           }
         }
