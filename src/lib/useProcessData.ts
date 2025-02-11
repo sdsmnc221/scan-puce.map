@@ -63,9 +63,9 @@ export default function useProcessData(
   const filteredCities: ComputedRef<City[]> = computed(() => {
     if (keyword.value.trim().length) {
       const filteredResult = cities.value.filter((city) => {
-        const dptOfCity = storedFilloutCsv.value["dpt"].filter((row: string) =>
-          row.toLowerCase().includes(keyword.value.toLowerCase())
-        );
+        // const dptOfCity = storedFilloutCsv.value["dpt"].filter((row: string) =>
+        //   row.toLowerCase().includes(keyword.value.toLowerCase())
+        // );
 
         // dptOfCity.forEach((csvCity: string) => {
         //   console.log(csvCity.split(","));
