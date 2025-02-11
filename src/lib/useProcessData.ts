@@ -63,17 +63,32 @@ export default function useProcessData(
   const filteredCities: ComputedRef<City[]> = computed(() => {
     if (keyword.value.trim().length) {
       const filteredResult = cities.value.filter((city) => {
+        const dptOfCity = storedFilloutCsv.value["dpt"].filter((row: string) =>
+          row.toLowerCase().includes(keyword.value.toLowerCase())
+        );
+
+        // dptOfCity.forEach((csvCity: string) => {
+        //   console.log(csvCity.split(","));
+        //   return (csvCity.split[","][0] as string) == city.zipCode; // csvCity.split[","][0] is postCode
+        // });
+
         return (
           city.zipCode.includes(keyword.value) ||
-          (usingDptCode.value
-            ? city?.departmentName
-                ?.toLowerCase()
-                ?.includes(keyword.value.toLowerCase())
-            : city.communes.some((commune) =>
-                commune.name.toLowerCase().includes(keyword.value.toLowerCase())
-              ))
+          city.departmentName
+            ?.toLowerCase()
+            ?.includes(keyword.value.toLowerCase()) ||
+          city.communes.some((commune) =>
+            commune.name.toLowerCase().includes(keyword.value.toLowerCase())
+          )
+
+          // dptOfCity.some(
+          //   (csvCity: string) =>
+          //     (csvCity.split[","][0] as string) == city.zipCode // csvCity.split[","][0] is postCode
+          // )
         );
       });
+
+      console.log(keyword.value, filteredResult);
 
       return uniqBy(filteredResult, "zipCode");
     }

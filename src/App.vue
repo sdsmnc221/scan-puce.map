@@ -108,6 +108,7 @@
     <LMap
       ref="map"
       id="map"
+      :key="reloadMapCount"
       :zoom="zoom"
       :center="centerFrance"
       :use-global-leaflet="false"
@@ -280,6 +281,7 @@ const iframeCode = `<iframe
 </iframe>`;
 
 const map = ref(null);
+const reloadMapCount = ref(0);
 
 const loading = ref(true);
 
@@ -512,6 +514,7 @@ watch(
     try {
       if (!map.value?._leaflet_id) {
         console.log("error map display");
+
         await nextTick();
         mapCities.value = [];
         mapCities.value = [...usingCities.value];
@@ -525,10 +528,26 @@ watch(
 
       return;
     } catch (error) {
-      console.error("Map error:", error);
+      console.log("Map error:", error);
+      reloadMapCount.value++;
     }
   },
   { deep: true, flush: "sync" }
+);
+
+watch(
+  () => reloadMapCount.value,
+  () => {
+    setTimeout(() => {
+      // document.querySelector("#map").innerHTML =
+      //   "<div id='map' style='width: 100%; height: 100%;'></div>";
+
+      loading.value = false;
+    }, 480);
+
+    console.log(reloadMapCount.value);
+  },
+  { immediate: true }
 );
 </script>
 

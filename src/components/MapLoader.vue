@@ -141,7 +141,7 @@ const props = defineProps({
 <template>
   <div class="loader-container" :class="{ 'slide-out-bck-center': !loading }">
     <FlickeringGrid
-      class="fixed flex justify-center items-center inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
+      class="absolute w-full h-full flex justify-center items-center inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
       :square-size="4"
       :grid-gap="6"
       color="#1d3557"
