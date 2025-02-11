@@ -246,7 +246,7 @@ import useProcessData from "./lib/useProcessData";
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
 
-const defaultZoom = 6;
+const defaultZoom = isMobile() ? 5.4 : 6;
 const zoom = ref(defaultZoom); // Kept zoom level at 6 which is good for viewing France
 const franceOutline = ref(franceBoundaries);
 const centerFrance = [46.603354, 1.888334];
