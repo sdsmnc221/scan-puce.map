@@ -1,11 +1,4 @@
-import {
-  type Ref,
-  ref,
-  type ComputedRef,
-  computed,
-  nextTick,
-  watch,
-} from "vue";
+import { type Ref, ref, type ComputedRef, computed, watch } from "vue";
 import axios from "axios";
 import { flatten, uniqBy } from "lodash";
 
@@ -41,9 +34,14 @@ type City = {
   lat: number;
   lng: number;
   name: string;
-  departmentName: string;
-  departmentCode: string;
-  records: BaseRecord[];
+  departmentName: string | null;
+  departmentCode: string | null;
+  baseRecords: BaseRecord[];
+  communes: {
+    name: string;
+    lat: number;
+    lng: number;
+  }[];
 };
 
 export default function useProcessData(
@@ -68,9 +66,9 @@ export default function useProcessData(
         return (
           city.zipCode.includes(keyword.value) ||
           (usingDptCode.value
-            ? city.departmentName
-                .toLowerCase()
-                .includes(keyword.value.toLowerCase())
+            ? city?.departmentName
+                ?.toLowerCase()
+                ?.includes(keyword.value.toLowerCase())
             : city.communes.some((commune) =>
                 commune.name.toLowerCase().includes(keyword.value.toLowerCase())
               ))
@@ -106,7 +104,9 @@ export default function useProcessData(
   const loadRecordByZipCode = (zipCode: string) => {
     const records_ = records.value.filter((rec) => {
       // Split in case there are multiple zip codes
-      const zipCodes = rec.ZipCode.split(",").map((code) => code.trim());
+      const zipCodes = rec.ZipCode.split(",").map((code: string) =>
+        code.trim()
+      );
       // Check for exact match
       return zipCodes.includes(zipCode);
     });
@@ -135,7 +135,10 @@ export default function useProcessData(
 
   const getDepartmentName = (zipcode: string) => {
     const deptCode = getDepartmentCode(zipcode);
-    return franceDepartments[deptCode] || null;
+    if (!deptCode) return null;
+    return (
+      franceDepartments[deptCode as keyof typeof franceDepartments] || null
+    );
   };
 
   // Modified fetchCsvRecords to handle batches
@@ -150,7 +153,7 @@ export default function useProcessData(
 
     const communes = [];
     for (const zipCode of zipCodesBatch) {
-      const communesOfSameZip = franceCommunes
+      const communesOfSameZip = (franceCommunes as any[])
         .filter((c) => c.CodePostal == zipCode)
         .map((c) => ({
           postcode: c.CodePostal,
@@ -214,28 +217,12 @@ export default function useProcessData(
       })
       .map((row) => {
         try {
-          const [
-            postcode,
-            city,
-            longitude,
-            latitude,
-            result_label,
-            result_score,
-            result_score_next,
-            result_type,
-            result_id,
-            result_housenumber,
-            result_name,
-            result_street,
-            result_postcode,
-            result_city,
-            result_context,
-            result_citycode,
-            result_oldcitycode,
-            result_oldcity,
-            result_district,
-            result_status,
-          ] = row.split(",");
+          const rowData = row.split(",");
+
+          const postcode = rowData[0];
+          const longitude = rowData[2];
+          const latitude = rowData[3];
+          const result_city = rowData[13];
 
           const records_ = usingDptCode.value
             ? loadRecordByDeptCode(postcode)
@@ -254,7 +241,7 @@ export default function useProcessData(
             name: result_city.replace(/"/g, ""), // Remove quotes from label,
             departmentName,
             departmentCode: getDepartmentCode(postcode),
-            records: records_,
+            baseRecords: records_,
           };
         } catch (rowError) {
           console.error("Error parsing row:", row, rowError);
@@ -285,54 +272,60 @@ export default function useProcessData(
     // Parse CSV response
     const zipCodesResults = processCsv(zipCodesBatch);
 
-    const processedCitiesRecords = zipCodesResults.reduce((acc, current) => {
-      const existingEntry = acc.find(
-        (entry) => entry.zipCode === current.zipCode
-      );
-
-      if (
-        existingEntry &&
-        existingEntry.communes.find((c) => c.name !== current.name)
-      ) {
-        // Add the commune to existing entryg
-        existingEntry.communes.push({
-          ...current,
-          name: current.name,
-          lat: current.lat,
-          lng: current.lng,
-        });
-
-        // Recalculate center
-        const totalLat = existingEntry.communes.reduce(
-          (sum, commune) => sum + commune.lat,
-          0
+    const processedCitiesRecords = zipCodesResults.reduce(
+      (acc: City[], current) => {
+        let existingEntry: City | undefined = acc.find(
+          (entry: City) => entry.zipCode === current.zipCode
         );
-        const totalLng = existingEntry.communes.reduce(
-          (sum, commune) => sum + commune.lng,
-          0
-        );
-        existingEntry.lat = totalLat / existingEntry.communes.length;
-        existingEntry.lng = totalLng / existingEntry.communes.length;
-      } else {
-        // Create new entry
-        acc.push({
-          ...current,
-          zipCode: current.zipCode,
-          records: current.records,
-          lat: current.lat, // Initial center is the first commune
-          lng: current.lng,
-          communes: [
-            {
+
+        if (existingEntry) {
+          existingEntry = existingEntry as City;
+
+          if (existingEntry.communes.find((c) => c.name !== current.name)) {
+            // Add the commune to existing entryg
+            existingEntry.communes.push({
+              ...current,
               name: current.name,
               lat: current.lat,
               lng: current.lng,
-            },
-          ],
-        });
-      }
+            });
 
-      return acc;
-    }, []);
+            // Recalculate center
+            const totalLat = existingEntry.communes.reduce(
+              (sum, commune) => sum + commune.lat,
+              0
+            );
+            const totalLng = existingEntry.communes.reduce(
+              (sum, commune) => sum + commune.lng,
+              0
+            );
+            existingEntry.lat = totalLat / existingEntry.communes.length;
+            existingEntry.lng = totalLng / existingEntry.communes.length;
+          }
+        } else {
+          // Create new entry
+          acc.push({
+            ...current,
+            departmentName: current.departmentName,
+            departmentCode: current.departmentCode,
+            zipCode: current.zipCode,
+            baseRecords: current.baseRecords as BaseRecord[],
+            lat: current.lat, // Initial center is the first commune
+            lng: current.lng,
+            communes: [
+              {
+                name: current.name,
+                lat: current.lat,
+                lng: current.lng,
+              },
+            ],
+          });
+        }
+
+        return acc;
+      },
+      []
+    );
 
     processCities = processedCitiesRecords;
 
