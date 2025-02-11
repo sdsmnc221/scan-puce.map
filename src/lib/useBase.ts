@@ -25,7 +25,7 @@ export default function useBase(usingFilloutBase: Ref<boolean>) {
         .select({
           view: "Grid view",
           pageSize: RECORDS_BATCH_SIZE,
-          maxRecords: 10,
+          // maxRecords: 10,
         })
         .eachPage(
           function page(recs, fetchNextPage) {
