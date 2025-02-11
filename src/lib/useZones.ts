@@ -1,6 +1,6 @@
 import { computed, type ComputedRef, type Ref, ref, watch } from "vue";
 
-import { type BaseRecord, type CsvStore } from "./useProcessData";
+import { type CsvStore } from "./useProcessData";
 
 import { createPolygonFromPoints, extractNumbers } from "./map";
 
@@ -8,7 +8,7 @@ export default function useZones(
   usingDptCode: Ref<boolean>,
   postcodes: ComputedRef<string[]>,
   records: Ref<Array<Record<string, any>>>,
-  storedFilloutCsv: ReF<CsvStore>,
+  storedFilloutCsv: Ref<CsvStore>,
   processCsv: (zipCodes: string[]) => any
 ) {
   const communesContours: Ref<any> = ref({});
@@ -45,7 +45,7 @@ export default function useZones(
       const zipCodesResults = processCsv(postcodes.value);
 
       const citiesDetails = zone.postcodes
-        .map((city) => {
+        .map((city: string) => {
           return zipCodesResults.find((entry: any) => {
             // Split in case there are multiple zip codes
             const entryCodes = entry.zipCode
@@ -57,34 +57,38 @@ export default function useZones(
             );
           });
         })
-        .filter((entry) => !!entry);
+        .filter((entry: any) => !!entry);
 
       // First try to use commune contours if available
       const hasContours = zone.postcodes.some(
-        (postcode) => communesContours.value[postcode]
+        (postcode: string) => communesContours.value[postcode]
       );
 
       if (hasContours) {
         // Use the contours for coordinates
         const allContourPoints = zone.postcodes
-          .filter((postcode) => communesContours.value[postcode])
-          .flatMap((postcode) => communesContours.value[postcode]);
+          .filter((postcode: string) => communesContours.value[postcode])
+          .flatMap((postcode: string) => communesContours.value[postcode]);
 
         return {
           ...zone,
           postcodes: zone.postcodes,
           coordinates: allContourPoints,
-          cityNames: citiesDetails.map((city) => city.name),
+          cityNames: citiesDetails.map((city: { name: string }) => city.name),
           color: "#FFCA3A",
         };
       }
 
-      const coordinates = citiesDetails.map((city) => ({
-        lat: city.lat,
-        lng: city.lng,
-      }));
+      const coordinates = citiesDetails.map(
+        (city: { lat: number; lng: number }) => ({
+          lat: city.lat,
+          lng: city.lng,
+        })
+      );
 
-      const cityNames = citiesDetails.map((city) => city.name);
+      const cityNames = citiesDetails.map(
+        (city: { name: string }) => city.name
+      );
 
       return {
         ...zone,
