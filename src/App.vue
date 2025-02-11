@@ -29,6 +29,47 @@
       <div
         class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
+        <h2 class="font-bold text-lg md:text-xl">Les épingles :</h2>
+
+        <button
+          class="mb-2 flex text-left justify-start items-center text-[12px] text-red-800"
+          @click="togglePinType(0)"
+        >
+          <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
+          <span
+            >Localisation des lecteurs de puce
+            <span class="font-bold">sans accès à ICAD</span>.</span
+          >
+        </button>
+
+        <button
+          class="mb-2 flex text-left justify-start items-center text-[12px] text-sky-700"
+          @click="togglePinType(1)"
+        >
+          <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
+          <span
+            >Localisation des lecteurs de puce
+            <span class="font-bold">avec accès à ICAD</span>.</span
+          >
+        </button>
+
+        <button
+          class="mb-2 flex text-left justify-start items-center text-[12px] text-yellow-700"
+          @click="togglePinType(2)"
+        >
+          <img class="w-[24px] h-[24px] inline-block" src="/pin-zone.png" />
+          <span
+            >Localisation des lecteurs de puce
+            <span class="font-bold"
+              >sur une Zone (multi-communale ou multi-départementale)</span
+            >.</span
+          >
+        </button>
+      </div>
+
+      <div
+        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:max-h-[32vh] md:text-left"
+      >
         <h2 class="font-bold text-lg md:text-xl">
           Information de la localisation{{ selectedCity ? ":" : "..." }}
         </h2>
@@ -287,6 +328,7 @@ const loading = ref(true);
 
 const searchTimeout = ref(null);
 const keyword = ref("");
+const pinType = ref([0, 1, 2]);
 
 const communesContours = ref({});
 const communesNames = ref({});
@@ -307,10 +349,23 @@ const { cities, filteredCities } = useProcessData(
   storedFilloutCsv,
   storedCsv,
   keyword,
+  pinType,
   loading
 );
 const mapCities = ref([]);
 const selectedCity = ref(null);
+
+const usingCities = computed(() => {
+  let toUse;
+
+  if (pinType.value.length || keyword.value) {
+    toUse = filteredCities.value;
+  } else {
+    toUse = cities.value;
+  }
+
+  return toUse;
+});
 
 const citySheetOpen = computed({
   get: () => (isMobile() ? selectedCity.value !== null : false),
@@ -366,6 +421,14 @@ const onSearchInput = (inputValue) => {
   searchTimeout.value = setTimeout(() => {
     keyword.value = inputValue;
   }, 480);
+};
+
+const togglePinType = (pinValue) => {
+  if (pinType.value.includes(pinValue)) {
+    pinType.value = pinType.value.filter((type) => type !== pinValue);
+  } else {
+    pinType.value.push(pinValue);
+  }
 };
 
 // const zones = computed(() => {
@@ -507,10 +570,8 @@ onUnmounted(() => {
 // );
 
 watch(
-  [cities, filteredCities],
+  [usingCities],
   async () => {
-    const usingCities =
-      filteredCities.value.length > 0 ? filteredCities : cities;
     try {
       if (!map.value?._leaflet_id) {
         console.log("error map display");

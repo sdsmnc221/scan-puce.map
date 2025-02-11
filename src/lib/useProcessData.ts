@@ -16,17 +16,18 @@ type CsvStore = {
 type BaseRecord = {
   id: string;
   createTime: string;
-  fields: {
-    Author: string;
-    ZipCode: string;
-    LinkToPost: string;
-    Dept: string;
-    LinkToUpdate: string;
-    CommuneName: string;
-    Notes: string;
-    ContactMode: string;
-    ContactModeUnfilled: number;
-  };
+  // fields: {
+  Author: string;
+  ZipCode: string;
+  LinkToPost: string;
+  Dept: string;
+  LinkToUpdate: string;
+  CommuneName: string;
+  Notes: string;
+  ContactMode: string;
+  ContactModeUnfilled: number;
+  AccessICAD?: boolean;
+  // };
 };
 
 type City = {
@@ -50,6 +51,7 @@ export default function useProcessData(
   storedFilloutCsv: Ref<CsvStore>,
   storedCsv: Ref<CsvStore>,
   keyword: Ref<string>,
+  pinType: Ref<number[]>,
   loading: Ref<boolean>
 ) {
   // Constants for pagination
@@ -61,8 +63,14 @@ export default function useProcessData(
 
   const cities: Ref<City[]> = ref([]);
   const filteredCities: ComputedRef<City[]> = computed(() => {
+    let filteredResult;
+
+    if (!keyword.value.trim().length && !pinType.value.length) {
+      return [];
+    }
+
     if (keyword.value.trim().length) {
-      const filteredResult = cities.value.filter((city) => {
+      filteredResult = cities.value.filter((city) => {
         // const dptOfCity = storedFilloutCsv.value["dpt"].filter((row: string) =>
         //   row.toLowerCase().includes(keyword.value.toLowerCase())
         // );
@@ -87,13 +95,27 @@ export default function useProcessData(
           // )
         );
       });
-
-      console.log(keyword.value, filteredResult);
-
-      return uniqBy(filteredResult, "zipCode");
     }
 
-    return [];
+    filteredResult = cities.value.filter((city: City) => {
+      if (pinType.value.includes(0) && pinType.value.includes(1)) {
+        return true;
+      } else if (pinType.value.includes(0) && !pinType.value.includes(1)) {
+        // case red pin (withoud ICAD)
+        return city.baseRecords.some(
+          (record: BaseRecord) => !record.AccessICAD
+        );
+      } else if (pinType.value.includes(1) && !pinType.value.includes(0)) {
+        // case blue pin (without ICAD)
+        return city.baseRecords.some(
+          (record: BaseRecord) => !!record.AccessICAD
+        );
+      } else if (!pinType.value.includes(0) && !pinType.value.includes(1)) {
+        return false;
+      }
+    });
+
+    return uniqBy(filteredResult, "zipCode");
   });
 
   const postcodes = computed(() => {
