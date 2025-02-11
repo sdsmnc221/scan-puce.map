@@ -70,18 +70,22 @@
           </TextHighlight>
         </div>
 
-        <Badge
-          v-else
-          variant="destructive"
-          class="mr-2"
-          style="font-size: 10px"
-        >
-          Contact à mettre à jour
-        </Badge>
+        <div class="my-1">
+          <Badge
+            v-if="
+              record.contactDetails.admin || record.contactDetails.needUpdate
+            "
+            variant="destructive"
+            class="mr-2"
+            style="font-size: 10px"
+          >
+            Contact à mettre à jour
+          </Badge>
 
-        <Badge v-if="record.AccessICAD" style="font-size: 10px"
-          >Accès ICAD</Badge
-        >
+          <Badge v-if="record.AccessICAD" style="font-size: 10px"
+            >Accès ICAD</Badge
+          >
+        </div>
 
         <p v-if="record.Notes" class="my-1 text-slate-500 text-[12px]">
           <span class="font-bold">Notes: </span> {{ record.Notes }}
