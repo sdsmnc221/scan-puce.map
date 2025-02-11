@@ -21,7 +21,10 @@
         <div>
           <span class="text-md font-semibold">{{ record.Author }}</span>
 
-          <span v-if="record.CommuneName">
+          <span
+            class="block text-xs text-slate-500 mb-2"
+            v-if="record.CommuneName"
+          >
             {{ ` (${record.CommuneName.trim()}) ` }}</span
           >
         </div>
@@ -52,7 +55,7 @@
               target="_blank"
               :href="`telto:${record.contactDetails.tel}`"
               class="p-0 m-0"
-              >Contact par téll</a
+              >Contact par tél</a
             >
           </div>
 
@@ -75,9 +78,14 @@
         >
           Contact à mettre à jour
         </Badge>
+
         <Badge v-if="record.AccessICAD" style="font-size: 10px"
           >Accès ICAD</Badge
         >
+
+        <p v-if="record.Notes" class="my-1 text-slate-500 text-[12px]">
+          <span class="font-bold">Notes: </span> {{ record.Notes }}
+        </p>
       </div>
     </div>
   </div>
@@ -98,6 +106,7 @@ type Record = {
   Tel?: string;
   Email?: string;
   ContactMode?: string;
+  Notes?: string;
 };
 
 type Props = {
