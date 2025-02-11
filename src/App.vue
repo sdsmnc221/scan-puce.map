@@ -562,8 +562,9 @@ body,
 #app {
   padding: 16px;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
+  overflow: hidden;
 
   & > * {
     position: relative;
