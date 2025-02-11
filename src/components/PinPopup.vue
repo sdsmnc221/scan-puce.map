@@ -1,25 +1,25 @@
 <template>
-  <h2 class="font-semibold text-sm">
+  <h2 class="font-semibold text-xl">
     {{ zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
 
-  <h3 class="text-xs font-semibold" v-if="isDpt">
+  <h3 class="text-sm font-semibold text-slate-400" v-if="isDpt">
     {{ location.departmentName }}
   </h3>
-  <h3 class="text-xs font-semibold" v-if="communes">
+  <h3 class="text-sm font-semibold text-slate-400" v-if="communes">
     {{ communes }}
   </h3>
 
-  <div class="mt-2" v-if="records?.length">
+  <div class="mt-2" v-if="baseRecords?.length">
     <div
-      v-for="(record, index) in records"
+      v-for="(record, index) in baseRecords"
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
         record.Author
       }`"
     >
-      <div class="text-sm block mt-4">
+      <div class="block mt-4">
         <div>
-          <span>{{ record.Author }}</span>
+          <span class="text-md font-semibold">{{ record.Author }}</span>
 
           <span v-if="record.CommuneName">
             {{ ` (${record.CommuneName.trim()}) ` }}</span
@@ -28,8 +28,7 @@
 
         <div
           v-if="!record.contactDetails?.needUpdate"
-          class="flex flex-col"
-          style="font-size: 10px"
+          class="flex flex-col text-xs text-sky-600 underline"
         >
           <div class="flex flex-row">
             <a
@@ -59,8 +58,7 @@
 
           <TextHighlight
             v-if="record.contactDetails.admin"
-            style="font-size: 10px"
-            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-bold mr-2 w-[152px]"
+            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-semibold text-xs mr-2 w-[152px]"
             @mouseenter="() => (hoveredIndex = index)"
             @mouseleave="() => (hoveredIndex = null)"
           >
@@ -111,7 +109,7 @@ type Props = {
     postcodes?: string[];
     departmentCode: string;
     departmentName: string;
-    records: Record[];
+    baseRecords: Record[];
   };
   isDpt?: boolean;
 };
@@ -187,8 +185,8 @@ const getContactDetails = (record: Record): ContactDetails => {
   return contact;
 };
 
-const records = computed(() =>
-  props.location.records.map((r) => ({
+const baseRecords = computed(() =>
+  props.location.baseRecords.map((r) => ({
     ...r,
     contactDetails: getContactDetails(r),
   }))

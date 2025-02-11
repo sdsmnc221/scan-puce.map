@@ -79,6 +79,10 @@ const copyCode = async () => {
   border-radius: 8px;
   overflow: hidden;
   margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  overflow: hidden;
 }
 
 .code-container {
@@ -125,6 +129,9 @@ code {
 
 .preview-container {
   border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .preview-header {
@@ -157,6 +164,7 @@ code {
 .preview-content {
   padding: 16px;
   background: white;
+  flex: 1;
 }
 
 .preview-frame {

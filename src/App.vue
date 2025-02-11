@@ -1,5 +1,110 @@
 <template>
-  <div style="height: 100vh; width: 100vw">
+  <nav class="w-1/3 flex flex-col font-serif">
+    <div class="flex flex-col items-center">
+      <h1 class="font-bold text-xl md:text-3xl text-cente my-3">
+        Réseau Lecteurs de Puce France
+      </h1>
+
+      <IInput
+        id="inputDemo"
+        placeholder="Recherche par code postal, code de département, nom de commune..."
+        container-class="w-11/12 search-input md:my-3"
+        @update:model-value="onSearchInput"
+      ></IInput>
+
+      <RippleButton
+        class="toggle-dpt my-3 w-11/12 text-sm"
+        @click="() => (usingDptCode = !usingDptCode)"
+      >
+        <span class="font-bold text-sm">
+          Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
+        >
+        <span class="block md:inline-block md:ml-1">
+          (au total :
+          <span class="font-bold">{{ mapCities.length }}</span>
+          localisations)
+        </span>
+      </RippleButton>
+
+      <div
+        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
+      >
+        <h2 class="font-bold text-lg md:text-xl">
+          Information de la localisation{{ selectedCity ? ":" : "..." }}
+        </h2>
+        <p class="text-md text-slate-400" v-if="!selectedCity">
+          Veuillez choisir une localisation sur la carte.
+        </p>
+        <div v-else class="hidden md:block my-6">
+          <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
+          <RippleButton class="mt-6 text-sm" @click="resetMapView"
+            >Recentrer sur la carte</RippleButton
+          >
+        </div>
+
+        <Sheet
+          :open="citySheetOpen"
+          @update:open="(openState) => onUpdateOpenCitySheet"
+        >
+          <SheetTrigger class="m-0 p-0 fixed"></SheetTrigger>
+          <SheetTitle></SheetTitle>
+          <SheetContent class="city-sheet font-serif" side="bottom">
+            <SheetHeader>
+              <SheetTitle></SheetTitle>
+              <SheetDescription class="flex flex-col text-left">
+                <div v-if="selectedCity" class="flex flex-col">
+                  <PinPopup :location="selectedCity" :is-dpt="usingDptCode">
+                  </PinPopup>
+                  <RippleButton class="mt-6 text-sm" @click="resetMapView"
+                    >Recentrer sur la carte</RippleButton
+                  >
+                </div>
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+
+    <div class="flex justify-between">
+      <Sheet>
+        <SheetTrigger class="toggle-embed">
+          <RippleButton class="text-[10px] md:text-xs rounded-xl">
+            Embed
+          </RippleButton>
+        </SheetTrigger>
+        <SheetContent class="embed-sheet">
+          <SheetHeader>
+            <SheetTitle>Code à copier-coller</SheetTitle>
+            <SheetDescription>
+              <CodeEmbed :code="iframeCode" language="html"></CodeEmbed>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet>
+        <SheetTrigger class="toggle-legal">
+          <RippleButton class="text-[10px] md:text-xs rounded-xl bg-yellow-100">
+            Mentions légales & Politique de confidentialité
+          </RippleButton>
+        </SheetTrigger>
+        <SheetContent class="legal-sheet">
+          <SheetHeader>
+            <SheetTitle
+              >Mentions légales & Politique de confidentialité</SheetTitle
+            >
+            <SheetDescription>
+              <LegalNotice></LegalNotice>
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+
+      <PWAInstallPrompt></PWAInstallPrompt>
+    </div>
+  </nav>
+  <div class="map w-2/3">
     <LMap
       ref="map"
       id="map"
@@ -59,12 +164,7 @@
           v-for="city in mapCities"
           :key="`commune-${city.zipCode}`"
           :lat-lng="[city.lat, city.lng]"
-          @click="
-            (e) => {
-              centerOnMarker([city.lat, city.lng]);
-              targetPopup(e);
-            }
-          "
+          @click="onMarkerClick(city)"
           @ready="loading = false"
         >
           <LIcon
@@ -74,63 +174,12 @@
             :icon-size="[25, 25]"
             :icon-anchor="[12.5, 12.5]"
           />
-          <LPopup>
-            <PinPopup :location="city" :is-dpt="usingDptCode"> </PinPopup>
-          </LPopup>
         </LMarker>
       </div>
     </LMap>
-
-    <IInput
-      id="inputDemo"
-      placeholder="Code postal, code de département..."
-      container-class="w-full max-w-sm search-input"
-      @update:model-value="onSearchInput"
-    ></IInput>
-
-    <RippleButton
-      class="toggle-dpt"
-      @click="() => (usingDptCode = !usingDptCode)"
-    >
-      Affichage par {{ usingDptCode ? "Département" : "Commune" }}
-    </RippleButton>
-
-    <Sheet>
-      <SheetTrigger class="toggle-embed">
-        <RippleButton class="text-xs rounded-xl"> Embed </RippleButton>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Code à copier-coller</SheetTitle>
-          <SheetDescription>
-            <CodeEmbed :code="iframeCode" language="html"></CodeEmbed>
-          </SheetDescription>
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
-
-    <Sheet>
-      <SheetTrigger class="toggle-legal">
-        <RippleButton class="text-xs rounded-xl bg-yellow-100">
-          Mentions légales & Politique de confidentialité
-        </RippleButton>
-      </SheetTrigger>
-      <SheetContent class="legal-sheet">
-        <SheetHeader>
-          <SheetTitle
-            >Mentions légales & Politique de confidentialité</SheetTitle
-          >
-          <SheetDescription>
-            <LegalNotice></LegalNotice>
-          </SheetDescription>
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
   </div>
 
-  <PWAInstallPrompt></PWAInstallPrompt>
-
-  <MapLoader :loading="loading"></MapLoader>
+  <!-- <MapLoader :loading="loading"></MapLoader> -->
 </template>
 
 <script setup>
@@ -163,6 +212,7 @@ import {
   getZoneCenter,
 } from "./lib/map";
 import { transformToCapitalize } from "./lib/lexique";
+import { isMobile } from "./lib/utils";
 
 import IInput from "./components/IInput.vue";
 import RippleButton from "./components/RippleButton.vue";
@@ -256,6 +306,16 @@ const { cities, filteredCities } = useProcessData(
   loading
 );
 const mapCities = ref([]);
+const selectedCity = ref(null);
+
+const citySheetOpen = computed({
+  get: () => (isMobile() ? selectedCity.value !== null : false),
+  set: (open) => {
+    if (!open) {
+      selectedCity.value = null;
+    }
+  },
+});
 
 const csvRowsCount = ref(0);
 
@@ -395,16 +455,26 @@ const centerOnMarker = ([lat, lng]) => {
   map.value?.leafletObject?.setView([lat, lng], 10);
 };
 
-const resetMapView = () => {
-  map.value?.leafletObject?.setView(centerFrance, defaultZoom);
+const resetMapView = async () => {
+  citySheetOpen.value = false;
+
+  await nextTick();
+
+  if (map.value?.leafletObject) {
+    map.value.leafletObject.setView(centerFrance, defaultZoom);
+  }
+  selectedCity.value = null;
 };
 
-const targetPopup = (e) => {
-  nextTick(() => {
-    e.target._popup._closeButton?.addEventListener("click", (target) => {
-      resetMapView();
-    });
-  });
+const onMarkerClick = (city) => {
+  centerOnMarker([city.lat, city.lng]);
+  selectedCity.value = city;
+};
+
+const onUpdateOpenCitySheet = (open) => {
+  if (!open) {
+    selectedCity.value = null;
+  }
 };
 
 onMounted(() => {
@@ -463,51 +533,107 @@ watch(
 <style lang="scss">
 @import "./output.css";
 
+body,
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  padding: 16px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+
+  & > * {
+    position: relative;
+  }
+}
+
+.map {
+  right: 0;
+  height: 100%;
+  flex: 1;
+
+  #map {
+    border-radius: 16px;
+  }
+}
+
 .leaflet-container {
   z-index: 10;
 }
 
-.search-input {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 99;
+nav {
+  height: 100%;
+  padding-right: 16px;
+  gap: 16px;
+  justify-content: space-between;
+
+  .search-input {
+  }
+
+  .toggle-dpt {
+    // position: fixed;
+    // top: 24px;
+    // right: 24px;
+    // z-index: 49;
+  }
+
+  .toggle-legal {
+    // position: fixed;
+    // bottom: 50px;
+    // right: 24px;
+    // z-index: 49;
+  }
+
+  .toggle-embed {
+    // position: fixed;
+    // bottom: 100px;
+    // right: 24px;
+    // z-index: 49;
+  }
 }
 
-.toggle-dpt {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  z-index: 49;
-}
-
-.toggle-legal {
-  position: fixed;
-  bottom: 50px;
-  right: 24px;
-  z-index: 49;
-}
-
-.toggle-embed {
-  position: fixed;
-  bottom: 100px;
-  right: 24px;
-  z-index: 49;
-}
-
-.legal-sheet {
+.legal-sheet,
+.embed-sheet {
   width: 50vw;
   max-width: unset;
 }
 
 @media screen and (max-width: 768px) {
-  .search-input {
-    bottom: 0;
-    left: 0;
+  #app {
+    flex-direction: column;
+    flex-direction: column-reverse;
+
+    nav {
+      height: 36vh;
+      width: 100%;
+      padding: 0;
+    }
+
+    .map {
+      flex: 1;
+      width: 100%;
+    }
   }
 
-  .legal-sheet {
-    width: 100vw;
+  .legal-sheet,
+  .embed-sheet {
+    width: 90vw;
+    max-width: unset;
+  }
+
+  .city-sheet {
+    max-height: 48vh;
+    overflow-y: scroll;
+
+    & > button {
+      display: none;
+    }
+  }
+
+  .fixed.inset-0 {
+    background-color: rgba(0, 0, 0, 0.32);
   }
 }
 </style>
