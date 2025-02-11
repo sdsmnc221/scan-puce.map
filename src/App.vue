@@ -29,45 +29,49 @@
       <div
         class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl">Les épingles :</h2>
+        <h2 class="font-bold text-lg md:text-xl text-center md:text-left">
+          Les épingles :
+        </h2>
 
-        <button
-          class="mb-2 flex text-left justify-start items-center text-[12px] text-red-800"
-          :class="{ 'line-through': !pinType.includes(0) }"
-          @click="togglePinType(0)"
-        >
-          <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
-          <span
-            >Localisation des lecteurs de puce
-            <span class="font-bold">sans accès à ICAD</span>.</span
+        <div class="w-full flex md:flex-col justify-center items-center">
+          <button
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-red-800"
+            :class="{ 'line-through': !pinType.includes(0) }"
+            @click="togglePinType(0)"
           >
-        </button>
+            <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
+            <span
+              >Localisation des lecteurs de puce
+              <span class="font-bold">sans accès à ICAD</span>.</span
+            >
+          </button>
 
-        <button
-          class="mb-2 flex text-left justify-start items-center text-[12px] text-sky-700"
-          :class="{ 'line-through': !pinType.includes(1) }"
-          @click="togglePinType(1)"
-        >
-          <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
-          <span
-            >Localisation des lecteurs de puce
-            <span class="font-bold">avec accès à ICAD</span>.</span
+          <button
+            class="mb-2 flex flex-col md:flex-row text-center md:text-left md:justify-start items-center text-[12px] text-sky-700"
+            :class="{ 'line-through': !pinType.includes(1) }"
+            @click="togglePinType(1)"
           >
-        </button>
+            <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
+            <span
+              >Localisation des lecteurs de puce
+              <span class="font-bold">avec accès à ICAD</span>.</span
+            >
+          </button>
 
-        <button
-          class="mb-2 flex text-left justify-start items-center text-[12px] text-yellow-700"
-          :class="{ 'line-through': !pinType.includes(2) }"
-          @click="togglePinType(2)"
-        >
-          <img class="w-[24px] h-[24px] inline-block" src="/pin-zone.png" />
-          <span
-            >Localisation des lecteurs de puce
-            <span class="font-bold"
-              >sur une Zone (multi-communale ou multi-départementale)</span
-            >.</span
+          <button
+            class="mb-2 flex flex-col md:flex-row text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
+            :class="{ 'line-through': !pinType.includes(2) }"
+            @click="togglePinType(2)"
           >
-        </button>
+            <img class="w-[24px] h-[24px] inline-block" src="/pin-zone.png" />
+            <span
+              >Localisation des lecteurs de puce
+              <span class="font-bold"
+                >sur une Zone (multi-communale ou multi-départementale)</span
+              >.</span
+            >
+          </button>
+        </div>
       </div>
 
       <div
@@ -688,18 +692,26 @@ nav {
 
 @media screen and (max-width: 768px) {
   #app {
-    flex-direction: column;
+    min-height: 100dvh;
+    height: auto;
+    overflow-y: scroll;
+
     flex-direction: column-reverse;
 
     nav {
-      height: 36vh;
       width: 100%;
       padding: 0;
     }
 
     .map {
-      flex: 1;
       width: 100%;
+      height: 50vh;
+      overflow: hidden;
+      flex: unset;
+
+      #map {
+        height: 100% !important;
+      }
     }
   }
 
