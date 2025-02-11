@@ -27,7 +27,7 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <LPolygon
+      <!-- <LPolygon
         v-for="(zone, index) in processedZones"
         :key="`zone-commun-${index}`"
         :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
@@ -52,7 +52,7 @@
             <PinPopup :location="zone"></PinPopup>
           </LPopup>
         </LMarker>
-      </LPolygon>
+      </LPolygon> -->
 
       <div>
         <LMarker
@@ -187,6 +187,9 @@ import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png
 
 import L from "leaflet";
 
+import useBase from "./lib/useBase";
+import useProcessData from "./lib/useProcessData";
+
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
 
@@ -224,21 +227,9 @@ const iframeCode = `<iframe
     sandbox="allow-scripts allow-same-origin allow-popups">
 </iframe>`;
 
-Airtable.configure({
-  endpointUrl: "https://api.airtable.com",
-  apiKey: import.meta.env.VITE_AIRTABLE_ACCESS_TOKEN,
-});
-
-const base = ref(Airtable.base(import.meta.env.VITE_AIRTABLE_BASE_ID));
-
 const map = ref(null);
 
 const loading = ref(true);
-
-const records = ref([]);
-const loadRecordsDone = ref(false);
-const cities = ref([]);
-const mapCities = ref([]);
 
 const searchTimeout = ref(null);
 const keyword = ref("");
@@ -255,6 +246,16 @@ const storedFilloutCsv = ref({
   dpt: [],
   zip: [],
 });
+
+const { cities, filteredCities } = useProcessData(
+  usingFilloutBase,
+  usingDptCode,
+  storedFilloutCsv,
+  storedCsv,
+  keyword,
+  loading
+);
+const mapCities = ref([]);
 
 const csvRowsCount = ref(0);
 
@@ -295,236 +296,6 @@ const loadRecordByDeptCode = (deptCode) => {
   return records_ ?? null;
 };
 
-const getDepartmentCode = (zipcode) => {
-  if (!zipcode) return null;
-  return zipcode.substring(0, 2);
-};
-
-// Function to get department name from zipcode
-const getDepartmentName = (zipcode) => {
-  const deptCode = getDepartmentCode(zipcode);
-  return franceDepartments[deptCode] || null;
-};
-
-const findCommunesByZipCodes = (zipCodes) => {
-  if (!zipCodes || !zipCodes.length) return [];
-
-  // Create a Set for faster lookup
-  const zipCodeSet = new Set(zipCodes);
-
-  return franceCommunes.filter((commune) => zipCodeSet.has(commune.CodePostal));
-};
-
-const fetchCsvRecords = async (zipCodes) => {
-  if (!zipCodes) return;
-
-  const communes = [];
-  for (const zipCode of zipCodes) {
-    const communesOfSameZip = franceCommunes
-      .filter((c) => c.CodePostal == zipCode)
-      .map((c) => ({
-        postcode: c.CodePostal,
-        city: transformToCapitalize(c.NomCommune),
-      }));
-
-    communesOfSameZip.forEach((c) => {
-      communes.push(c);
-    });
-  }
-  const csvRows = communes.map((match) => `${match.postcode},"${match.city}"`);
-
-  // Create CSV content with header - add name of commune to help filter
-  const csvHeader = "postcode,city\n";
-  const csvContent = csvRows.join("\n");
-
-  let store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
-
-  if (
-    csvRowsCount.value == 0 ||
-    store.value[usingDptCode.value ? "dpt" : "zip"].length !==
-      csvRowsCount.value
-  ) {
-    // Create formData with the new CSV content
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([csvContent], { type: "text/csv" }),
-      "zipCodes.csv"
-    );
-
-    // Make the request with formData
-    const response = await axios.post(
-      "https://api-adresse.data.gouv.fr/search/csv/",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    store.value[usingDptCode.value ? "dpt" : "zip"] = response.data
-      .split("\n")
-      .slice(1); // Skip header row
-  }
-};
-
-const processCsv = (rows) => {
-  csvRowsCount.value = rows.length;
-
-  const data = rows
-    .filter((row) => row.length > 0 && !row.includes("not-found"))
-    .map((row) => {
-      try {
-        const [
-          postcode,
-          city,
-          longitude,
-          latitude,
-
-          result_label,
-          result_score,
-          result_score_next,
-          result_type,
-          result_id,
-          result_housenumber,
-          result_name,
-          result_street,
-          result_postcode,
-          result_city,
-          result_context,
-          result_citycode,
-          result_oldcitycode,
-          result_oldcity,
-          result_district,
-          result_status,
-        ] = row.split(",");
-
-        const records_ = usingDptCode.value
-          ? loadRecordByDeptCode(postcode)
-          : loadRecordByZipCode(postcode);
-
-        const departmentName = getDepartmentName(postcode);
-
-        if (!latitude || !longitude) {
-          return null;
-        }
-
-        return {
-          zipCode: postcode,
-          lat: parseFloat(latitude),
-          lng: parseFloat(longitude),
-          name: result_city.replace(/"/g, ""), // Remove quotes from label,
-          departmentName,
-          departmentCode: getDepartmentCode(postcode),
-          records: records_,
-        };
-      } catch (rowError) {
-        console.error("Error parsing row:", row, rowError);
-        return null;
-      }
-    })
-    .filter((record) => !!record);
-
-  return data;
-};
-
-async function loadCities() {
-  try {
-    loading.value = true;
-
-    const zipCodes = postcodes.value;
-    cities.value = [];
-
-    await fetchCsvRecords(zipCodes);
-
-    // Parse CSV response
-    const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
-    const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
-    const zipCodesResults = processCsv(rows);
-
-    const processedCitiesRecords = zipCodesResults.reduce((acc, current) => {
-      const existingEntry = acc.find(
-        (entry) => entry.zipCode === current.zipCode
-      );
-
-      if (
-        existingEntry &&
-        existingEntry.communes.find((c) => c.name !== current.name)
-      ) {
-        // Add the commune to existing entryg
-        existingEntry.communes.push({
-          ...current,
-          name: current.name,
-          lat: current.lat,
-          lng: current.lng,
-        });
-
-        // Recalculate center
-        const totalLat = existingEntry.communes.reduce(
-          (sum, commune) => sum + commune.lat,
-          0
-        );
-        const totalLng = existingEntry.communes.reduce(
-          (sum, commune) => sum + commune.lng,
-          0
-        );
-        existingEntry.lat = totalLat / existingEntry.communes.length;
-        existingEntry.lng = totalLng / existingEntry.communes.length;
-      } else {
-        // Create new entry
-        acc.push({
-          ...current,
-          zipCode: current.zipCode,
-          records: current.records,
-          lat: current.lat, // Initial center is the first commune
-          lng: current.lng,
-          communes: [
-            {
-              name: current.name,
-              lat: current.lat,
-              lng: current.lng,
-            },
-          ],
-        });
-      }
-
-      return acc;
-    }, []);
-
-    if (keyword.value) {
-      const filteredCitiesByKeyword = processedCitiesRecords.filter((city) => {
-        return (
-          city.zipCode.includes(keyword.value) ||
-          (usingDptCode.value
-            ? city.departmentName
-                .toLowerCase()
-                .includes(keyword.value.toLowerCase())
-            : city.communes.some((commune) =>
-                commune.name.toLowerCase().includes(keyword.value.toLowerCase())
-              ))
-        );
-      });
-
-      cities.value = [];
-
-      nextTick(() => {
-        cities.value = new Set(filteredCitiesByKeyword);
-
-        setTimeout(() => {
-          loading.value = false;
-        }, 640);
-      });
-    } else {
-      cities.value = [];
-      cities.value = processedCitiesRecords;
-    }
-  } catch (error) {
-    console.error("Error loading cities:", error);
-    cities.value = []; // Set empty array in case of error
-  }
-}
-
 const onSearchInput = (inputValue) => {
   if (searchTimeout.value) clearTimeout(searchTimeout.value);
 
@@ -533,112 +304,92 @@ const onSearchInput = (inputValue) => {
   }, 480);
 };
 
-const postcodes = computed(() => {
-  let codes;
+// const zones = computed(() => {
+//   let codes;
 
-  if (usingDptCode.value) {
-    codes = flatten(
-      records.value
-        .filter((rec) => !!rec.Dept)
-        .map((rec) => rec.Dept.replaceAll(" ", "").split(","))
-    ).map((dpt) => dpt + "000");
-  } else {
-    codes = flatten(
-      records.value
-        .filter((rec) => !!rec.ZipCode)
-        .map((rec) => rec.ZipCode.replaceAll(" ", "").split(","))
-    );
-  }
+//   if (usingDptCode.value) {
+//     codes = records.value
+//       .filter((rec) => rec.Dept.includes(","))
+//       .map((rec) => ({
+//         postcodes: rec.Dept.replaceAll(" ", "")
+//           .split(",")
+//           .map((dpt) => {
+//             const dptCode = extractNumbers(dpt);
+//             return dptCode.length === 2 ? dptCode + "000" : dptCode;
+//           }),
+//         records: [rec],
+//       }));
+//   } else {
+//     codes = records.value
+//       .filter((rec) => rec.ZipCode.includes(","))
+//       .map((rec) => ({
+//         postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
+//         records: [rec],
+//       }));
+//   }
 
-  return codes;
-});
+//   return codes;
+// });
 
-const zones = computed(() => {
-  let codes;
+// const computeZones = () => {
+//   return zones.value.map((zone, index) => {
+//     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+//     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
+//     const zipCodesResults = processCsv(rows);
 
-  if (usingDptCode.value) {
-    codes = records.value
-      .filter((rec) => rec.Dept.includes(","))
-      .map((rec) => ({
-        postcodes: rec.Dept.replaceAll(" ", "")
-          .split(",")
-          .map((dpt) => {
-            const dptCode = extractNumbers(dpt);
-            return dptCode.length === 2 ? dptCode + "000" : dptCode;
-          }),
-        records: [rec],
-      }));
-  } else {
-    codes = records.value
-      .filter((rec) => rec.ZipCode.includes(","))
-      .map((rec) => ({
-        postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
-        records: [rec],
-      }));
-  }
+//     const citiesDetails = zone.postcodes
+//       .map((city) => {
+//         return zipCodesResults.find((entry) => {
+//           // Split in case there are multiple zip codes
+//           const entryCodes = entry.zipCode
+//             .split(",")
+//             .map((code) => code.trim());
+//           // Check for exact match with either full code or department code
+//           return (
+//             entryCodes.includes(city) || entryCodes.includes(city.slice(0, 2))
+//           );
+//         });
+//       })
+//       .filter((entry) => !!entry);
 
-  return codes;
-});
+//     // First try to use commune contours if available
+//     const hasContours = zone.postcodes.some(
+//       (postcode) => communesContours.value[postcode]
+//     );
 
-const computeZones = () => {
-  return zones.value.map((zone, index) => {
-    const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
-    const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
-    const zipCodesResults = processCsv(rows);
+//     if (hasContours) {
+//       // Use the contours for coordinates
+//       const allContourPoints = zone.postcodes
+//         .filter((postcode) => communesContours.value[postcode])
+//         .flatMap((postcode) => communesContours.value[postcode]);
 
-    const citiesDetails = zone.postcodes
-      .map((city) => {
-        return zipCodesResults.find((entry) => {
-          // Split in case there are multiple zip codes
-          const entryCodes = entry.zipCode
-            .split(",")
-            .map((code) => code.trim());
-          // Check for exact match with either full code or department code
-          return (
-            entryCodes.includes(city) || entryCodes.includes(city.slice(0, 2))
-          );
-        });
-      })
-      .filter((entry) => !!entry);
+//       return {
+//         ...zone,
+//         postcodes: zone.postcodes,
+//         coordinates: allContourPoints,
+//         cityNames: citiesDetails.map((city) => city.name),
+//         color: "#FFCA3A",
+//       };
+//     }
 
-    // First try to use commune contours if available
-    const hasContours = zone.postcodes.some(
-      (postcode) => communesContours.value[postcode]
-    );
+//     const coordinates = citiesDetails.map((city) => ({
+//       lat: city.lat,
+//       lng: city.lng,
+//     }));
 
-    if (hasContours) {
-      // Use the contours for coordinates
-      const allContourPoints = zone.postcodes
-        .filter((postcode) => communesContours.value[postcode])
-        .flatMap((postcode) => communesContours.value[postcode]);
+//     const cityNames = citiesDetails.map((city) => city.name);
 
-      return {
-        ...zone,
-        postcodes: zone.postcodes,
-        coordinates: allContourPoints,
-        cityNames: citiesDetails.map((city) => city.name),
-        color: "#FFCA3A",
-      };
-    }
+//     return {
+//       ...zone,
+//       postcodes: zone.postcodes,
+//       coordinates: createPolygonFromPoints(coordinates), // Changed this line
+//       cityNames,
+//       color: "#FFCA3A",
+//     };
+//   });
+// };
 
-    const coordinates = citiesDetails.map((city) => ({
-      lat: city.lat,
-      lng: city.lng,
-    }));
-
-    const cityNames = citiesDetails.map((city) => city.name);
-
-    return {
-      ...zone,
-      postcodes: zone.postcodes,
-      coordinates: createPolygonFromPoints(coordinates), // Changed this line
-      cityNames,
-      color: "#FFCA3A",
-    };
-  });
-};
-
-const processedZones = ref(computeZones());
+// const processedZones = ref(computeZones());
 
 const centerOnMarker = ([lat, lng]) => {
   map.value?.leafletObject?.setView([lat, lng], 10);
@@ -673,85 +424,34 @@ onUnmounted(() => {
   if (searchTimeout.value) clearTimeout(searchTimeout.value);
 });
 
-watch(
-  () => usingFilloutBase.value,
-  () => {
-    records.value = [];
-
-    base
-      .value(usingFilloutBase.value ? "filloutBase" : "draftBase")
-      .select({
-        view: "Grid view",
-      })
-      .eachPage(
-        function page(recs, fetchNextPage) {
-          // This function (`page`) will get called for each page of records.
-
-          recs.forEach(function (record) {
-            records.value.push(record.fields);
-          });
-
-          // To fetch the next page of records, call `fetchNextPage`.
-          // If there are more records, `page` will get called again.
-          // If there are no more records, `done` will get called.
-
-          fetchNextPage();
-        },
-        function done(err) {
-          if (err) {
-            console.error(err);
-            loadRecordsDone.value = false;
-            return;
-          } else {
-            loadRecordsDone.value = true;
-            return;
-          }
-        }
-      );
-  },
-  { immediate: true }
-);
+// watch(
+//   [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
+//   () => {
+//     processedZones.value = computeZones();
+//   },
+//   { deep: true, flush: "sync" }
+// );
 
 watch(
-  [() => usingDptCode.value, () => loadRecordsDone.value],
+  [cities, filteredCities],
   async () => {
-    loadCities();
-  },
-  { immediate: true, deep: true, flush: "sync" }
-);
-
-watch(
-  () => keyword.value,
-  () => {
-    loadCities();
-  }
-);
-
-watch(
-  [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
-  () => {
-    processedZones.value = computeZones();
-  },
-  { deep: true, flush: "sync" }
-);
-
-watch(
-  cities,
-  async () => {
+    const usingCities =
+      filteredCities.value.length > 0 ? filteredCities : cities;
     try {
       if (!map.value?._leaflet_id) {
         console.log("error map display");
         await nextTick();
         mapCities.value = [];
-
-        mapCities.value = [...cities.value];
+        mapCities.value = [...usingCities.value];
 
         return;
       }
 
       await nextTick();
       mapCities.value = [];
-      mapCities.value = [...cities.value];
+      mapCities.value = [...usingCities.value];
+
+      return;
     } catch (error) {
       console.error("Map error:", error);
     }
