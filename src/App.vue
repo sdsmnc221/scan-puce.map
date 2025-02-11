@@ -169,7 +169,9 @@
         >
           <LIcon
             :icon-url="`/pin${
-              city?.records?.some((r) => r.AccessICAD === true) ? '-icad' : ''
+              city?.baseRecords?.some((r) => r.AccessICAD === true)
+                ? '-icad'
+                : ''
             }.png`"
             :icon-size="[25, 25]"
             :icon-anchor="[12.5, 12.5]"
@@ -177,9 +179,9 @@
         </LMarker>
       </div>
     </LMap>
-  </div>
 
-  <!-- <MapLoader :loading="loading"></MapLoader> -->
+    <MapLoader :loading="loading"></MapLoader>
+  </div>
 </template>
 
 <script setup>
