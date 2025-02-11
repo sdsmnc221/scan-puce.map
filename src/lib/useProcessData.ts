@@ -101,6 +101,8 @@ export default function useProcessData(
       });
     }
 
+    console.log(pinType.value);
+
     filteredResult = cities.value.filter((city: City) => {
       if (pinType.value.includes(0) && pinType.value.includes(1)) {
         return true;
@@ -115,11 +117,12 @@ export default function useProcessData(
           (record: BaseRecord) => !!record.AccessICAD
         );
       } else if (!pinType.value.includes(0) && !pinType.value.includes(1)) {
+        console.log("here");
         return false;
       }
     });
 
-    console.log(filteredResult);
+    // console.log(filteredResult);
 
     return uniqBy(filteredResult, "zipCode");
   });

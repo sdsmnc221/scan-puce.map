@@ -21,8 +21,10 @@
         >
         <span class="block md:inline-block md:ml-1">
           ( <span class="font-bold">{{ mapCities.length }}</span> localisations
-          <span v-if="pinType.includes(2)" class="font-bold"
-            >& {{ processedZones.length }} zones</span
+          <span v-if="pinType.includes(2)"
+            >&
+            <span class="font-bold">{{ processedZones.length }}</span>
+            zones</span
           >)
         </span>
       </RippleButton>
@@ -30,11 +32,13 @@
       <div
         class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl text-center md:text-left">
+        <h2 class="font-bold text-lg md:text-xl sm:text-center md:text-left">
           Les épingles :
         </h2>
 
-        <div class="w-full flex md:flex-col justify-center items-center">
+        <div
+          class="w-full flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
+        >
           <button
             class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-red-800"
             :class="{ 'line-through': !pinType.includes(0) }"
@@ -60,7 +64,7 @@
           </button>
 
           <button
-            class="md:w-80 ml-2 mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
           >
@@ -377,7 +381,7 @@ const selectedCity = ref(null);
 const usingCities = computed(() => {
   let toUse;
 
-  if (pinType.value.includes(0) || pinType.value.includes(1) || keyword.value) {
+  if (pinType.value.length || !pinType.value.includes(2) || keyword.value) {
     toUse = filteredCities.value;
   } else {
     toUse = cities.value;
@@ -444,9 +448,11 @@ const onSearchInput = (inputValue) => {
 
 const togglePinType = (pinValue) => {
   if (pinType.value.includes(pinValue)) {
+    // Create a new array with the filtered values
     pinType.value = pinType.value.filter((type) => type !== pinValue);
   } else {
-    pinType.value.push(pinValue);
+    // Create a new array with the added value
+    pinType.value = [...pinType.value, pinValue];
   }
 };
 
