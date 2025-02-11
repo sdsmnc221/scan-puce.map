@@ -8,12 +8,12 @@ import { transformToCapitalize } from "./lexique";
 import franceCommunes from "../geojson/communesFr.json";
 import franceDepartments from "../geojson/dptFr.json";
 
-type CsvStore = {
+export type CsvStore = {
   dpt: any[];
   zip: any[];
 };
 
-type BaseRecord = {
+export type BaseRecord = {
   id: string;
   createTime: string;
   // fields: {
@@ -65,7 +65,11 @@ export default function useProcessData(
   const filteredCities: ComputedRef<City[]> = computed(() => {
     let filteredResult;
 
-    if (!keyword.value.trim().length && !pinType.value.length) {
+    if (
+      !keyword.value.trim().length &&
+      pinType.value.length === 1 &&
+      pinType.value.includes(2)
+    ) {
       return [];
     }
 
@@ -114,6 +118,8 @@ export default function useProcessData(
         return false;
       }
     });
+
+    console.log(filteredResult);
 
     return uniqBy(filteredResult, "zipCode");
   });
@@ -457,7 +463,10 @@ export default function useProcessData(
   );
 
   return {
+    records,
+    postcodes,
     cities,
     filteredCities,
+    processCsv,
   };
 }

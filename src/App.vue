@@ -20,9 +20,10 @@
           Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
         >
         <span class="block md:inline-block md:ml-1">
-          (au total :
-          <span class="font-bold">{{ mapCities.length }}</span>
-          localisations)
+          ( <span class="font-bold">{{ mapCities.length }}</span> localisations
+          <span v-if="pinType.includes(2)" class="font-bold"
+            >& {{ processedZones.length }} zones</span
+          >)
         </span>
       </RippleButton>
 
@@ -47,7 +48,7 @@
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row text-center md:text-left md:justify-start items-center text-[12px] text-sky-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-sky-700"
             :class="{ 'line-through': !pinType.includes(1) }"
             @click="togglePinType(1)"
           >
@@ -59,7 +60,7 @@
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
+            class="md:w-80 ml-2 mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
           >
@@ -75,20 +76,28 @@
       </div>
 
       <div
-        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:max-h-[32vh] md:text-left"
+        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <h2 class="font-bold text-lg md:text-xl">
           Information de la localisation{{ selectedCity ? ":" : "..." }}
         </h2>
+
         <p class="text-md text-slate-400" v-if="!selectedCity">
           Veuillez choisir une localisation sur la carte.
         </p>
-        <div v-else class="hidden md:block my-6">
+        <div
+          v-else
+          class="hidden md:block my-6 md:max-h-[40vh] md:overflow-scroll"
+        >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
-          <RippleButton class="mt-6 text-sm" @click="resetMapView"
-            >Recentrer sur la carte</RippleButton
-          >
         </div>
+
+        <RippleButton
+          v-if="selectedCity"
+          class="mt-6 text-sm"
+          @click="resetMapView"
+          >Recentrer sur la carte</RippleButton
+        >
 
         <Sheet
           :open="citySheetOpen"
@@ -133,7 +142,7 @@
 
       <Sheet>
         <SheetTrigger class="toggle-legal">
-          <RippleButton class="text-[10px] md:text-xs rounded-xl bg-yellow-100">
+          <RippleButton class="text-[10px] rounded-xl bg-yellow-100">
             Mentions légales & Politique de confidentialité
           </RippleButton>
         </SheetTrigger>
@@ -181,32 +190,32 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <!-- <LPolygon
-        v-for="(zone, index) in processedZones"
-        :key="`zone-commun-${index}`"
-        :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
-        :options="getZoneOptions(zone)"
-      >
-        <LMarker
-          :lat-lng="getZoneCenter(zone.coordinates)"
-          @click="
-            (e) => {
-              const { lat, lng } = e.latlng;
-              centerOnMarker([lat, lng]);
-              targetPopup(e);
-            }
-          "
+      <template v-if="pinType.includes(2)">
+        <LPolygon
+          v-for="(zone, index) in processedZones"
+          :key="`zone-commun-${index}`"
+          :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
+          :options="getZoneOptions(zone)"
         >
-          <LIcon
-            icon-url="pin-zone.png"
-            :icon-size="[32, 32]"
-            :icon-anchor="[16, 16]"
-          />
-          <LPopup>
-            <PinPopup :location="zone"></PinPopup>
-          </LPopup>
-        </LMarker>
-      </LPolygon> -->
+          <LMarker
+            :lat-lng="getZoneCenter(zone.coordinates)"
+            @click="
+              (e) => {
+                const { lat, lng } = e.latlng;
+                onMarkerClick(zone, {
+                  coordinates: [lat, lng],
+                });
+              }
+            "
+          >
+            <LIcon
+              icon-url="pin-zone.png"
+              :icon-size="[32, 32]"
+              :icon-anchor="[16, 16]"
+            />
+          </LMarker>
+        </LPolygon>
+      </template>
 
       <div>
         <LMarker
@@ -256,12 +265,7 @@ import Airtable from "airtable";
 import axios from "axios";
 import { inject } from "@vercel/analytics";
 import { flatten } from "lodash";
-import {
-  createPolygonFromPoints,
-  getZoneOptions,
-  extractNumbers,
-  getZoneCenter,
-} from "./lib/map";
+
 import { transformToCapitalize } from "./lib/lexique";
 import { isMobile } from "./lib/utils";
 
@@ -288,8 +292,11 @@ import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png
 
 import L from "leaflet";
 
+import { getZoneOptions, getZoneCenter } from "./lib/map";
+
 import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
+import useZones from "./lib/useZones";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
@@ -337,9 +344,6 @@ const searchTimeout = ref(null);
 const keyword = ref("");
 const pinType = ref([0, 1, 2]);
 
-const communesContours = ref({});
-const communesNames = ref({});
-
 const storedCsv = ref({
   dpt: [],
   zip: [],
@@ -350,14 +354,22 @@ const storedFilloutCsv = ref({
   zip: [],
 });
 
-const { cities, filteredCities } = useProcessData(
-  usingFilloutBase,
+const { records, postcodes, cities, filteredCities, processCsv } =
+  useProcessData(
+    usingFilloutBase,
+    usingDptCode,
+    storedFilloutCsv,
+    storedCsv,
+    keyword,
+    pinType,
+    loading
+  );
+const { processedZones } = useZones(
   usingDptCode,
+  postcodes,
+  records,
   storedFilloutCsv,
-  storedCsv,
-  keyword,
-  pinType,
-  loading
+  processCsv
 );
 const mapCities = ref([]);
 const selectedCity = ref(null);
@@ -365,7 +377,7 @@ const selectedCity = ref(null);
 const usingCities = computed(() => {
   let toUse;
 
-  if (pinType.value.length || keyword.value) {
+  if (pinType.value.includes(0) || pinType.value.includes(1) || keyword.value) {
     toUse = filteredCities.value;
   } else {
     toUse = cities.value;
@@ -438,93 +450,6 @@ const togglePinType = (pinValue) => {
   }
 };
 
-// const zones = computed(() => {
-//   let codes;
-
-//   if (usingDptCode.value) {
-//     codes = records.value
-//       .filter((rec) => rec.Dept.includes(","))
-//       .map((rec) => ({
-//         postcodes: rec.Dept.replaceAll(" ", "")
-//           .split(",")
-//           .map((dpt) => {
-//             const dptCode = extractNumbers(dpt);
-//             return dptCode.length === 2 ? dptCode + "000" : dptCode;
-//           }),
-//         records: [rec],
-//       }));
-//   } else {
-//     codes = records.value
-//       .filter((rec) => rec.ZipCode.includes(","))
-//       .map((rec) => ({
-//         postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
-//         records: [rec],
-//       }));
-//   }
-
-//   return codes;
-// });
-
-// const computeZones = () => {
-//   return zones.value.map((zone, index) => {
-//     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
-//     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
-//     const zipCodesResults = processCsv(rows);
-
-//     const citiesDetails = zone.postcodes
-//       .map((city) => {
-//         return zipCodesResults.find((entry) => {
-//           // Split in case there are multiple zip codes
-//           const entryCodes = entry.zipCode
-//             .split(",")
-//             .map((code) => code.trim());
-//           // Check for exact match with either full code or department code
-//           return (
-//             entryCodes.includes(city) || entryCodes.includes(city.slice(0, 2))
-//           );
-//         });
-//       })
-//       .filter((entry) => !!entry);
-
-//     // First try to use commune contours if available
-//     const hasContours = zone.postcodes.some(
-//       (postcode) => communesContours.value[postcode]
-//     );
-
-//     if (hasContours) {
-//       // Use the contours for coordinates
-//       const allContourPoints = zone.postcodes
-//         .filter((postcode) => communesContours.value[postcode])
-//         .flatMap((postcode) => communesContours.value[postcode]);
-
-//       return {
-//         ...zone,
-//         postcodes: zone.postcodes,
-//         coordinates: allContourPoints,
-//         cityNames: citiesDetails.map((city) => city.name),
-//         color: "#FFCA3A",
-//       };
-//     }
-
-//     const coordinates = citiesDetails.map((city) => ({
-//       lat: city.lat,
-//       lng: city.lng,
-//     }));
-
-//     const cityNames = citiesDetails.map((city) => city.name);
-
-//     return {
-//       ...zone,
-//       postcodes: zone.postcodes,
-//       coordinates: createPolygonFromPoints(coordinates), // Changed this line
-//       cityNames,
-//       color: "#FFCA3A",
-//     };
-//   });
-// };
-
-// const processedZones = ref(computeZones());
-
 const centerOnMarker = ([lat, lng]) => {
   map.value?.leafletObject?.setView([lat, lng], 10);
 };
@@ -540,8 +465,8 @@ const resetMapView = async () => {
   selectedCity.value = null;
 };
 
-const onMarkerClick = (city) => {
-  centerOnMarker([city.lat, city.lng]);
+const onMarkerClick = (city, zoneOptions = null) => {
+  centerOnMarker(zoneOptions ? zoneOptions.coordinates : [city.lat, city.lng]);
   selectedCity.value = city;
 };
 
@@ -567,14 +492,6 @@ onMounted(() => {
 onUnmounted(() => {
   if (searchTimeout.value) clearTimeout(searchTimeout.value);
 });
-
-// watch(
-//   [() => storedCsv.value, () => storedFilloutCsv.value, () => zones.value],
-//   () => {
-//     processedZones.value = computeZones();
-//   },
-//   { deep: true, flush: "sync" }
-// );
 
 watch(
   [usingCities],
@@ -625,6 +542,7 @@ watch(
 body,
 * {
   box-sizing: border-box;
+  text-wrap: balance;
 }
 
 #app {
