@@ -465,6 +465,18 @@ export default function useProcessData(
     }
   );
 
+  watch(
+    () => currentCitiesBatch.value,
+    () => {
+      if (
+        currentCitiesBatch.value ===
+        Math.ceil(postcodes.value.length / BATCH_SIZE)
+      ) {
+        loading.value = false;
+      }
+    }
+  );
+
   return {
     records,
     postcodes,
