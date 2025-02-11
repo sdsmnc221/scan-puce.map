@@ -54,7 +54,7 @@
         </LMarker>
       </LPolygon>
 
-      <template v-if="mapCities?.length">
+      <div>
         <LMarker
           v-for="city in mapCities"
           :key="`commune-${city.zipCode}`"
@@ -78,7 +78,7 @@
             <PinPopup :location="city" :is-dpt="usingDptCode"> </PinPopup>
           </LPopup>
         </LMarker>
-      </template>
+      </div>
     </LMap>
 
     <IInput
@@ -146,6 +146,7 @@ import {
   LGeoJson,
   LRectangle,
 } from "@vue-leaflet/vue-leaflet";
+
 import franceBoundaries from "./geojson/france.json";
 import franceDepartments from "./geojson/dptFr.json";
 import franceCommunes from "./geojson/communesFr.json";
@@ -179,6 +180,12 @@ import PWAInstallPrompt from "./components/PWAInstallPrompt.vue";
 import PinPopup from "./components/PinPopup.vue";
 import LegalNotice from "./components/LegalNotice.vue";
 import MapLoader from "./components/MapLoader.vue";
+
+import markerIconUrl from "/node_modules/leaflet/dist/images/marker-icon.png";
+import markerIconRetinaUrl from "/node_modules/leaflet/dist/images/marker-icon-2x.png";
+import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png";
+
+import L from "leaflet";
 
 const usingDptCode = ref(false);
 const usingFilloutBase = ref(true);
@@ -372,8 +379,9 @@ const processCsv = (rows) => {
         const [
           postcode,
           city,
-          latitude,
           longitude,
+          latitude,
+
           result_label,
           result_score,
           result_score_next,
@@ -651,6 +659,13 @@ const targetPopup = (e) => {
 onMounted(() => {
   nextTick(() => {
     inject();
+
+    L.Icon.Default.imagePath = "/";
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: markerIconRetinaUrl,
+      iconUrl: markerIconUrl,
+      shadowUrl: markerShadowUrl,
+    });
   });
 });
 
@@ -724,26 +739,21 @@ watch(
   cities,
   async () => {
     try {
-      await nextTick();
       if (!map.value?._leaflet_id) {
         console.log("error map display");
-
-        // map.value = document.querySelector("#map");
-
+        await nextTick();
         mapCities.value = [];
-        nextTick(() => {
-          mapCities.value = [...cities.value];
-        });
+
+        mapCities.value = [...cities.value];
+
+        return;
       }
 
+      await nextTick();
       mapCities.value = [];
-
-      nextTick(() => {
-        mapCities.value = [...cities.value];
-      });
+      mapCities.value = [...cities.value];
     } catch (error) {
       console.error("Map error:", error);
-      // cities.value = [...cities.value];
     }
   },
   { deep: true, flush: "sync" }
