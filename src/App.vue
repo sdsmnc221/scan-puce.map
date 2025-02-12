@@ -30,7 +30,7 @@
       </RippleButton>
 
       <div
-        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
+        class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <h2 class="font-bold text-lg md:text-xl sm:text-center md:text-left">
           Les épingles :
@@ -80,7 +80,7 @@
       </div>
 
       <div
-        class="mt-4 md:mt-10 sm:w-full md:w-11/12 sm:text-center md:text-left"
+        class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <h2 class="font-bold text-lg md:text-xl">
           Information de la localisation{{ selectedCity ? ":" : "..." }}
@@ -91,14 +91,14 @@
         </p>
         <div
           v-else
-          class="hidden md:block my-6 md:max-h-[40vh] md:overflow-scroll"
+          class="hidden md:block my-3 md:max-h-[30vh] md:overflow-scroll"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
 
         <RippleButton
           v-if="selectedCity"
-          class="mt-6 text-sm"
+          class="my-3 text-sm"
           @click="resetMapView"
           >Recentrer sur la carte</RippleButton
         >
