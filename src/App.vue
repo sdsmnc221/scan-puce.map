@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-1/3 flex flex-col font-serif">
+  <nav class="w-1/3 flex flex-col font-sans">
     <div class="flex flex-col items-center">
       <h1 class="font-bold text-xl md:text-3xl text-cente my-3">
         Réseau Lecteurs de Puce France
@@ -109,7 +109,7 @@
         >
           <SheetTrigger class="m-0 p-0 fixed"></SheetTrigger>
           <SheetTitle></SheetTitle>
-          <SheetContent class="city-sheet font-serif" side="bottom">
+          <SheetContent class="city-sheet font-sans" side="bottom">
             <SheetHeader>
               <SheetTitle></SheetTitle>
               <SheetDescription class="flex flex-col text-left">
