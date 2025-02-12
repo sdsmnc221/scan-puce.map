@@ -91,7 +91,7 @@
         </p>
 
         <p class="text-md text-slate-800" v-else>
-          {{ selectedCityZip || "Zone " + selectedCity?.postcodes?.join(", ") }}
+          {{ selectedCityZip }}
         </p>
 
         <div
@@ -391,9 +391,13 @@ const mapCities = ref([]);
 const selectedCity = ref(null);
 
 const selectedCityZip = computed(() => {
-  console.log(selectedCity.value);
+  if (!selectedCity.value) return "";
+
+  if (selectedCity.value.postcodes?.length) {
+    return "Zone " + selectedCity.value.postcodes.join(", ");
+  }
   return usingDptCode.value
-    ? "Zone " + selectedCity.value.departmentCode
+    ? "Département " + selectedCity.value.departmentCode
     : "Commune(s) " + selectedCity.value.zipCode;
 });
 

@@ -134,9 +134,12 @@ const props = defineProps<Props>();
 const hoveredIndex: Ref<null | number> = ref(null);
 
 const zipCode = computed(() => {
+  if (props.location.postcodes?.length) {
+    return "Zone " + props.location.postcodes.join(", ");
+  }
   return props.isDpt
-    ? "Zone " + props.location.departmentCode
-    : props.location.zipCode;
+    ? "Département " + props.location.departmentCode
+    : "Commune(s) " + props.location.zipCode;
 });
 
 const communes = computed(() => {
