@@ -1,10 +1,11 @@
-<style lang="scss" scoped>
+<style lang="scss">
 .loader-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100svh;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -140,7 +141,7 @@ const props = defineProps({
 <template>
   <div class="loader-container" :class="{ 'slide-out-bck-center': !loading }">
     <FlickeringGrid
-      class="fixed flex justify-center items-center inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
+      class="absolute w-full h-full flex justify-center items-center inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
       :square-size="4"
       :grid-gap="6"
       color="#1d3557"

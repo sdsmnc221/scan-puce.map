@@ -26,7 +26,10 @@
       </div>
 
       <div v-show="isPreviewVisible" class="preview-content">
-        <div v-html="props.code" class="preview-frame"></div>
+        <div
+          v-html="props.code.replace('600px', '100%')"
+          class="preview-frame"
+        ></div>
       </div>
     </div>
   </div>
@@ -79,6 +82,10 @@ const copyCode = async () => {
   border-radius: 8px;
   overflow: hidden;
   margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  overflow: hidden;
 }
 
 .code-container {
@@ -125,6 +132,9 @@ code {
 
 .preview-container {
   border-top: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .preview-header {
@@ -157,11 +167,12 @@ code {
 .preview-content {
   padding: 16px;
   background: white;
+  flex: 1;
 }
 
 .preview-frame {
   width: 100%;
-  min-height: 200px;
+  height: 100%;
   border: 1px solid #eee;
   border-radius: 4px;
 }

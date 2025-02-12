@@ -1,35 +1,37 @@
 <template>
-  <h2 class="font-semibold text-sm">
+  <h2 class="font-semibold text-xl">
     {{ zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
 
-  <h3 class="text-xs font-semibold" v-if="isDpt">
+  <h3 class="text-sm font-semibold text-slate-400" v-if="isDpt">
     {{ location.departmentName }}
   </h3>
-  <h3 class="text-xs font-semibold" v-if="communes">
+  <h3 class="text-sm font-semibold text-slate-400" v-if="communes">
     {{ communes }}
   </h3>
 
-  <div class="mt-2" v-if="records?.length">
+  <div class="mt-2" v-if="baseRecords?.length">
     <div
-      v-for="(record, index) in records"
+      v-for="(record, index) in baseRecords"
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
         record.Author
       }`"
     >
-      <div class="text-sm block mt-4">
+      <div class="block mt-4">
         <div>
-          <span>{{ record.Author }}</span>
+          <span class="text-md font-semibold">{{ record.Author }}</span>
 
-          <span v-if="record.CommuneName">
+          <span
+            class="block text-xs text-slate-500 mb-2"
+            v-if="record.CommuneName"
+          >
             {{ ` (${record.CommuneName.trim()}) ` }}</span
           >
         </div>
 
         <div
           v-if="!record.contactDetails?.needUpdate"
-          class="flex flex-col"
-          style="font-size: 10px"
+          class="flex flex-col text-xs text-sky-600 underline"
         >
           <div class="flex flex-row">
             <a
@@ -53,14 +55,13 @@
               target="_blank"
               :href="`telto:${record.contactDetails.tel}`"
               class="p-0 m-0"
-              >Contact par téll</a
+              >Contact par tél</a
             >
           </div>
 
           <TextHighlight
             v-if="record.contactDetails.admin"
-            style="font-size: 10px"
-            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-bold mr-2 w-[152px]"
+            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-semibold text-xs mr-2 w-[152px]"
             @mouseenter="() => (hoveredIndex = index)"
             @mouseleave="() => (hoveredIndex = null)"
           >
@@ -69,17 +70,26 @@
           </TextHighlight>
         </div>
 
-        <Badge
-          v-else
-          variant="destructive"
-          class="mr-2"
-          style="font-size: 10px"
-        >
-          Contact à mettre à jour
-        </Badge>
-        <Badge v-if="record.AccessICAD" style="font-size: 10px"
-          >Accès ICAD</Badge
-        >
+        <div class="my-1">
+          <Badge
+            v-if="
+              record.contactDetails.admin || record.contactDetails.needUpdate
+            "
+            variant="destructive"
+            class="mr-2"
+            style="font-size: 10px"
+          >
+            Contact à mettre à jour
+          </Badge>
+
+          <Badge v-if="record.AccessICAD" style="font-size: 10px"
+            >Accès ICAD</Badge
+          >
+        </div>
+
+        <p v-if="record.Notes" class="my-1 text-slate-500 text-[12px]">
+          <span class="font-bold">Notes: </span> {{ record.Notes }}
+        </p>
       </div>
     </div>
   </div>
@@ -100,6 +110,7 @@ type Record = {
   Tel?: string;
   Email?: string;
   ContactMode?: string;
+  Notes?: string;
 };
 
 type Props = {
@@ -111,7 +122,7 @@ type Props = {
     postcodes?: string[];
     departmentCode: string;
     departmentName: string;
-    records: Record[];
+    baseRecords: Record[];
   };
   isDpt?: boolean;
 };
@@ -123,9 +134,12 @@ const props = defineProps<Props>();
 const hoveredIndex: Ref<null | number> = ref(null);
 
 const zipCode = computed(() => {
+  if (props.location.postcodes?.length) {
+    return "Zone " + props.location.postcodes.join(", ");
+  }
   return props.isDpt
-    ? "Zone " + props.location.departmentCode
-    : props.location.zipCode;
+    ? "Département " + props.location.departmentCode
+    : "Commune(s) " + props.location.zipCode;
 });
 
 const communes = computed(() => {
@@ -187,8 +201,8 @@ const getContactDetails = (record: Record): ContactDetails => {
   return contact;
 };
 
-const records = computed(() =>
-  props.location.records.map((r) => ({
+const baseRecords = computed(() =>
+  props.location.baseRecords.map((r) => ({
     ...r,
     contactDetails: getContactDetails(r),
   }))
