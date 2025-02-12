@@ -9,6 +9,7 @@ export default function useZones(
   postcodes: ComputedRef<string[]>,
   records: Ref<Array<Record<string, any>>>,
   storedFilloutCsv: Ref<CsvStore>,
+  keyword: Ref<string>,
   processCsv: (zipCodes: string[]) => any
 ) {
   const communesContours: Ref<any> = ref({});
@@ -101,6 +102,7 @@ export default function useZones(
   };
 
   const processedZones = ref(computeZones());
+  const filteredZones: Ref<any[]> = ref([]);
 
   watch(
     [() => storedFilloutCsv.value, () => zones.value],
@@ -110,8 +112,28 @@ export default function useZones(
     { deep: true, flush: "sync" }
   );
 
+  watch(
+    () => keyword.value,
+    () => {
+      if (keyword.value.trim().length) {
+        filteredZones.value = processedZones.value.filter(
+          (zone: any) =>
+            zone.postcodes.some((code: string) =>
+              code.includes(keyword.value.trim())
+            ) ||
+            zone.cityNames.some((city: string) =>
+              city.toLowerCase().includes(keyword.value.trim().toLowerCase())
+            )
+        );
+      } else {
+        filteredZones.value = [];
+      }
+    }
+  );
+
   return {
     zones,
     processedZones,
+    filteredZones,
   };
 }

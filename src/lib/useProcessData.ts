@@ -85,12 +85,14 @@ export default function useProcessData(
         // });
 
         return (
-          city.zipCode.includes(keyword.value) ||
+          city.zipCode.includes(keyword.value.trim()) ||
           city.departmentName
             ?.toLowerCase()
-            ?.includes(keyword.value.toLowerCase()) ||
+            ?.includes(keyword.value.trim().toLowerCase()) ||
           city.communes.some((commune) =>
-            commune.name.toLowerCase().includes(keyword.value.toLowerCase())
+            commune.name
+              .toLowerCase()
+              .includes(keyword.value.trim().toLowerCase())
           )
 
           // dptOfCity.some(

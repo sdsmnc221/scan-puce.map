@@ -208,7 +208,7 @@
 
       <template v-if="pinType.includes(2)">
         <LPolygon
-          v-for="(zone, index) in processedZones"
+          v-for="(zone, index) in usingZones"
           :key="`zone-commun-${index}`"
           :lat-lngs="zone.coordinates.map(({ lat, lng }) => [lat, lng])"
           :options="getZoneOptions(zone)"
@@ -380,13 +380,23 @@ const { records, postcodes, cities, filteredCities, processCsv } =
     pinType,
     loading
   );
-const { processedZones } = useZones(
+const { processedZones, filteredZones } = useZones(
   usingDptCode,
   postcodes,
   records,
   storedFilloutCsv,
+  keyword,
   processCsv
 );
+
+const usingZones = computed(() => {
+  if (keyword.value.trim().length) {
+    return filteredZones.value;
+  } else {
+    return processedZones.value;
+  }
+});
+
 const mapCities = ref([]);
 const selectedCity = ref(null);
 
