@@ -99,6 +99,8 @@ export default function useProcessData(
           // )
         );
       });
+
+      return uniqBy(filteredResult, "zipCode");
     }
 
     console.log(pinType.value);
