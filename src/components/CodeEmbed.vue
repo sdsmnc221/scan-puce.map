@@ -26,7 +26,10 @@
       </div>
 
       <div v-show="isPreviewVisible" class="preview-content">
-        <div v-html="props.code" class="preview-frame"></div>
+        <div
+          v-html="props.code.replace('600px', '100%')"
+          class="preview-frame"
+        ></div>
       </div>
     </div>
   </div>
@@ -169,7 +172,7 @@ code {
 
 .preview-frame {
   width: 100%;
-  min-height: 200px;
+  height: 100%;
   border: 1px solid #eee;
   border-radius: 4px;
 }

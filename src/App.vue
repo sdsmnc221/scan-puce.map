@@ -89,16 +89,28 @@
         <p class="text-md text-slate-400" v-if="!selectedCity">
           Veuillez choisir une localisation sur la carte.
         </p>
+
+        <p class="text-md text-slate-800" v-else>
+          {{ selectedCityZip || "Zone " + selectedCity?.postcodes?.join(", ") }}
+        </p>
+
         <div
-          v-else
-          class="hidden md:block my-3 md:max-h-[30vh] md:overflow-scroll"
+          v-if="selectedCity"
+          class="city-details hidden md:block my-3 p-5 md:overflow-scroll bg-white"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
+
+          <RippleButton
+            v-if="selectedCity"
+            class="mt-3 text-sm w-full"
+            @click="resetMapView"
+            >Recentrer sur la carte</RippleButton
+          >
         </div>
 
         <RippleButton
           v-if="selectedCity"
-          class="my-3 text-sm"
+          class="mt-3 text-sm w-full"
           @click="resetMapView"
           >Recentrer sur la carte</RippleButton
         >
@@ -378,6 +390,13 @@ const { processedZones } = useZones(
 const mapCities = ref([]);
 const selectedCity = ref(null);
 
+const selectedCityZip = computed(() => {
+  console.log(selectedCity.value);
+  return usingDptCode.value
+    ? "Zone " + selectedCity.value.departmentCode
+    : "Commune(s) " + selectedCity.value.zipCode;
+});
+
 const usingCities = computed(() => {
   let toUse;
 
@@ -582,6 +601,7 @@ nav {
   padding-right: 16px;
   gap: 16px;
   justify-content: space-between;
+  z-index: 98;
 
   .search-input {
   }
@@ -606,12 +626,28 @@ nav {
     // right: 24px;
     // z-index: 49;
   }
+
+  .city-details {
+    position: fixed;
+    right: 32px;
+    top: 32px;
+    z-index: 5;
+    width: 20vw;
+    max-height: calc(100vh - 32px * 2);
+    border-radius: 16px;
+    transform: translateY(-16px);
+  }
 }
 
 .legal-sheet,
 .embed-sheet {
   width: 50vw;
   max-width: unset;
+  z-index: 99;
+}
+
+.fixed.inset-0 {
+  z-index: 99;
 }
 
 @media screen and (max-width: 768px) {
@@ -625,6 +661,7 @@ nav {
     nav {
       width: 100%;
       padding: 0;
+      z-index: unset;
     }
 
     .map {
