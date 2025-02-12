@@ -82,11 +82,11 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl">
+        <h2 class="hidden md:block font-bold text-lg md:text-xl">
           Information de la localisation{{ selectedCity ? ":" : "..." }}
         </h2>
 
-        <p class="text-md text-slate-400" v-if="!selectedCity">
+        <p class="hidden md:block text-md text-slate-400" v-if="!selectedCity">
           Veuillez choisir une localisation sur la carte.
         </p>
 
@@ -697,6 +697,7 @@ nav {
 
   .fixed.inset-0 {
     background-color: rgba(0, 0, 0, 0.32);
+    z-index: 10;
   }
 }
 </style>
