@@ -20,8 +20,8 @@
       v-model="modelValue"
       :class="
         cn(
-          `flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
-            file:text-sm file:font-medium placeholder:text-neutral-400 dark:placeholder-text-neutral-600 
+          `flex h-10 w-full border-none bg-gray-50 dark:bg-zinc-800 text-black dark:text-white shadow-input rounded-md px-3 py-2 pb-4 text-sm  file:border-0 file:bg-transparent 
+            file:text-sm file:font-medium placeholder:text-neutral-400 placeholder:text-[10px] dark:placeholder-text-neutral-600 
             focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 dark:focus-visible:ring-neutral-600
              disabled:cursor-not-allowed disabled:opacity-50
              dark:shadow-[0px_0px_1px_1px_var(--neutral-700)]
@@ -84,10 +84,21 @@ function handleMouseMove({ clientX, clientY }: MouseEvent) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 input {
   box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, 0.1),
     0px 1px 0px 0px rgba(25, 28, 33, 0.02),
     0px 0px 0px 1px rgba(25, 28, 33, 0.08);
+
+  position: relative;
+
+  &::placeholder {
+    word-break: break-word;
+    text-wrap: wrap;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+  }
 }
 </style>

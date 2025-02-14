@@ -1,7 +1,7 @@
 <template>
   <nav class="w-1/3 flex flex-col font-sans">
     <div class="flex flex-col items-center">
-      <h1 class="font-bold text-xl md:text-3xl text-cente my-3">
+      <h1 class="font-bold text-xl md:text-3xl text-center my-3">
         Réseau Lecteurs de Puce France
       </h1>
 
@@ -19,7 +19,7 @@
         <span class="font-bold text-sm">
           Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
         >
-        <span class="block md:inline-block md:ml-1">
+        <span class="block md:inline-block md:ml-1 text-xs">
           ( <span class="font-bold">{{ mapCities.length }}</span> localisations
           <span v-if="pinType.includes(2)"
             >&
@@ -32,7 +32,7 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl sm:text-center md:text-left">
+        <h2 class="font-bold text-lg md:text-xl text-center md:text-left">
           Les épingles :
         </h2>
 
@@ -40,7 +40,7 @@
           class="w-full flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
         >
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-red-800"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-red-800"
             :class="{ 'line-through': !pinType.includes(0) }"
             @click="togglePinType(0)"
           >
@@ -52,7 +52,7 @@
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-sky-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-sky-700"
             :class="{ 'line-through': !pinType.includes(1) }"
             @click="togglePinType(1)"
           >
@@ -64,7 +64,7 @@
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[12px] text-yellow-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-yellow-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
           >
@@ -158,7 +158,9 @@
 
       <Sheet>
         <SheetTrigger class="toggle-legal">
-          <RippleButton class="text-[10px] rounded-xl bg-yellow-100">
+          <RippleButton
+            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-yellow-100"
+          >
             Mentions légales & Politique de confidentialité
           </RippleButton>
         </SheetTrigger>
