@@ -191,7 +191,7 @@ const getContactDetails = (record: Record): ContactDetails => {
       break;
   }
 
-  if (!contact.link && !contact.mail && !contact.admin) {
+  if (!contact.link && !contact.mail && !contact.admin && !contact.tel) {
     // console.log(record);
     contact.needUpdate = true;
   } else {
