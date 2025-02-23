@@ -204,8 +204,11 @@ export default function useProcessData(
     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
     // Initialize store if empty
-    if (!store.value[usingDptCode.value ? "dpt" : "zip"]?.length) {
-      store.value[usingDptCode.value ? "dpt" : "zip"] = csvCommunesContent;
+    if (!store.value.dpt.length) {
+      store.value["dpt"] = csvDeptsContent;
+    }
+    if (!store.value.zip.length) {
+      store.value["zip"] = csvCommunesContent;
     }
 
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
@@ -362,7 +365,7 @@ export default function useProcessData(
     cities.value = uniqBy(cities.value, "zipCode");
   };
 
-  const fetchCsvRecords = async (zipCodes: string[], batchIndex = 0) => {
+  const fetchCsvRecords = async (zipCodes: string[]) => {
     if (!zipCodes || zipCodes.length === 0) return false;
 
     // Check all zipcodes against local data
@@ -371,12 +374,13 @@ export default function useProcessData(
 
     for (const zipCode of zipCodes) {
       const matches = csvCommunesContent.filter(
-        (row) => row.postcode === zipCode || row.result_postcode === zipCode
+        (row: any) =>
+          row.postcode === zipCode || row.result_postcode === zipCode
       );
 
       if (matches.length > 0) {
         const formattedMatches = matches.map(
-          (match) =>
+          (match: any) =>
             `${match.postcode},"${match.commune}",${match.longitude},${match.latitude}`
         );
         localMatches.push(...formattedMatches);
@@ -397,8 +401,6 @@ export default function useProcessData(
     if (zipCodesToFetch.length === 0) {
       return true;
     }
-
-    console.log(storedFilloutCsv.value);
 
     // Fetch remaining zipcodes in one API call
     const communes = [];
@@ -468,10 +470,7 @@ export default function useProcessData(
           `Processing batch ${currentCsvBatch.value + 1} of ${totalBatches}`
         );
 
-        const success = await fetchCsvRecords(
-          zipCodesBatch,
-          currentCsvBatch.value
-        );
+        const success = await fetchCsvRecords(zipCodesBatch);
         if (success) {
           await loadCitiesForBatch(currentCsvBatch.value);
         }
@@ -494,40 +493,6 @@ export default function useProcessData(
       loadCsvDone.value = true;
     } finally {
       loading.value = false;
-    }
-  };
-
-  const loadCities = async () => {
-    try {
-      loading.value = true;
-      currentCitiesBatch.value = 0;
-
-      console.log("load cities");
-
-      const startIndex = currentCitiesBatch.value * BATCH_SIZE;
-      const endIndex = startIndex + BATCH_SIZE;
-
-      const zipCodes = postcodes.value.slice(startIndex, endIndex);
-
-      if (!zipCodes.length) return;
-
-      const totalBatches = Math.ceil(postcodes.value.length / BATCH_SIZE);
-
-      processZipcodesBatch();
-
-      const loadNextBatch = () => {
-        currentCitiesBatch.value++;
-        if (currentCitiesBatch.value < totalBatches) {
-          processZipcodesBatch();
-
-          setTimeout(() => loadNextBatch(), 100);
-        }
-      };
-
-      loadNextBatch();
-    } catch (error) {
-      console.error("Error loading cities:", error);
-      cities.value = []; // Set empty array in case of error
     }
   };
 
