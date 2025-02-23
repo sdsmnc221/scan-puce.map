@@ -311,6 +311,7 @@ import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png
 import L from "leaflet";
 
 import { getZoneOptions, getZoneCenter } from "./lib/map";
+import { delay } from "./lib/useBase";
 
 import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
@@ -451,7 +452,7 @@ const geoJsonOptions = {
 const loadRecordByZipCode = (zipCode) => {
   const records_ = records.value.filter((rec) => {
     // Split in case there are multiple zip codes
-    const zipCodes = rec.ZipCode.split(",").map((code) => code.trim());
+    const zipCodes = rec.ZipCode?.split(",").map((code) => code.trim());
     // Check for exact match
     return zipCodes.includes(zipCode);
   });
@@ -465,7 +466,7 @@ const loadRecordByDeptCode = (deptCode) => {
   const records_ = records.value.filter((rec) => {
     // Split the Dept field in case it contains multiple codes
 
-    const deptCodes = rec.Dept.split(",").map((code) => code.trim());
+    const deptCodes = rec.Dept?.split(",").map((code) => code.trim());
     // Check for exact match with the prefix
     return deptCodes.includes(deptPrefix);
   });
@@ -535,20 +536,20 @@ onUnmounted(() => {
 });
 
 watch(
-  [usingCities],
+  usingCities,
   async () => {
     try {
       if (!map.value?._leaflet_id) {
         console.log("error map display");
 
-        await nextTick();
+        await delay(1000); // Wait 50ms between each chunk
         mapCities.value = [];
         mapCities.value = [...usingCities.value];
 
         return;
       }
 
-      await nextTick();
+      await delay(1000); // Wait 50ms between each chunk
       mapCities.value = [];
       mapCities.value = [...usingCities.value];
 
@@ -567,8 +568,7 @@ watch(
     setTimeout(() => {
       // document.querySelector("#map").innerHTML =
       //   "<div id='map' style='width: 100%; height: 100%;'></div>";
-
-      loading.value = false;
+      // loading.value = false;
     }, 480);
 
     console.log(reloadMapCount.value);

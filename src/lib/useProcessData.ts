@@ -59,7 +59,9 @@ export default function useProcessData(
   const currentCsvBatch = ref(0);
   const currentCitiesBatch = ref(0);
 
-  const { loadRecordsDone, records } = useBase(usingFilloutBase);
+  const { loadRecordsDone, records, batchIndex } = useBase(usingFilloutBase);
+
+  const loadCsvDone = ref(false);
 
   const cities: Ref<City[]> = ref([]);
   const filteredCities: ComputedRef<City[]> = computed(() => {
@@ -132,19 +134,21 @@ export default function useProcessData(
   });
 
   const postcodes = computed(() => {
+    if (!batchIndex.value) return [];
+
     let codes;
 
     if (usingDptCode.value) {
       codes = flatten(
         records.value
           .filter((rec) => !!rec.Dept)
-          .map((rec) => rec.Dept.replaceAll(" ", "").split(","))
+          .map((rec) => rec.Dept?.replaceAll(" ", "")?.split(","))
       ).map((dpt) => dpt + "000");
     } else {
       codes = flatten(
         records.value
           .filter((rec) => !!rec.ZipCode)
-          .map((rec) => rec.ZipCode.replaceAll(" ", "").split(","))
+          .map((rec) => rec?.ZipCode?.replaceAll(" ", "")?.split(","))
       );
     }
 
@@ -154,11 +158,11 @@ export default function useProcessData(
   const loadRecordByZipCode = (zipCode: string) => {
     const records_ = records.value.filter((rec) => {
       // Split in case there are multiple zip codes
-      const zipCodes = rec.ZipCode.split(",").map((code: string) =>
+      const zipCodes = rec.ZipCode?.split(",")?.map((code: string) =>
         code.trim()
       );
       // Check for exact match
-      return zipCodes.includes(zipCode);
+      return zipCodes?.includes(zipCode);
     });
 
     return records_ ?? null;
@@ -170,7 +174,7 @@ export default function useProcessData(
     const records_ = records.value.filter((rec) => {
       // Split the Dept field in case it contains multiple codes
 
-      const deptCodes = rec.Dept.split(",").map((code: string) => code.trim());
+      const deptCodes = rec.Dept?.split(",").map((code: string) => code.trim());
       // Check for exact match with the prefix
       return deptCodes.includes(deptPrefix);
     });
@@ -191,18 +195,11 @@ export default function useProcessData(
     );
   };
 
-  // Modified fetchCsvRecords to handle batches
   const fetchCsvRecords = async (zipCodes: string[], batchIndex = 0) => {
-    if (!zipCodes) return;
-
-    const startIndex = batchIndex * BATCH_SIZE;
-    const endIndex = startIndex + BATCH_SIZE;
-    const zipCodesBatch = zipCodes.slice(startIndex, endIndex);
-
-    if (zipCodesBatch.length === 0) return;
+    if (!zipCodes || zipCodes.length === 0) return false;
 
     const communes = [];
-    for (const zipCode of zipCodesBatch) {
+    for (const zipCode of zipCodes) {
       const communesOfSameZip = (franceCommunes as any[])
         .filter((c) => c.CodePostal == zipCode)
         .map((c) => ({
@@ -386,50 +383,74 @@ export default function useProcessData(
 
   const loadCsv = async () => {
     try {
-      loading.value = true;
-
-      const zipCodes = postcodes.value;
-
-      if (!zipCodes.length) return;
-
       currentCsvBatch.value = 0;
-      const totalBatches = Math.ceil(zipCodes.length / BATCH_SIZE);
+      const totalBatches = Math.ceil(postcodes.value.length / BATCH_SIZE);
 
-      // Initial load of first batch
-      await fetchCsvRecords(zipCodes, currentCsvBatch.value);
+      const processBatch = async () => {
+        loading.value = true; // Set loading true at start of each batch
 
-      // Load remaining batches
-      const loadNextBatch = async () => {
-        currentCsvBatch.value++;
-        if (currentCsvBatch.value < totalBatches) {
-          const success = await fetchCsvRecords(
-            zipCodes,
-            currentCsvBatch.value
-          );
-          if (success) {
-            // Schedule next batch with a small delay to prevent UI blocking
-            setTimeout(() => loadNextBatch(), 100);
+        const startIndex = currentCsvBatch.value * BATCH_SIZE;
+        const endIndex = startIndex + BATCH_SIZE;
+        const zipCodesBatch = postcodes.value.slice(startIndex, endIndex);
+
+        if (zipCodesBatch.length === 0) {
+          loadCsvDone.value = true;
+          loading.value = false; // Set loading false if no more batches
+          return;
+        }
+
+        console.log(
+          `Processing CSV batch ${currentCsvBatch.value + 1} of ${totalBatches}`
+        );
+
+        const success = await fetchCsvRecords(
+          zipCodesBatch,
+          currentCsvBatch.value
+        );
+
+        if (success) {
+          await loadCitiesForBatch(currentCsvBatch.value);
+          currentCsvBatch.value++;
+
+          loading.value = false; // Set loading false after batch completes
+
+          if (currentCsvBatch.value >= totalBatches) {
+            loadCsvDone.value = true;
+            return;
           }
+
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          await processBatch();
+        } else {
+          loadCsvDone.value = true;
+          loading.value = false; // Set loading false if batch fails
         }
       };
 
-      loadNextBatch();
+      await processBatch();
     } catch (error) {
       console.error("Error loading cities:", error);
-      cities.value = []; // Set empty array in case of error
+      cities.value = [];
+      loadCsvDone.value = true;
+      loading.value = false; // Set loading false on error
     }
   };
 
   const loadCities = async () => {
     try {
       loading.value = true;
+      currentCitiesBatch.value = 0;
 
-      const zipCodes = postcodes.value;
+      console.log("load cities");
+
+      const startIndex = currentCitiesBatch.value * BATCH_SIZE;
+      const endIndex = startIndex + BATCH_SIZE;
+
+      const zipCodes = postcodes.value.slice(startIndex, endIndex);
 
       if (!zipCodes.length) return;
 
-      currentCitiesBatch.value = 0;
-      const totalBatches = Math.ceil(zipCodes.length / BATCH_SIZE);
+      const totalBatches = Math.ceil(postcodes.value.length / BATCH_SIZE);
 
       processZipcodesBatch();
 
@@ -449,10 +470,29 @@ export default function useProcessData(
     }
   };
 
+  const loadCitiesForBatch = async (batchIndex: number) => {
+    try {
+      const startIndex = batchIndex * BATCH_SIZE;
+      const endIndex = startIndex + BATCH_SIZE;
+      const zipCodes = postcodes.value.slice(startIndex, endIndex);
+
+      if (!zipCodes.length) return;
+
+      currentCitiesBatch.value = batchIndex;
+      console.log(`Processing cities for batch ${batchIndex + 1}`);
+
+      await processZipcodesBatch();
+    } catch (error) {
+      console.error("Error loading cities for batch:", error);
+    }
+  };
+
   watch(
     [() => usingDptCode.value, () => loadRecordsDone.value],
     async () => {
-      loadCsv();
+      if (loadRecordsDone.value) {
+        loadCsv();
+      }
     },
     { immediate: true, deep: true, flush: "sync" }
   );
@@ -462,21 +502,14 @@ export default function useProcessData(
     () => {
       console.log(
         currentCsvBatch.value,
-        Math.ceil(postcodes.value.length / BATCH_SIZE)
+        Math.ceil(postcodes.value.length / BATCH_SIZE),
+        currentCsvBatch.value === Math.ceil(postcodes.value.length / BATCH_SIZE)
       );
 
-      loadCities();
-    }
-  );
-
-  watch(
-    () => currentCitiesBatch.value,
-    () => {
       if (
-        currentCitiesBatch.value ===
-        Math.ceil(postcodes.value.length / BATCH_SIZE)
+        currentCsvBatch.value === Math.ceil(postcodes.value.length / BATCH_SIZE)
       ) {
-        loading.value = false;
+        loadCities();
       }
     }
   );

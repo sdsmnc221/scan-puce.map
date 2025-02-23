@@ -15,11 +15,13 @@ export default function useZones(
   const communesContours: Ref<any> = ref({});
 
   const zones: ComputedRef<any[]> = computed(() => {
+    if (!records.value?.length) return [];
+
     let codes;
 
     if (usingDptCode.value) {
       codes = records.value
-        .filter((rec) => rec.Dept.includes(","))
+        .filter((rec) => rec.Dept?.includes(","))
         .map((rec) => ({
           postcodes: rec.Dept.replaceAll(" ", "")
             .split(",")
@@ -31,7 +33,7 @@ export default function useZones(
         }));
     } else {
       codes = records.value
-        .filter((rec) => rec.ZipCode.includes(","))
+        .filter((rec) => rec.ZipCode?.includes(","))
         .map((rec) => ({
           postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
           baseRecords: [rec],

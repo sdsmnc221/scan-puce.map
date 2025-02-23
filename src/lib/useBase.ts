@@ -1,7 +1,10 @@
 import { watch, type Ref, ref } from "vue";
 import Airtable from "airtable";
+import { chunk } from "lodash";
 
 const RECORDS_BATCH_SIZE = 50;
+
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function useBase(usingFilloutBase: Ref<boolean>) {
   Airtable.configure({
@@ -15,6 +18,8 @@ export default function useBase(usingFilloutBase: Ref<boolean>) {
 
   const loadRecordsDone = ref(false);
 
+  const batchIndex = ref<number | null>(null);
+
   watch(
     () => usingFilloutBase.value,
     () => {
@@ -24,34 +29,40 @@ export default function useBase(usingFilloutBase: Ref<boolean>) {
         .value(usingFilloutBase.value ? "filloutBase" : "draftBase")
         .select({
           view: "Grid view",
-          pageSize: RECORDS_BATCH_SIZE,
+          // pageSize: RECORDS_BATCH_SIZE,
           // maxRecords: 50,
         })
-        .eachPage(
-          function page(recs, fetchNextPage) {
-            // This function (`page`) will get called for each page of records.
-
+        .all()
+        .then((recs) => {
+          const loadRecordsInChunks = async () => {
             const newRecords = recs.map((record) => record.fields);
-            records.value.push(...newRecords);
+            const chunksOfRecs = chunk(newRecords, RECORDS_BATCH_SIZE);
 
-            // To fetch the next page of records, call `fetchNextPage`.
-            // If there are more records, `page` will get called again.
-            // If there are no more records, `done` will get called.
+            for (let index = 0; index < chunksOfRecs.length; index++) {
+              batchIndex.value = index;
 
-            // Small delay before next batch
-            setTimeout(() => fetchNextPage(), 50);
-          },
-          function done(err) {
-            if (err) {
-              console.error(err);
-              loadRecordsDone.value = false;
-              return;
-            } else {
-              loadRecordsDone.value = true;
-              return;
+              records.value.push(...chunksOfRecs[index]);
+
+              await delay(1000); // Wait 50ms between each chunk
             }
+
+            loadRecordsDone.value = true;
+          };
+
+          loadRecordsInChunks();
+
+          return;
+        })
+        .catch((err) => {
+          if (err) {
+            console.error(err);
+            loadRecordsDone.value = false;
+            return;
+          } else {
+            loadRecordsDone.value = true;
+            return;
           }
-        );
+        });
     },
     { immediate: true }
   );
@@ -59,5 +70,6 @@ export default function useBase(usingFilloutBase: Ref<boolean>) {
   return {
     records,
     loadRecordsDone,
+    batchIndex,
   };
 }
