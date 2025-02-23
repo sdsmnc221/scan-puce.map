@@ -195,7 +195,7 @@ export default function useProcessData(
     );
   };
 
-  const fetchCsvRecords = async (zipCodes: string[], batchIndex = 0) => {
+  const fetchCsvRecords = async (zipCodes: string[]) => {
     if (!zipCodes || zipCodes.length === 0) return false;
 
     const communes = [];

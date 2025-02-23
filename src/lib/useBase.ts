@@ -4,7 +4,8 @@ import { chunk } from "lodash";
 
 const RECORDS_BATCH_SIZE = 50;
 
-export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const delay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function useBase(usingFilloutBase: Ref<boolean>) {
   Airtable.configure({
