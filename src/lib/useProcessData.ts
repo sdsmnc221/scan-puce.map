@@ -403,10 +403,7 @@ export default function useProcessData(
           `Processing CSV batch ${currentCsvBatch.value + 1} of ${totalBatches}`
         );
 
-        const success = await fetchCsvRecords(
-          zipCodesBatch,
-          currentCsvBatch.value
-        );
+        const success = await fetchCsvRecords(zipCodesBatch);
 
         if (success) {
           await loadCitiesForBatch(currentCsvBatch.value);
