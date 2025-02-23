@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@inspira-ui/plugins": "^0.0.1",
+    "@rollup/plugin-dsv": "^3.0.5",
     "@types/lodash": "^4.17.14",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue-leaflet/vue-leaflet": "^0.10.1",

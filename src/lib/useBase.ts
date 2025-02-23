@@ -44,7 +44,7 @@ export default function useBase(usingFilloutBase: Ref<boolean>) {
 
               records.value.push(...chunksOfRecs[index]);
 
-              await delay(1000); // Wait 50ms between each chunk
+              await delay(100); // Wait 50ms between each chunk
             }
 
             loadRecordsDone.value = true;

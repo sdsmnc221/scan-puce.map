@@ -383,14 +383,17 @@ const { records, postcodes, cities, filteredCities, processCsv } =
     pinType,
     loading
   );
-const { processedZones, filteredZones } = useZones(
-  usingDptCode,
-  postcodes,
-  records,
-  storedFilloutCsv,
-  keyword,
-  processCsv
-);
+// const { processedZones, filteredZones } = useZones(
+//   usingDptCode,
+//   postcodes,
+//   records,
+//   storedFilloutCsv,
+//   keyword,
+//   processCsv
+// );
+
+const processedZones = ref([]);
+const filteredZones = ref([]);
 
 const usingZones = computed(() => {
   if (keyword.value.trim().length) {

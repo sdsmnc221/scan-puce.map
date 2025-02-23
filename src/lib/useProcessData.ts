@@ -8,6 +8,9 @@ import { transformToCapitalize } from "./lexique";
 import franceCommunes from "../geojson/communesFr.json";
 import franceDepartments from "../geojson/dptFr.json";
 
+import csvCommunesContent from "../geojson/communes.csv";
+import csvDeptsContent from "../geojson/depts.csv";
+
 export type CsvStore = {
   dpt: any[];
   zip: any[];
@@ -174,9 +177,11 @@ export default function useProcessData(
     const records_ = records.value.filter((rec) => {
       // Split the Dept field in case it contains multiple codes
 
-      const deptCodes = rec.Dept?.split(",").map((code: string) => code.trim());
+      const deptCodes = rec.Dept?.split(",")?.map((code: string) =>
+        code.trim()
+      );
       // Check for exact match with the prefix
-      return deptCodes.includes(deptPrefix);
+      return deptCodes?.includes(deptPrefix);
     });
 
     return records_ ?? null;
@@ -195,81 +200,61 @@ export default function useProcessData(
     );
   };
 
-  const fetchCsvRecords = async (zipCodes: string[]) => {
-    if (!zipCodes || zipCodes.length === 0) return false;
-
-    const communes = [];
-    for (const zipCode of zipCodes) {
-      const communesOfSameZip = (franceCommunes as any[])
-        .filter((c) => c.CodePostal == zipCode)
-        .map((c) => ({
-          postcode: c.CodePostal,
-          city: transformToCapitalize(c.NomCommune),
-        }));
-
-      communes.push(...communesOfSameZip);
-    }
-
-    const csvRows = communes.map(
-      (match) => `${match.postcode},"${match.city}"`
-    );
-
-    const csvContent = csvRows.join("\n");
-
-    // Create formData with the batch CSV content
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([csvContent], { type: "text/csv" }),
-      "zipCodes.csv"
-    );
-
-    try {
-      const response = await axios.post(
-        "https://api-adresse.data.gouv.fr/search/csv/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      // Append new batch data
-      const newData = response.data.split("\n").slice(1);
-      if (!storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"]) {
-        storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"] = [];
-      }
-      storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"].push(
-        ...newData
-      );
-
-      return true;
-    } catch (error) {
-      console.error("Error fetching batch:", error);
-      return false;
-    }
-  };
-
   const processCsv = (zipCodesBatch: string[]) => {
     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
+
+    // Initialize store if empty
+    if (!store.value[usingDptCode.value ? "dpt" : "zip"]?.length) {
+      store.value[usingDptCode.value ? "dpt" : "zip"] = csvCommunesContent;
+    }
+
     const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
 
     const data = rows
-      .filter((row) => row.length > 0 && !row.includes("not-found"))
       .filter((row) => {
-        // Get the zip code from the first column of the CSV row
-        const rowZipCode = row.split(",")[0];
-        return zipCodesBatch.includes(rowZipCode);
+        if (!row) return false;
+
+        // Handle both string and object formats
+        if (typeof row === "string") {
+          return (
+            !row.includes("not-found") && !row.includes("longitude,latitude")
+          );
+        }
+        return true; // Keep all object records
+      })
+      .filter((row) => {
+        // Extract postcode from either string or object
+        const postcode =
+          typeof row === "string" ? row.split(",")[0] : row.postcode;
+
+        return zipCodesBatch.includes(postcode);
       })
       .map((row) => {
         try {
-          const rowData = row.split(",");
+          let postcode, longitude, latitude, city;
 
-          const postcode = rowData[0];
-          const longitude = rowData[2];
-          const latitude = rowData[3];
-          const result_city = rowData[13];
+          if (typeof row === "string") {
+            const rowData = row.split(",");
+            postcode = rowData[0];
+            longitude = rowData[2];
+            latitude = rowData[3];
+            city = rowData[1].replace(/"/g, "");
+          } else {
+            // Handle object format
+            postcode = row.postcode;
+            longitude = row.longitude;
+            latitude = row.latitude;
+            city = row.commune;
+          }
+
+          // Parse with explicit parseFloat and validate
+          const lat = parseFloat(latitude);
+          const lng = parseFloat(longitude);
+
+          if (isNaN(lat) || isNaN(lng)) {
+            console.log("Skipping invalid coordinates for:", postcode);
+            return null;
+          }
 
           const records_ = usingDptCode.value
             ? loadRecordByDeptCode(postcode)
@@ -277,15 +262,11 @@ export default function useProcessData(
 
           const departmentName = getDepartmentName(postcode);
 
-          if (!latitude || !longitude) {
-            return null;
-          }
-
           return {
             zipCode: postcode,
-            lat: parseFloat(latitude),
-            lng: parseFloat(longitude),
-            name: result_city.replace(/"/g, ""), // Remove quotes from label,
+            lat,
+            lng,
+            name: city,
             departmentName,
             departmentCode: getDepartmentCode(postcode),
             baseRecords: records_,
@@ -381,46 +362,128 @@ export default function useProcessData(
     cities.value = uniqBy(cities.value, "zipCode");
   };
 
+  const fetchCsvRecords = async (zipCodes: string[], batchIndex = 0) => {
+    if (!zipCodes || zipCodes.length === 0) return false;
+
+    // Check all zipcodes against local data
+    const localMatches: string[] = [];
+    const zipCodesToFetch: string[] = [];
+
+    for (const zipCode of zipCodes) {
+      const matches = csvCommunesContent.filter(
+        (row) => row.postcode === zipCode || row.result_postcode === zipCode
+      );
+
+      if (matches.length > 0) {
+        const formattedMatches = matches.map(
+          (match) =>
+            `${match.postcode},"${match.commune}",${match.longitude},${match.latitude}`
+        );
+        localMatches.push(...formattedMatches);
+      } else {
+        zipCodesToFetch.push(zipCode);
+      }
+    }
+
+    // Store local matches
+    if (!storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"]) {
+      storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"] = [];
+    }
+    storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"].push(
+      ...localMatches
+    );
+
+    // If all found locally, we're done
+    if (zipCodesToFetch.length === 0) {
+      return true;
+    }
+
+    console.log(storedFilloutCsv.value);
+
+    // Fetch remaining zipcodes in one API call
+    const communes = [];
+    for (const zipCode of zipCodesToFetch) {
+      const communesOfSameZip = (franceCommunes as any[])
+        .filter((c) => c.CodePostal == zipCode)
+        .map((c) => ({
+          postcode: c.CodePostal,
+          city: transformToCapitalize(c.NomCommune),
+        }));
+
+      communes.push(...communesOfSameZip);
+    }
+
+    const csvRows = communes.map(
+      (match) => `${match.postcode},"${match.city}"`
+    );
+
+    const csvContent = csvRows.join("\n");
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob([csvContent], { type: "text/csv" }),
+      "zipCodes.csv"
+    );
+
+    try {
+      const response = await axios.post(
+        "https://api-adresse.data.gouv.fr/search/csv/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const newData = response.data.split("\n").slice(1);
+      storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"].push(
+        ...newData
+      );
+      return true;
+    } catch (error) {
+      console.error("Error fetching missing zipcodes:", error);
+      return localMatches.length > 0; // Return true if we at least have some local matches
+    }
+  };
+
   const loadCsv = async () => {
     try {
+      loading.value = true;
       currentCsvBatch.value = 0;
+      const BATCH_SIZE = 50; // Adjust batch size as needed
       const totalBatches = Math.ceil(postcodes.value.length / BATCH_SIZE);
 
       const processBatch = async () => {
-        loading.value = true; // Set loading true at start of each batch
-
         const startIndex = currentCsvBatch.value * BATCH_SIZE;
         const endIndex = startIndex + BATCH_SIZE;
         const zipCodesBatch = postcodes.value.slice(startIndex, endIndex);
 
         if (zipCodesBatch.length === 0) {
           loadCsvDone.value = true;
-          loading.value = false; // Set loading false if no more batches
           return;
         }
 
         console.log(
-          `Processing CSV batch ${currentCsvBatch.value + 1} of ${totalBatches}`
+          `Processing batch ${currentCsvBatch.value + 1} of ${totalBatches}`
         );
 
-        const success = await fetchCsvRecords(zipCodesBatch);
-
+        const success = await fetchCsvRecords(
+          zipCodesBatch,
+          currentCsvBatch.value
+        );
         if (success) {
           await loadCitiesForBatch(currentCsvBatch.value);
-          currentCsvBatch.value++;
+        }
 
-          loading.value = false; // Set loading false after batch completes
+        currentCsvBatch.value++;
 
-          if (currentCsvBatch.value >= totalBatches) {
-            loadCsvDone.value = true;
-            return;
-          }
-
+        if (currentCsvBatch.value < totalBatches) {
+          // Add delay between batches to prevent UI blocking
           await new Promise((resolve) => setTimeout(resolve, 100));
           await processBatch();
         } else {
           loadCsvDone.value = true;
-          loading.value = false; // Set loading false if batch fails
         }
       };
 
@@ -429,7 +492,8 @@ export default function useProcessData(
       console.error("Error loading cities:", error);
       cities.value = [];
       loadCsvDone.value = true;
-      loading.value = false; // Set loading false on error
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -502,12 +566,6 @@ export default function useProcessData(
         Math.ceil(postcodes.value.length / BATCH_SIZE),
         currentCsvBatch.value === Math.ceil(postcodes.value.length / BATCH_SIZE)
       );
-
-      if (
-        currentCsvBatch.value === Math.ceil(postcodes.value.length / BATCH_SIZE)
-      ) {
-        loadCities();
-      }
     }
   );
 
