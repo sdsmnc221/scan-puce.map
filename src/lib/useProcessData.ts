@@ -255,7 +255,7 @@ export default function useProcessData(
           const lng = parseFloat(longitude);
 
           if (isNaN(lat) || isNaN(lng)) {
-            console.log("Skipping invalid coordinates for:", postcode);
+            // console.log("Skipping invalid coordinates for:", postcode);
             return null;
           }
 

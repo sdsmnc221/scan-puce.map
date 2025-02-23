@@ -1,8 +1,22 @@
 import { computed, type ComputedRef, type Ref, ref, watch } from "vue";
-
 import { type CsvStore } from "./useProcessData";
-
 import { createPolygonFromPoints, extractNumbers } from "./map";
+
+// Define type interfaces
+interface Zone {
+  postcodes: string[];
+  baseRecords: Record<string, any>[];
+  coordinates?: { lat: number; lng: number }[];
+  cityNames?: string[];
+  color?: string;
+}
+
+interface CityDetail {
+  zipCode: string;
+  name: string;
+  lat: number;
+  lng: number;
+}
 
 export default function useZones(
   usingDptCode: Ref<boolean>,
@@ -10,128 +24,121 @@ export default function useZones(
   records: Ref<Array<Record<string, any>>>,
   storedFilloutCsv: Ref<CsvStore>,
   keyword: Ref<string>,
-  processCsv: (zipCodes: string[]) => any
+  processCsv: (zipCodes: string[]) => CityDetail[]
 ) {
-  const communesContours: Ref<any> = ref({});
+  const communesContours: Ref<Record<string, any>> = ref({});
 
-  const zones: ComputedRef<any[]> = computed(() => {
+  // Memoize processed CSV results
+  const zipCodesResultsCache = ref<CityDetail[]>([]);
+
+  // Optimize zones computation with proper typing
+  const zones: ComputedRef<Zone[]> = computed(() => {
     if (!records.value?.length) return [];
 
-    let codes;
+    const processRecord = (rec: Record<string, any>) => {
+      const field = usingDptCode.value ? "Dept" : "ZipCode";
+      if (!rec[field]?.includes(",")) return null;
 
-    if (usingDptCode.value) {
-      codes = records.value
-        .filter((rec) => rec.Dept?.includes(","))
-        .map((rec) => ({
-          postcodes: rec.Dept.replaceAll(" ", "")
-            .split(",")
-            .map((dpt: string) => {
-              const dptCode = extractNumbers(dpt);
-              return dptCode.length === 2 ? dptCode + "000" : dptCode;
-            }),
-          baseRecords: [rec],
-        }));
-    } else {
-      codes = records.value
-        .filter((rec) => rec.ZipCode?.includes(","))
-        .map((rec) => ({
-          postcodes: rec.ZipCode.replaceAll(" ", "").split(","),
-          baseRecords: [rec],
-        }));
-    }
+      const postcodes = rec[field]
+        .replaceAll(" ", "")
+        .split(",")
+        .map((code: string) => {
+          if (!usingDptCode.value) return code;
+          const dptCode = extractNumbers(code);
+          return dptCode.length === 2 ? dptCode + "000" : dptCode;
+        });
 
-    return codes;
+      return {
+        postcodes,
+        baseRecords: [rec],
+      };
+    };
+
+    return records.value
+      .map(processRecord)
+      .filter((zone): zone is Zone => zone !== null);
   });
 
   const computeZones = () => {
-    return zones.value.map((zone) => {
-      const zipCodesResults = processCsv(postcodes.value);
+    // Update cache only when needed
+    zipCodesResultsCache.value = processCsv(postcodes.value);
 
+    return zones.value.map((zone) => {
       const citiesDetails = zone.postcodes
         .map((city: string) => {
-          return zipCodesResults.find((entry: any) => {
-            // Split in case there are multiple zip codes
+          return zipCodesResultsCache.value.find((entry) => {
             const entryCodes = entry.zipCode
               .split(",")
-              .map((code: string) => code.trim());
-            // Check for exact match with either full code or department code
+              .map((code) => code.trim());
             return (
               entryCodes.includes(city) || entryCodes.includes(city.slice(0, 2))
             );
           });
         })
-        .filter((entry: any) => !!entry);
+        .filter((entry): entry is CityDetail => !!entry);
 
-      // First try to use commune contours if available
+      // Check contours availability
       const hasContours = zone.postcodes.some(
-        (postcode: string) => communesContours.value[postcode]
+        (postcode) => communesContours.value[postcode]
       );
 
       if (hasContours) {
-        // Use the contours for coordinates
         const allContourPoints = zone.postcodes
-          .filter((postcode: string) => communesContours.value[postcode])
-          .flatMap((postcode: string) => communesContours.value[postcode]);
+          .filter((postcode) => communesContours.value[postcode])
+          .flatMap((postcode) => communesContours.value[postcode]);
 
         return {
           ...zone,
-          postcodes: zone.postcodes,
           coordinates: allContourPoints,
-          cityNames: citiesDetails.map((city: { name: string }) => city.name),
+          cityNames: citiesDetails.map((city) => city.name),
           color: "#FFCA3A",
         };
       }
 
-      const coordinates = citiesDetails.map(
-        (city: { lat: number; lng: number }) => ({
-          lat: city.lat,
-          lng: city.lng,
-        })
-      );
-
-      const cityNames = citiesDetails.map(
-        (city: { name: string }) => city.name
-      );
+      // Process regular coordinates
+      const coordinates = citiesDetails.map((city) => ({
+        lat: city.lat,
+        lng: city.lng,
+      }));
 
       return {
         ...zone,
-        postcodes: zone.postcodes,
-        coordinates: createPolygonFromPoints(coordinates), // Changed this line
-        cityNames,
+        coordinates: createPolygonFromPoints(coordinates),
+        cityNames: citiesDetails.map((city) => city.name),
         color: "#FFCA3A",
       };
     });
   };
 
-  const processedZones = ref(computeZones());
-  const filteredZones: Ref<any[]> = ref([]);
+  const processedZones = ref<Zone[]>(computeZones());
+  const filteredZones = ref<Zone[]>([]);
 
+  // Optimize watchers
   watch(
-    [() => storedFilloutCsv.value, () => zones.value],
+    [storedFilloutCsv, zones],
     () => {
       processedZones.value = computeZones();
     },
-    { deep: true, flush: "sync" }
+    { deep: true }
   );
 
-  watch(
-    () => keyword.value,
-    () => {
-      if (keyword.value.trim().length) {
-        filteredZones.value = processedZones.value.filter(
-          (zone: any) =>
-            zone.postcodes.some((code: string) =>
-              code.includes(keyword.value.trim())
-            ) ||
-            zone.cityNames.some((city: string) =>
-              city.toLowerCase().includes(keyword.value.trim().toLowerCase())
-            )
-        );
-      } else {
-        filteredZones.value = [];
-      }
+  // Debounce keyword filtering
+  const debouncedFilter = (value: string) => {
+    const trimmedKeyword = value.trim().toLowerCase();
+    if (trimmedKeyword) {
+      filteredZones.value = processedZones.value.filter(
+        (zone) =>
+          zone.postcodes.some((code) => code.includes(trimmedKeyword)) ||
+          zone.cityNames?.some((city) =>
+            city.toLowerCase().includes(trimmedKeyword)
+          )
+      );
+    } else {
+      filteredZones.value = [];
     }
-  );
+  };
+
+  watch(() => keyword.value, debouncedFilter);
 
   return {
     zones,
