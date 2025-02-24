@@ -644,13 +644,9 @@ body,
   overflow-x: visible;
 
   mask-image: url("/public/ink-reversed.gif"), url("/public/ink.gif");
-  mask-size: contain;
+  mask-size: cover, contain;
   mask-position: center;
   mask-repeat: no-repeat;
-
-  #map {
-    border-radius: 16px;
-  }
 }
 
 .leaflet-container {
