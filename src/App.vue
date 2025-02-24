@@ -179,9 +179,10 @@
       <PWAInstallPrompt></PWAInstallPrompt>
     </div>
   </nav>
+
   <div class="map w-2/3 watercolor-map-container">
     <!-- SVG Filters definition -->
-    <svg class="filters">
+    <svg class="filters" style="position: absolute; top: 0; left: 0">
       <defs>
         <filter id="watercolor-map">
           <!-- Paper texture effect -->
@@ -638,6 +639,12 @@ body,
   right: 0;
   height: 100%;
   flex: 1;
+  overflow-x: visible;
+
+  mask-image: url("/public/ink-reversed.gif"), url("/public/ink.gif");
+  mask-size: auto 100vh;
+  mask-position: center;
+  mask-repeat: no-repeat;
 
   #map {
     border-radius: 16px;
@@ -717,6 +724,8 @@ nav {
       height: 50vh;
       overflow: hidden;
       flex: unset;
+
+      mask-size: 100vw 48vh;
 
       #map {
         height: 100% !important;
