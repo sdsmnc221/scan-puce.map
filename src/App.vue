@@ -1,5 +1,7 @@
 <template>
-  <nav class="w-1/3 flex flex-col font-sans">
+  <nav
+    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans"
+  >
     <div class="flex flex-col items-center">
       <h1 class="font-bold text-xl md:text-3xl text-center my-3">
         Réseau Lecteurs de Puce France
@@ -179,7 +181,37 @@
       <PWAInstallPrompt></PWAInstallPrompt>
     </div>
   </nav>
-  <div class="map w-2/3">
+
+  <div class="map w-2/3 watercolor-map-container">
+    <!-- SVG Filters definition -->
+    <svg class="filters" style="position: absolute; top: 0; left: 0">
+      <defs>
+        <filter id="watercolor-map">
+          <!-- Paper texture effect -->
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.015"
+            numOctaves="2"
+            result="noise"
+          />
+
+          <!-- Displacement for organic edges -->
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="12"
+            result="displacement"
+          />
+
+          <!-- Soft edges -->
+          <feGaussianBlur stdDeviation="0.3" result="blur" />
+
+          <!-- Color adjustments -->
+          <feColorMatrix type="saturate" values="0.8" result="saturated" />
+        </filter>
+      </defs>
+    </svg>
+
     <LMap
       ref="map"
       id="map"
@@ -196,6 +228,11 @@
         layer-type="base"
         name="OpenStreetMap"
         :bounds="franceBounds"
+        :options="{
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors',
+          className: 'watercolor-tiles',
+        }"
       />
 
       <LRectangle
@@ -528,6 +565,8 @@ onMounted(() => {
       iconUrl: markerIconUrl,
       shadowUrl: markerShadowUrl,
     });
+
+    // addSvgFilters();
   });
 });
 
@@ -587,11 +626,11 @@ body,
 }
 
 #app {
-  padding: 16px;
   width: 100vw;
   height: 100dvh;
   display: flex;
   overflow: hidden;
+  justify-content: center;
 
   & > * {
     position: relative;
@@ -602,46 +641,43 @@ body,
   right: 0;
   height: 100%;
   flex: 1;
+  overflow-x: visible;
 
-  #map {
-    border-radius: 16px;
-  }
+  mask-image: url("/public/ink-reversed.gif"), url("/public/ink.gif");
+  mask-size: cover, contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
 }
 
 .leaflet-container {
   z-index: 10;
 }
 
+.leaflet-tile-container img {
+  filter: saturate(0.64) contrast(1.1) brightness(1.05);
+  transition: all 0.3s ease;
+}
+
+/* Apply both SVG and CSS filters for better effect */
+.watercolor-tiles {
+  filter: url(#watercolor-map) saturate(0.85) contrast(1.1) brightness(1.05) !important;
+}
+
+/* Soften the background */
+.leaflet-container {
+  background: #f5f5f0;
+}
+
+/* Smooth tile transitions */
+.leaflet-tile-container img {
+  transition: opacity 0.2s ease-in-out;
+}
+
 nav {
   height: 100%;
-  padding-right: 16px;
   gap: 16px;
   justify-content: space-between;
   z-index: 98;
-
-  .search-input {
-  }
-
-  .toggle-dpt {
-    // position: fixed;
-    // top: 24px;
-    // right: 24px;
-    // z-index: 49;
-  }
-
-  .toggle-legal {
-    // position: fixed;
-    // bottom: 50px;
-    // right: 24px;
-    // z-index: 49;
-  }
-
-  .toggle-embed {
-    // position: fixed;
-    // bottom: 100px;
-    // right: 24px;
-    // z-index: 49;
-  }
 
   .city-details {
     position: fixed;
@@ -671,12 +707,13 @@ nav {
     min-height: 100dvh;
     height: auto;
     overflow-y: scroll;
+    justify-content: flex-start;
 
     flex-direction: column-reverse;
 
     nav {
       width: 100%;
-      padding: 0;
+
       z-index: unset;
     }
 
@@ -685,6 +722,8 @@ nav {
       height: 50vh;
       overflow: hidden;
       flex: unset;
+
+      mask-size: 100vw 56vh;
 
       #map {
         height: 100% !important;
