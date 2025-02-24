@@ -1,5 +1,7 @@
 <template>
-  <nav class="w-1/3 flex flex-col font-sans">
+  <nav
+    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans"
+  >
     <div class="flex flex-col items-center">
       <h1 class="font-bold text-xl md:text-3xl text-center my-3">
         Réseau Lecteurs de Puce France
@@ -624,11 +626,11 @@ body,
 }
 
 #app {
-  padding: 16px;
   width: 100vw;
   height: 100dvh;
   display: flex;
   overflow: hidden;
+  justify-content: center;
 
   & > * {
     position: relative;
@@ -642,7 +644,7 @@ body,
   overflow-x: visible;
 
   mask-image: url("/public/ink-reversed.gif"), url("/public/ink.gif");
-  mask-size: auto 100vh;
+  mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;
 
@@ -677,7 +679,6 @@ body,
 
 nav {
   height: 100%;
-  padding-right: 16px;
   gap: 16px;
   justify-content: space-between;
   z-index: 98;
@@ -710,12 +711,13 @@ nav {
     min-height: 100dvh;
     height: auto;
     overflow-y: scroll;
+    justify-content: flex-start;
 
     flex-direction: column-reverse;
 
     nav {
       width: 100%;
-      padding: 0;
+
       z-index: unset;
     }
 
@@ -725,7 +727,7 @@ nav {
       overflow: hidden;
       flex: unset;
 
-      mask-size: 100vw 48vh;
+      mask-size: 100vw 56vh;
 
       #map {
         height: 100% !important;
