@@ -179,7 +179,36 @@
       <PWAInstallPrompt></PWAInstallPrompt>
     </div>
   </nav>
-  <div class="map w-2/3">
+  <div class="map w-2/3 watercolor-map-container">
+    <!-- SVG Filters definition -->
+    <svg class="filters">
+      <defs>
+        <filter id="watercolor-map">
+          <!-- Paper texture effect -->
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.015"
+            numOctaves="2"
+            result="noise"
+          />
+
+          <!-- Displacement for organic edges -->
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="noise"
+            scale="12"
+            result="displacement"
+          />
+
+          <!-- Soft edges -->
+          <feGaussianBlur stdDeviation="0.3" result="blur" />
+
+          <!-- Color adjustments -->
+          <feColorMatrix type="saturate" values="0.8" result="saturated" />
+        </filter>
+      </defs>
+    </svg>
+
     <LMap
       ref="map"
       id="map"
@@ -196,6 +225,11 @@
         layer-type="base"
         name="OpenStreetMap"
         :bounds="franceBounds"
+        :options="{
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors',
+          className: 'watercolor-tiles',
+        }"
       />
 
       <LRectangle
@@ -528,6 +562,8 @@ onMounted(() => {
       iconUrl: markerIconUrl,
       shadowUrl: markerShadowUrl,
     });
+
+    // addSvgFilters();
   });
 });
 
@@ -612,36 +648,32 @@ body,
   z-index: 10;
 }
 
+.leaflet-tile-container img {
+  filter: saturate(0.64) contrast(1.1) brightness(1.05);
+  transition: all 0.3s ease;
+}
+
+/* Apply both SVG and CSS filters for better effect */
+.watercolor-tiles {
+  filter: url(#watercolor-map) saturate(0.85) contrast(1.1) brightness(1.05) !important;
+}
+
+/* Soften the background */
+.leaflet-container {
+  background: #f5f5f0;
+}
+
+/* Smooth tile transitions */
+.leaflet-tile-container img {
+  transition: opacity 0.2s ease-in-out;
+}
+
 nav {
   height: 100%;
   padding-right: 16px;
   gap: 16px;
   justify-content: space-between;
   z-index: 98;
-
-  .search-input {
-  }
-
-  .toggle-dpt {
-    // position: fixed;
-    // top: 24px;
-    // right: 24px;
-    // z-index: 49;
-  }
-
-  .toggle-legal {
-    // position: fixed;
-    // bottom: 50px;
-    // right: 24px;
-    // z-index: 49;
-  }
-
-  .toggle-embed {
-    // position: fixed;
-    // bottom: 100px;
-    // right: 24px;
-    // z-index: 49;
-  }
 
   .city-details {
     position: fixed;
