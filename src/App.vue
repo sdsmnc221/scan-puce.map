@@ -643,7 +643,7 @@ body,
   flex: 1;
   overflow-x: visible;
 
-  mask-image: url("/public/ink-reversed.gif"), url("/public/ink.gif");
+  mask-image: url("/ink-reversed.gif"), url("/ink.gif");
   mask-size: cover, contain;
   mask-position: center;
   mask-repeat: no-repeat;
@@ -708,6 +708,7 @@ nav {
     height: auto;
     overflow-y: scroll;
     justify-content: flex-start;
+    margin-top: 16px;
 
     flex-direction: column-reverse;
 
