@@ -23,11 +23,7 @@
         >
         <span class="block md:inline-block md:ml-1 text-xs">
           ( <span class="font-bold">{{ mapCities.length }}</span> localisations
-          <span v-if="pinType.includes(2)"
-            >&
-            <span class="font-bold">{{ processedZones.length }}</span>
-            zones</span
-          >)
+          )
         </span>
       </RippleButton>
 
@@ -65,7 +61,7 @@
             >
           </button>
 
-          <button
+          <!-- <button
             class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-yellow-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
@@ -77,7 +73,7 @@
                 >sur une Zone (multi-communale ou multi-départementale)</span
               >.</span
             >
-          </button>
+          </button> -->
         </div>
       </div>
 
@@ -245,7 +241,7 @@
 
       <LGeoJson :geojson="franceOutline" :options="franceOptions" />
 
-      <template v-if="pinType.includes(2)">
+      <!-- <template v-if="pinType.includes(2)">
         <LPolygon
           v-for="(zone, index) in usingZones"
           :key="`zone-commun-${index}`"
@@ -270,7 +266,7 @@
             />
           </LMarker>
         </LPolygon>
-      </template>
+      </template> -->
 
       <div>
         <LMarker
