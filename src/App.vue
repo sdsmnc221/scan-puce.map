@@ -708,7 +708,6 @@ nav {
     height: auto;
     overflow-y: scroll;
     justify-content: flex-start;
-    margin-top: 16px;
 
     flex-direction: column-reverse;
 
@@ -724,7 +723,7 @@ nav {
       overflow: hidden;
       flex: unset;
 
-      mask-size: 100vw 56vh;
+      mask-size: 100vw 56vh, cover;
 
       #map {
         height: 100% !important;
