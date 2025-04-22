@@ -112,14 +112,33 @@ export default function useProcessData(
 
     if (keyword.value.trim().length) {
       if (usingDptCode.value) {
+        // Normalize the search keyword for department codes
+        // This handles cases like "01" to match with "1"
+        const normalizedKeyword = keyword.value.trim();
+        const isNumericSearch = /^\d+$/.test(normalizedKeyword);
+
         // For department filtering, create city-like objects for departments
-        const matchedDepts = departments.value.filter(
-          (dept) =>
-            dept.code_departement.includes(keyword.value.trim()) ||
-            dept.nom_departement
-              .toLowerCase()
-              .includes(keyword.value.trim().toLowerCase())
-        );
+        const matchedDepts = departments.value.filter((dept) => {
+          // For numeric searches, normalize both the search term and department code
+          if (isNumericSearch) {
+            const normalizedDeptCode = dept.code_departement.replace(/^0+/, "");
+            const normalizedSearchTerm = normalizedKeyword.replace(/^0+/, "");
+
+            // Check if the normalized codes match
+            if (normalizedDeptCode === normalizedSearchTerm) {
+              return true;
+            }
+            // Also check for partial matches in the original code
+            if (dept.code_departement.includes(normalizedKeyword)) {
+              return true;
+            }
+          }
+
+          // For text searches, check department name
+          return dept.nom_departement
+            .toLowerCase()
+            .includes(normalizedKeyword.toLowerCase());
+        });
 
         const deptCities = matchedDepts.map((dept) => {
           // Find records that match this department code
@@ -282,13 +301,18 @@ export default function useProcessData(
     // Remove any trailing zeros that might have been added for compatibility
     const deptPrefix = deptCode.replace(/000$/, "");
 
+    // Also handle leading zeros in department codes (e.g., "01" should match "1")
+    const normalizedDeptPrefix = deptPrefix.replace(/^0+/, "");
+
     const records_ = records.value.filter((rec) => {
       // Split the Dept field in case it contains multiple codes
-      const deptCodes = rec.Dept?.split(",")?.map((code: string) =>
-        code.trim()
-      );
-      // Check for exact match with the prefix
-      return deptCodes?.includes(deptPrefix);
+      const deptCodes = rec.Dept?.split(",")?.map((code: string) => {
+        // Normalize each department code by removing leading zeros
+        return code.trim().replace(/^0+/, "");
+      });
+
+      // Check for exact match with the normalized prefix
+      return deptCodes?.includes(normalizedDeptPrefix);
     });
 
     return records_ ?? null;
@@ -299,11 +323,28 @@ export default function useProcessData(
 
     // For department codes that were padded with '000'
     if (zipcode.endsWith("000")) {
-      return zipcode.substring(0, zipcode.length - 3);
+      let deptCode = zipcode.substring(0, zipcode.length - 3);
+
+      // Handle special cases like Corsica (2A, 2B)
+      if (!deptCode.startsWith("2A") && !deptCode.startsWith("2B")) {
+        // For numeric department codes, remove leading zeros if present
+        if (/^\d+$/.test(deptCode)) {
+          deptCode = deptCode.replace(/^0+/, "");
+        }
+      }
+
+      return deptCode;
     }
 
     // Standard zip code to department code conversion
-    return zipcode.substring(0, 2);
+    let deptCode = zipcode.substring(0, 2);
+
+    // Special case for overseas departments (3-digit codes)
+    if (zipcode.length >= 3 && zipcode.substring(0, 3).match(/^97[1-6]$/)) {
+      deptCode = zipcode.substring(0, 3);
+    }
+
+    return deptCode;
   };
 
   const getDepartmentName = (zipcode: string) => {
