@@ -97,21 +97,7 @@
           class="city-details hidden md:block my-3 p-5 md:overflow-scroll bg-white"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
-
-          <RippleButton
-            v-if="selectedCity"
-            class="mt-3 text-sm w-full"
-            @click="resetMapView"
-            >Recentrer sur la carte</RippleButton
-          >
         </div>
-
-        <RippleButton
-          v-if="selectedCity"
-          class="mt-3 text-sm w-full"
-          @click="resetMapView"
-          >Recentrer sur la carte</RippleButton
-        >
 
         <Sheet
           :open="citySheetOpen"
@@ -121,13 +107,7 @@
           <SheetTitle></SheetTitle>
           <SheetContent class="city-sheet font-sans" side="bottom">
             <SheetHeader>
-              <SheetTitle>
-                <RippleButton
-                  class="mt-6 text-sm w-full top-[-24px]"
-                  @click="resetMapView"
-                  >Recentrer sur la carte</RippleButton
-                >
-              </SheetTitle>
+              <SheetTitle> </SheetTitle>
               <SheetDescription
                 class="flex flex-col text-left relative top-[-10px]"
               >
@@ -535,17 +515,6 @@ const centerOnMarker = ([lat, lng]) => {
   map.value?.leafletObject?.setView([lat, lng], 10);
 };
 
-const resetMapView = async () => {
-  citySheetOpen.value = false;
-
-  await nextTick();
-
-  if (map.value?.leafletObject) {
-    map.value.leafletObject.setView(centerFrance, defaultZoom);
-  }
-  selectedCity.value = null;
-};
-
 const resetMapViewGlobal = async () => {
   citySheetOpen.value = false;
 
@@ -554,6 +523,8 @@ const resetMapViewGlobal = async () => {
   if (map.value?.leafletObject) {
     map.value.leafletObject.setView(centerFrance, defaultZoom);
   }
+
+  selectedCity.value = null;
 };
 
 const onMarkerClick = (city, zoneOptions = null) => {
