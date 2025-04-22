@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.4.1",
-    "@vueuse/core": "^12.3.0",
+    "@vueuse/core": "^12.8.2",
     "@vueuse/motion": "^2.2.6",
     "airtable": "^0.12.2",
     "axios": "^1.7.9",

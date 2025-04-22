@@ -101,6 +101,7 @@
 
         <Sheet
           :open="citySheetOpen"
+          ref="citySheetRef"
           @update:open="(openState) => onUpdateOpenCitySheet"
         >
           <SheetTrigger class="m-0 p-0 fixed"></SheetTrigger>
@@ -297,7 +298,16 @@ import franceBoundaries from "./geojson/france.json";
 import franceDepartments from "./geojson/dptFr.json";
 import franceCommunes from "./geojson/communesFr.json";
 
-import { ref, computed, onMounted, watch, nextTick, onUnmounted } from "vue";
+import {
+  ref,
+  computed,
+  onMounted,
+  watch,
+  nextTick,
+  onUnmounted,
+  useTemplateRef,
+} from "vue";
+import { onClickOutside } from "@vueuse/core";
 import Airtable from "airtable";
 import axios from "axios";
 import { inject } from "@vercel/analytics";
@@ -390,6 +400,12 @@ const storedCsv = ref({
 const storedFilloutCsv = ref({
   dpt: [],
   zip: [],
+});
+
+const citySheetRef = useTemplateRef("citySheetRef");
+
+onClickOutside(citySheetRef, () => {
+  citySheetOpen.value = false;
 });
 
 const { records, postcodes, cities, filteredCities, processCsv } =
@@ -720,8 +736,11 @@ nav {
   }
 
   .city-sheet {
-    max-height: 48vh;
+    height: 36vh;
     overflow-y: scroll;
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
 
     & > button {
       display: none;
@@ -729,8 +748,7 @@ nav {
   }
 
   .fixed.inset-0 {
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    opacity: 0;
     pointer-events: none !important;
   }
 }
