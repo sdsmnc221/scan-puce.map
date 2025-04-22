@@ -557,7 +557,7 @@ const resetMapViewGlobal = async () => {
 };
 
 const onMarkerClick = (city, zoneOptions = null) => {
-  centerOnMarker(zoneOptions ? zoneOptions.coordinates : [city.lat, city.lng]);
+  // centerOnMarker(zoneOptions ? zoneOptions.coordinates : [city.lat, city.lng]);
   selectedCity.value = city;
 };
 
