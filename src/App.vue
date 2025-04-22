@@ -121,14 +121,19 @@
           <SheetTitle></SheetTitle>
           <SheetContent class="city-sheet font-sans" side="bottom">
             <SheetHeader>
-              <SheetTitle></SheetTitle>
-              <SheetDescription class="flex flex-col text-left">
+              <SheetTitle>
+                <RippleButton
+                  class="mt-6 text-sm w-full top-[-24px]"
+                  @click="resetMapView"
+                  >Recentrer sur la carte</RippleButton
+                >
+              </SheetTitle>
+              <SheetDescription
+                class="flex flex-col text-left relative top-[-10px]"
+              >
                 <div v-if="selectedCity" class="flex flex-col">
                   <PinPopup :location="selectedCity" :is-dpt="usingDptCode">
                   </PinPopup>
-                  <RippleButton class="mt-6 text-sm" @click="resetMapView"
-                    >Recentrer sur la carte</RippleButton
-                  >
                 </div>
               </SheetDescription>
             </SheetHeader>
@@ -217,6 +222,7 @@
       :use-global-leaflet="false"
       :max-bounds="franceBounds"
       :max-bounds-viscosity="1.0"
+      @click="resetMapViewGlobal"
     >
       <LTileLayer
         url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
@@ -540,6 +546,16 @@ const resetMapView = async () => {
   selectedCity.value = null;
 };
 
+const resetMapViewGlobal = async () => {
+  citySheetOpen.value = false;
+
+  await nextTick();
+
+  if (map.value?.leafletObject) {
+    map.value.leafletObject.setView(centerFrance, defaultZoom);
+  }
+};
+
 const onMarkerClick = (city, zoneOptions = null) => {
   centerOnMarker(zoneOptions ? zoneOptions.coordinates : [city.lat, city.lng]);
   selectedCity.value = city;
@@ -742,8 +758,9 @@ nav {
   }
 
   .fixed.inset-0 {
-    background-color: rgba(0, 0, 0, 0.32);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: 10;
+    pointer-events: none !important;
   }
 }
 </style>
