@@ -100,7 +100,7 @@ export default function useProcessData(
   initDepartmentsData();
 
   const filteredCities: ComputedRef<City[]> = computed(() => {
-    let filteredResult;
+    let filteredResult: City[];
 
     if (
       !keyword.value.trim().length &&
@@ -151,7 +151,7 @@ export default function useProcessData(
             name: dept.nom_departement,
             departmentName: dept.nom_departement,
             departmentCode: dept.code_departement,
-            baseRecords: deptRecords || [],
+            baseRecords: deptRecords || ([] as BaseRecord[]),
             communes: [
               {
                 name: dept.nom_departement,
@@ -159,7 +159,7 @@ export default function useProcessData(
                 lng: dept.longitude,
               },
             ],
-          };
+          } as City; // Explicitly cast to City type
         });
 
         return uniqBy(deptCities, "zipCode");
@@ -376,9 +376,19 @@ export default function useProcessData(
           if (!deptCode) return null;
 
           // Find the department in our full departments list
-          const dept = departments.value.find(
-            (d) => d.code_departement === deptCode
-          );
+          const dept = departments.value.find((d) => {
+            // Compare normalized department codes for matching
+            const normalizedStoredCode = d.code_departement.replace(/^0+/, "");
+            const normalizedSearchCode = deptCode.replace(/^0+/, "");
+
+            // Handle special cases like Corsica (2A, 2B)
+            if (d.code_departement === "2A" || d.code_departement === "2B") {
+              return d.code_departement === deptCode;
+            }
+
+            return normalizedStoredCode === normalizedSearchCode;
+          });
+
           if (!dept) return null;
 
           // Get records for this department
@@ -391,10 +401,10 @@ export default function useProcessData(
             name: dept.nom_departement,
             departmentName: dept.nom_departement,
             departmentCode: deptCode,
-            baseRecords: records_,
-          };
+            baseRecords: records_ || ([] as BaseRecord[]),
+          } as City;
         })
-        .filter((item) => item !== null);
+        .filter((item) => item !== null) as City[];
     }
 
     // If not in department mode, use original code for communes
