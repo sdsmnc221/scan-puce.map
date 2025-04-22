@@ -9,7 +9,8 @@ import franceCommunes from "../geojson/communesFr.json";
 import franceDepartments from "../geojson/dptFr.json";
 
 import csvCommunesContent from "../geojson/communes.csv";
-import csvDeptsContent from "../geojson/depts.csv";
+// Import the new departments data with coordinates
+import csvDeptsWithCoordinates from "../geojson/departementsfrance_with_coordinates.csv";
 
 export type CsvStore = {
   dpt: any[];
@@ -19,7 +20,6 @@ export type CsvStore = {
 export type BaseRecord = {
   id: string;
   createTime: string;
-  // fields: {
   Author: string;
   ZipCode: string;
   LinkToPost: string;
@@ -30,7 +30,6 @@ export type BaseRecord = {
   ContactMode: string;
   ContactModeUnfilled: number;
   AccessICAD?: boolean;
-  // };
 };
 
 type City = {
@@ -46,6 +45,16 @@ type City = {
     lat: number;
     lng: number;
   }[];
+};
+
+// Department data structure to match our updated CSV format
+type Department = {
+  code_departement: string;
+  nom_departement: string;
+  code_region: number;
+  nom_region: string;
+  latitude: number;
+  longitude: number;
 };
 
 export default function useProcessData(
@@ -67,6 +76,29 @@ export default function useProcessData(
   const loadCsvDone = ref(false);
 
   const cities: Ref<City[]> = ref([]);
+  const departments: Ref<Department[]> = ref([]);
+
+  // Process the departments data when the component is initialized
+  const initDepartmentsData = () => {
+    try {
+      // Assuming csvDeptsWithCoordinates is already parsed into objects
+      // If it's a string, you would need to parse it first
+      departments.value = csvDeptsWithCoordinates.map((dept: any) => ({
+        code_departement: dept.code_departement?.toString(),
+        nom_departement: dept.nom_departement,
+        code_region: parseInt(dept.code_region),
+        nom_region: dept.nom_region,
+        latitude: parseFloat(dept.latitude),
+        longitude: parseFloat(dept.longitude),
+      }));
+    } catch (error) {
+      console.error("Error initializing departments data:", error);
+    }
+  };
+
+  // Initialize departments data
+  initDepartmentsData();
+
   const filteredCities: ComputedRef<City[]> = computed(() => {
     let filteredResult;
 
@@ -79,59 +111,133 @@ export default function useProcessData(
     }
 
     if (keyword.value.trim().length) {
-      filteredResult = cities.value.filter((city) => {
-        // const dptOfCity = storedFilloutCsv.value["dpt"].filter((row: string) =>
-        //   row.toLowerCase().includes(keyword.value.toLowerCase())
-        // );
-
-        // dptOfCity.forEach((csvCity: string) => {
-        //   console.log(csvCity.split(","));
-        //   return (csvCity.split[","][0] as string) == city.zipCode; // csvCity.split[","][0] is postCode
-        // });
-
-        return (
-          city.zipCode.includes(keyword.value.trim()) ||
-          city.departmentName
-            ?.toLowerCase()
-            ?.includes(keyword.value.trim().toLowerCase()) ||
-          city.communes.some((commune) =>
-            commune.name
+      if (usingDptCode.value) {
+        // For department filtering, create city-like objects for departments
+        const matchedDepts = departments.value.filter(
+          (dept) =>
+            dept.code_departement.includes(keyword.value.trim()) ||
+            dept.nom_departement
               .toLowerCase()
               .includes(keyword.value.trim().toLowerCase())
-          )
-
-          // dptOfCity.some(
-          //   (csvCity: string) =>
-          //     (csvCity.split[","][0] as string) == city.zipCode // csvCity.split[","][0] is postCode
-          // )
         );
-      });
 
-      return uniqBy(filteredResult, "zipCode");
+        const deptCities = matchedDepts.map((dept) => {
+          // Find records that match this department code
+          const deptRecords = loadRecordByDeptCode(dept.code_departement);
+
+          return {
+            zipCode: dept.code_departement + "000", // Add '000' to make it look like a ZIP code for consistency
+            lat: dept.latitude,
+            lng: dept.longitude,
+            name: dept.nom_departement,
+            departmentName: dept.nom_departement,
+            departmentCode: dept.code_departement,
+            baseRecords: deptRecords || [],
+            communes: [
+              {
+                name: dept.nom_departement,
+                lat: dept.latitude,
+                lng: dept.longitude,
+              },
+            ],
+          };
+        });
+
+        return uniqBy(deptCities, "zipCode");
+      } else {
+        // Original city filtering logic
+        filteredResult = cities.value.filter((city) => {
+          return (
+            city.zipCode.includes(keyword.value.trim()) ||
+            city.departmentName
+              ?.toLowerCase()
+              ?.includes(keyword.value.trim().toLowerCase()) ||
+            city.communes.some((commune) =>
+              commune.name
+                .toLowerCase()
+                .includes(keyword.value.trim().toLowerCase())
+            )
+          );
+        });
+
+        return uniqBy(filteredResult, "zipCode");
+      }
     }
 
     console.log(pinType.value);
 
-    filteredResult = cities.value.filter((city: City) => {
-      if (pinType.value.includes(0) && pinType.value.includes(1)) {
-        return true;
-      } else if (pinType.value.includes(0) && !pinType.value.includes(1)) {
-        // case red pin (withoud ICAD)
-        return city.baseRecords.some(
-          (record: BaseRecord) => !record.AccessICAD
-        );
-      } else if (pinType.value.includes(1) && !pinType.value.includes(0)) {
-        // case blue pin (without ICAD)
-        return city.baseRecords.some(
-          (record: BaseRecord) => !!record.AccessICAD
-        );
-      } else if (!pinType.value.includes(0) && !pinType.value.includes(1)) {
-        console.log("here");
-        return false;
-      }
-    });
+    // For non-search filtering (by pin type)
+    if (usingDptCode.value) {
+      // Create department-based cities for filtering
+      const deptCities = departments.value
+        .map((dept) => {
+          // Find records that match this department
+          const deptRecords = loadRecordByDeptCode(dept.code_departement);
 
-    // console.log(filteredResult);
+          if (!deptRecords || deptRecords.length === 0) {
+            return null;
+          }
+
+          return {
+            zipCode: dept.code_departement + "000",
+            lat: dept.latitude,
+            lng: dept.longitude,
+            name: dept.nom_departement,
+            departmentName: dept.nom_departement,
+            departmentCode: dept.code_departement,
+            baseRecords: deptRecords,
+            communes: [
+              {
+                name: dept.nom_departement,
+                lat: dept.latitude,
+                lng: dept.longitude,
+              },
+            ],
+          };
+        })
+        .filter((city) => city !== null) as City[];
+
+      filteredResult = deptCities.filter((city: City) => {
+        if (pinType.value.includes(0) && pinType.value.includes(1)) {
+          return true;
+        } else if (pinType.value.includes(0) && !pinType.value.includes(1)) {
+          // case red pin (without ICAD)
+          return city.baseRecords.some(
+            (record: BaseRecord) => !record.AccessICAD
+          );
+        } else if (pinType.value.includes(1) && !pinType.value.includes(0)) {
+          // case blue pin (with ICAD)
+          return city.baseRecords.some(
+            (record: BaseRecord) => !!record.AccessICAD
+          );
+        } else if (!pinType.value.includes(0) && !pinType.value.includes(1)) {
+          console.log("no pin types selected");
+          return false;
+        }
+        return false;
+      });
+    } else {
+      // Original city filtering by pin type
+      filteredResult = cities.value.filter((city: City) => {
+        if (pinType.value.includes(0) && pinType.value.includes(1)) {
+          return true;
+        } else if (pinType.value.includes(0) && !pinType.value.includes(1)) {
+          // case red pin (without ICAD)
+          return city.baseRecords.some(
+            (record: BaseRecord) => !record.AccessICAD
+          );
+        } else if (pinType.value.includes(1) && !pinType.value.includes(0)) {
+          // case blue pin (with ICAD)
+          return city.baseRecords.some(
+            (record: BaseRecord) => !!record.AccessICAD
+          );
+        } else if (!pinType.value.includes(0) && !pinType.value.includes(1)) {
+          console.log("no pin types selected");
+          return false;
+        }
+        return false;
+      });
+    }
 
     return uniqBy(filteredResult, "zipCode");
   });
@@ -146,7 +252,7 @@ export default function useProcessData(
         records.value
           .filter((rec) => !!rec.Dept)
           .map((rec) => rec.Dept?.replaceAll(" ", "")?.split(","))
-      ).map((dpt) => dpt + "000");
+      ).map((dpt) => dpt + "000"); // This is for compatibility with existing code
     } else {
       codes = flatten(
         records.value
@@ -172,11 +278,12 @@ export default function useProcessData(
   };
 
   const loadRecordByDeptCode = (deptCode: string) => {
-    const deptPrefix = deptCode.slice(0, 2);
+    // For department mode, we need to normalize the format
+    // Remove any trailing zeros that might have been added for compatibility
+    const deptPrefix = deptCode.replace(/000$/, "");
 
     const records_ = records.value.filter((rec) => {
       // Split the Dept field in case it contains multiple codes
-
       const deptCodes = rec.Dept?.split(",")?.map((code: string) =>
         code.trim()
       );
@@ -189,29 +296,78 @@ export default function useProcessData(
 
   const getDepartmentCode = (zipcode: string) => {
     if (!zipcode) return null;
+
+    // For department codes that were padded with '000'
+    if (zipcode.endsWith("000")) {
+      return zipcode.substring(0, zipcode.length - 3);
+    }
+
+    // Standard zip code to department code conversion
     return zipcode.substring(0, 2);
   };
 
   const getDepartmentName = (zipcode: string) => {
     const deptCode = getDepartmentCode(zipcode);
     if (!deptCode) return null;
+
+    // First check our departments array
+    const deptFromArray = departments.value.find(
+      (d) => d.code_departement === deptCode
+    );
+
+    if (deptFromArray) {
+      return deptFromArray.nom_departement;
+    }
+
+    // Fallback to the existing mapping if needed
     return (
       franceDepartments[deptCode as keyof typeof franceDepartments] || null
     );
   };
 
   const processCsv = (zipCodesBatch: string[]) => {
+    // If we're in department mode, use the new department data directly
+    if (usingDptCode.value) {
+      return zipCodesBatch
+        .map((zipCode) => {
+          // Extract department code (remove trailing zeros)
+          const deptCode = getDepartmentCode(zipCode);
+          if (!deptCode) return null;
+
+          // Find the department in our full departments list
+          const dept = departments.value.find(
+            (d) => d.code_departement === deptCode
+          );
+          if (!dept) return null;
+
+          // Get records for this department
+          const records_ = loadRecordByDeptCode(deptCode);
+
+          return {
+            zipCode: zipCode, // Keep original zipcode for compatibility
+            lat: dept.latitude,
+            lng: dept.longitude,
+            name: dept.nom_departement,
+            departmentName: dept.nom_departement,
+            departmentCode: deptCode,
+            baseRecords: records_,
+          };
+        })
+        .filter((item) => item !== null);
+    }
+
+    // If not in department mode, use original code for communes
     const store = usingFilloutBase.value ? storedFilloutCsv : storedCsv;
 
     // Initialize store if empty
     if (!store.value.dpt.length) {
-      store.value["dpt"] = csvDeptsContent;
+      store.value["dpt"] = csvDeptsWithCoordinates;
     }
     if (!store.value.zip.length) {
       store.value["zip"] = csvCommunesContent;
     }
 
-    const rows = store.value[usingDptCode.value ? "dpt" : "zip"];
+    const rows = store.value["zip"]; // Always use zip for non-department mode
 
     const data = rows
       .filter((row) => {
@@ -259,10 +415,8 @@ export default function useProcessData(
             return null;
           }
 
-          const records_ = usingDptCode.value
-            ? loadRecordByDeptCode(postcode)
-            : loadRecordByZipCode(postcode);
-
+          const records_ = loadRecordByZipCode(postcode);
+          const departmentCode = getDepartmentCode(postcode);
           const departmentName = getDepartmentName(postcode);
 
           return {
@@ -271,7 +425,7 @@ export default function useProcessData(
             lng,
             name: city,
             departmentName,
-            departmentCode: getDepartmentCode(postcode),
+            departmentCode,
             baseRecords: records_,
           };
         } catch (rowError) {
@@ -313,9 +467,8 @@ export default function useProcessData(
           existingEntry = existingEntry as City;
 
           if (existingEntry.communes.find((c) => c.name !== current.name)) {
-            // Add the commune to existing entryg
+            // Add the commune to existing entry
             existingEntry.communes.push({
-              ...current,
               name: current.name,
               lat: current.lat,
               lng: current.lng,
@@ -365,9 +518,17 @@ export default function useProcessData(
     cities.value = uniqBy(cities.value, "zipCode");
   };
 
+  // Modified to handle departments better
   const fetchCsvRecords = async (zipCodes: string[]) => {
     if (!zipCodes || zipCodes.length === 0) return false;
 
+    // If we're using department codes, we already have all data from the CSV
+    if (usingDptCode.value) {
+      // We can mark as success immediately since we use the static department data
+      return true;
+    }
+
+    // Original code for commune data (zip codes)
     // Check all zipcodes against local data
     const localMatches: string[] = [];
     const zipCodesToFetch: string[] = [];
@@ -390,12 +551,10 @@ export default function useProcessData(
     }
 
     // Store local matches
-    if (!storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"]) {
-      storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"] = [];
+    if (!storedFilloutCsv.value["zip"]) {
+      storedFilloutCsv.value["zip"] = [];
     }
-    storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"].push(
-      ...localMatches
-    );
+    storedFilloutCsv.value["zip"].push(...localMatches);
 
     // If all found locally, we're done
     if (zipCodesToFetch.length === 0) {
@@ -439,9 +598,7 @@ export default function useProcessData(
       );
 
       const newData = response.data.split("\n").slice(1);
-      storedFilloutCsv.value[usingDptCode.value ? "dpt" : "zip"].push(
-        ...newData
-      );
+      storedFilloutCsv.value["zip"].push(...newData);
       return true;
     } catch (error) {
       console.error("Error fetching missing zipcodes:", error);
@@ -453,9 +610,22 @@ export default function useProcessData(
     try {
       loading.value = true;
       currentCsvBatch.value = 0;
-      const BATCH_SIZE = 50; // Adjust batch size as needed
       const totalBatches = Math.ceil(postcodes.value.length / BATCH_SIZE);
 
+      // For department mode with our comprehensive dataset, we can simplify
+      if (usingDptCode.value) {
+        // We're using the comprehensive department dataset, so we can proceed directly
+        for (let i = 0; i < totalBatches; i++) {
+          currentCsvBatch.value = i;
+          await loadCitiesForBatch(i);
+        }
+
+        loadCsvDone.value = true;
+        loading.value = false;
+        return;
+      }
+
+      // Original code for commune data processing in batches
       const processBatch = async () => {
         const startIndex = currentCsvBatch.value * BATCH_SIZE;
         const endIndex = startIndex + BATCH_SIZE;
@@ -540,5 +710,6 @@ export default function useProcessData(
     cities,
     filteredCities,
     processCsv,
+    departments, // Expose departments data
   };
 }

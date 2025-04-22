@@ -703,8 +703,7 @@ nav {
     min-height: 100dvh;
     height: auto;
     overflow-y: scroll;
-    justify-content: flex-start;
-
+    justify-content: center;
     flex-direction: column-reverse;
 
     nav {
