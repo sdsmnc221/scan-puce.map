@@ -9,7 +9,7 @@
 
       <IInput
         id="inputDemo"
-        placeholder="Recherche par code postal, code de département, nom de commune..."
+        placeholder="Tapez ci-dessous le n° de département recherché (ex. 75)"
         container-class="w-11/12 search-input md:my-3"
         @update:model-value="onSearchInput"
       ></IInput>
@@ -346,7 +346,7 @@ import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
 import useZones from "./lib/useZones";
 
-const usingDptCode = ref(false);
+const usingDptCode = ref(true);
 const usingFilloutBase = ref(true);
 
 const defaultZoom = isMobile() ? 5.4 : 6;
