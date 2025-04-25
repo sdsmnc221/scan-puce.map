@@ -3,9 +3,19 @@
     class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans"
   >
     <div class="flex flex-col items-center">
-      <h1 class="font-bold text-xl md:text-3xl text-center my-3">
+      <h1 class="font-bold text-xl md:text-3xl text-center mt-3">
         Réseau Lecteurs de Puce France
       </h1>
+
+      <h2 class="font-bold text-lg mt-1 mb-3 text-center">
+        <span class="underline"
+          >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
+        >
+        <span class="md:ml-1 text-xs text-slate-400">
+          ( <span class="font-bold">{{ mapCities.length }}</span> localisations
+          )</span
+        >
+      </h2>
 
       <IInput
         id="inputDemo"
@@ -19,12 +29,9 @@
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-sm">
-          Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
+          Changer en affichage par
+          {{ !usingDptCode ? "Département" : "Commune" }}</span
         >
-        <span class="block md:inline-block md:ml-1 text-xs">
-          ( <span class="font-bold">{{ mapCities.length }}</span> localisations
-          )
-        </span>
       </RippleButton>
 
       <div
@@ -81,20 +88,22 @@
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <h2 class="hidden md:block font-bold text-lg md:text-xl">
-          Information de la localisation{{ selectedCity ? ":" : "..." }}
+          Pour visualiser l'information de la localisation{{
+            selectedCity ? ":" : "..."
+          }}
         </h2>
 
-        <p class="hidden md:block text-md text-slate-400" v-if="!selectedCity">
+        <p class="hidden md:block text-md text-slate-400">
           Veuillez choisir une localisation sur la carte.
         </p>
 
-        <p class="text-md text-slate-800" v-else>
+        <!-- <p class="text-md text-slate-800" v-else>
           {{ selectedCityZip }}
-        </p>
+        </p> -->
 
         <div
           v-if="selectedCity"
-          class="city-details hidden md:block my-3 p-5 md:overflow-scroll bg-white"
+          class="city-details hidden md:block mt-20 max-h-[72vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
@@ -684,7 +693,7 @@ nav {
     top: 32px;
     z-index: 5;
     width: 20vw;
-    max-height: calc(100vh - 32px * 2);
+
     border-radius: 16px;
     transform: translateY(-16px);
   }
