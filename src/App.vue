@@ -647,6 +647,16 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
     }
   }, 1200);
 });
+
+watch(
+  () => selectedCity.value,
+  () => {
+    if (!selectedCity.value) {
+      clearUrlParams("dptCode");
+      onSearchInput("");
+    }
+  }
+);
 </script>
 
 <style lang="scss">
