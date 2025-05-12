@@ -349,6 +349,7 @@ import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png
 import L from "leaflet";
 
 import { getZoneOptions, getZoneCenter } from "./lib/map";
+import { getUrlParams, clearUrlParams } from "./lib/path-utils";
 import { delay } from "./lib/useBase";
 
 import useBase from "./lib/useBase";
@@ -575,6 +576,22 @@ onMounted(() => {
     });
 
     // addSvgFilters();
+
+    if (window.location.search) {
+      const { param, result } = getUrlParams("dptCode");
+
+      if (param === "dptCode") {
+        usingDptCode.value = true;
+      } else if (param === "zipCode") {
+        usingDptCode.value = false;
+      }
+
+      keyword.value = result;
+
+      setTimeout(() => {
+        clearUrlParams(param);
+      }, 1200);
+    }
   });
 });
 
@@ -617,11 +634,19 @@ watch(
       //   "<div id='map' style='width: 100%; height: 100%;'></div>";
       // loading.value = false;
     }, 480);
-
-    console.log(reloadMapCount.value);
   },
   { immediate: true }
 );
+
+watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
+  setTimeout(() => {
+    const city = cities.value.find((c) => c.departmentCode == newKeyword);
+
+    if (city) {
+      selectedCity.value = city;
+    }
+  }, 1200);
+});
 </script>
 
 <style lang="scss">
