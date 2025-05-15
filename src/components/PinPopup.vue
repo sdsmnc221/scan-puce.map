@@ -182,7 +182,7 @@ const getContactDetails = (record: Record): ContactDetails => {
   }
 
   if (record.LinkToPost && record.LinkToPost.includes("https")) {
-    contact.link = record.Email;
+    contact.link = record.LinkToPost;
   }
 
   if (!contact.link && !contact.mail && !contact.admin && !contact.tel) {
