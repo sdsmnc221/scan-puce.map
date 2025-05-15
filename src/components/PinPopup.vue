@@ -6,7 +6,7 @@
   <h3 class="text-sm font-semibold text-slate-400" v-if="isDpt">
     {{ location.departmentName }}
   </h3>
-  <h3 class="text-sm font-semibold text-slate-400" v-if="communes">
+  <h3 class="text-sm font-semibold text-slate-400 border-b" v-if="communes">
     {{ communes }}
   </h3>
 
@@ -16,17 +16,15 @@
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
         record.Author
       }`"
+      class="border-b"
     >
       <div class="block mt-4">
         <div>
-          <span class="text-md underline font-semibold flex gap-2 items-center"
-            >{{ record.Author }}
-            <Badge
-              v-if="record.AccessICAD"
-              class="text-[9px] md:px-1 bg-blue-700"
-              >Accès ICAD</Badge
-            ></span
+          <p
+            class="text-md underline font-semibold flex flex-wrap md:gap-2 items-center justify-start"
           >
+            <span>{{ record.Author }}</span>
+          </p>
 
           <p
             class="block text-xs text-gray-500 font-semibold mb-2"
@@ -35,6 +33,12 @@
             {{ ` ${record.CommuneName.trim()} (${record.ZipCode}) ` }}
           </p>
         </div>
+
+        <Badge
+          v-if="record.AccessICAD"
+          class="mb-2 text-[9px] md:px-1 bg-blue-700"
+          >Accès ICAD</Badge
+        >
 
         <div
           v-if="!record.contactDetails?.needUpdate"
@@ -90,8 +94,12 @@
           </Badge> -->
         <!-- </div> -->
 
-        <p v-if="record.Notes" class="my-1 text-slate-500 text-[12px]">
-          <span class="font-bold">Notes: </span> {{ record.Notes }}
+        <p
+          v-if="record.Notes"
+          class="my-1 text-slate-500 text-[12px] flex flex-col"
+        >
+          <span class="font-bold">Notes: </span>
+          <span>{{ record.Notes }}</span>
         </p>
       </div>
     </div>
