@@ -10,7 +10,7 @@
     {{ communes }}
   </h3>
 
-  <div class="mt-2" v-if="baseRecords?.length">
+  <div class="mt-1" v-if="baseRecords?.length">
     <div
       v-for="(record, index) in baseRecords"
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
@@ -19,14 +19,21 @@
     >
       <div class="block mt-4">
         <div>
-          <span class="text-md font-semibold">{{ record.Author }}</span>
+          <span class="text-md underline font-semibold flex gap-2 items-center"
+            >{{ record.Author }}
+            <Badge
+              v-if="record.AccessICAD"
+              class="text-[9px] md:px-1 bg-blue-700"
+              >Accès ICAD</Badge
+            ></span
+          >
 
-          <span
-            class="block text-xs text-slate-500 mb-2"
+          <p
+            class="block text-xs text-gray-500 font-semibold mb-2"
             v-if="record.CommuneName"
           >
-            {{ ` (${record.CommuneName.trim()}) ` }}</span
-          >
+            {{ ` ${record.CommuneName.trim()} (${record.ZipCode}) ` }}
+          </p>
         </div>
 
         <div
@@ -70,8 +77,8 @@
           </TextHighlight>
         </div>
 
-        <div class="my-1">
-          <Badge
+        <!-- <div class="my-1"> -->
+        <!-- <Badge
             v-if="
               record.contactDetails.admin || record.contactDetails.needUpdate
             "
@@ -80,12 +87,8 @@
             style="font-size: 10px"
           >
             Contact à mettre à jour
-          </Badge>
-
-          <Badge v-if="record.AccessICAD" style="font-size: 10px"
-            >Accès ICAD</Badge
-          >
-        </div>
+          </Badge> -->
+        <!-- </div> -->
 
         <p v-if="record.Notes" class="my-1 text-slate-500 text-[12px]">
           <span class="font-bold">Notes: </span> {{ record.Notes }}
@@ -111,6 +114,7 @@ type Record = {
   Email?: string;
   ContactMode?: string;
   Notes?: string;
+  ZipCode?: string;
 };
 
 type Props = {
@@ -161,34 +165,16 @@ type ContactDetails = {
 const getContactDetails = (record: Record): ContactDetails => {
   let contact: ContactDetails = {};
 
-  if (!record.ContactMode) {
-    if (!record.LinkToPost?.includes("https")) {
-      contact.needUpdate = true;
-    } else {
-      contact.link = record.LinkToPost;
-      contact.needUpdate = false;
-    }
+  if (record.Tel) {
+    contact.tel = record.Tel;
   }
 
-  switch (record.ContactMode) {
-    case "TelOrMail":
-      contact.tel = record.Tel;
-      contact.mail = record.Email;
-      contact.admin = false;
-      break;
-    case "LinkToPost":
-      if (record.LinkToPost.includes("https")) {
-        contact.link = record.LinkToPost;
-        contact.admin = false;
-      } else {
-        contact.needUpdate = true;
-      }
-      break;
+  if (record.Email) {
+    contact.mail = record.Email;
+  }
 
-    case "ViaAdmin":
-      break;
-    default:
-      break;
+  if (record.LinkToPost && record.LinkToPost.includes("https")) {
+    contact.link = record.Email;
   }
 
   if (!contact.link && !contact.mail && !contact.admin && !contact.tel) {
