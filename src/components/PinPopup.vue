@@ -64,7 +64,7 @@
             <a
               v-if="record.contactDetails?.tel"
               target="_blank"
-              :href="`telto:${record.contactDetails.tel}`"
+              :href="`tel:${record.contactDetails.tel}`"
               class="p-0 m-0"
               >Contact par tél</a
             >
