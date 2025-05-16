@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-semibold text-xl">
+  <h2 class="font-semibold text-xl text-secondary">
     {{ zipCode || "Zone " + location.postcodes?.join(", ") }}
   </h2>
 
@@ -16,12 +16,12 @@
       :key="`${zipCode || location.postcodes?.join('-')}-record-${
         record.Author
       }`"
-      class="border-b"
+      class="border-b border-amber-100"
     >
       <div class="block mt-4">
         <div>
           <p
-            class="text-md underline font-semibold flex flex-wrap md:gap-2 items-center justify-start"
+            class="text-md underline font-semibold flex flex-wrap md:gap-2 items-center justify-start text-secondary"
           >
             <span>{{ record.Author }}</span>
           </p>
@@ -36,13 +36,13 @@
 
         <Badge
           v-if="record.AccessICAD"
-          class="mb-2 text-[9px] md:px-1 bg-blue-700"
+          class="mb-2 text-[9px] md:px-1 bg-primary text-primary-foreground"
           >Accès ICAD</Badge
         >
 
         <div
           v-if="!record.contactDetails?.needUpdate"
-          class="flex flex-col text-xs text-sky-600 underline"
+          class="flex flex-col text-xs text-amber-600 underline"
         >
           <div class="flex flex-row">
             <a
@@ -72,7 +72,7 @@
 
           <TextHighlight
             v-if="record.contactDetails.admin"
-            class="rounded-lg bg-gradient-to-r from-sky-200 to-yellow-200 inline-block text-center px-2 py-0 font-semibold text-xs mr-2 w-[152px]"
+            class="rounded-lg bg-gradient-to-r from-amber-200 to-amber-300 inline-block text-center px-2 py-0 font-semibold text-xs mr-2 w-[152px] text-secondary"
             @mouseenter="() => (hoveredIndex = index)"
             @mouseleave="() => (hoveredIndex = null)"
           >

@@ -1,13 +1,13 @@
 <template>
   <nav
-    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans"
+    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
   >
     <div class="flex flex-col items-center">
-      <h1 class="font-bold text-xl md:text-3xl text-center mt-3">
+      <h1 class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary">
         Réseau Lecteurs de Puce France
       </h1>
 
-      <h2 class="font-bold text-lg mt-1 mb-3 text-center">
+      <h2 class="font-bold text-lg mt-1 mb-3 text-center text-secondary">
         <span class="underline"
           >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
         >
@@ -25,7 +25,7 @@
       ></IInput>
 
       <RippleButton
-        class="toggle-dpt my-3 w-11/12 text-sm"
+        class="toggle-dpt my-3 w-11/12 text-sm bg-amber-100 text-primary-foreground hover:bg-amber-600"
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-sm">
@@ -37,7 +37,9 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl text-center md:text-left">
+        <h2
+          class="font-bold text-lg md:text-xl text-center md:text-left text-secondary"
+        >
           Les épingles :
         </h2>
 
@@ -45,7 +47,7 @@
           class="w-full flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
         >
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-red-800"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-secondary"
             :class="{
               'line-through': Array.isArray(pinType) && !pinType.includes(0),
             }"
@@ -59,7 +61,7 @@
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-sky-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-secondary"
             :class="{
               'line-through': Array.isArray(pinType) && !pinType.includes(1),
             }"
@@ -91,7 +93,7 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="hidden md:block font-bold text-lg md:text-xl">
+        <h2 class="hidden md:block font-bold text-lg md:text-xl text-secondary">
           Pour visualiser l'information de la localisation{{
             selectedCity ? ":" : "..."
           }}
@@ -107,7 +109,7 @@
 
         <div
           v-if="selectedCity"
-          class="city-details hidden md:block mt-20 max-h-[72vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg"
+          class="city-details hidden md:block mt-20 max-h-[72vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
@@ -139,7 +141,9 @@
     <div class="flex justify-between">
       <Sheet>
         <SheetTrigger class="toggle-embed">
-          <RippleButton class="text-[10px] md:text-xs rounded-xl">
+          <RippleButton
+            class="text-[10px] md:text-xs rounded-xl bg-secondary hover:bg-amber-600"
+          >
             Embed
           </RippleButton>
         </SheetTrigger>
@@ -156,7 +160,7 @@
       <Sheet>
         <SheetTrigger class="toggle-legal">
           <RippleButton
-            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-yellow-100"
+            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-amber-100 text-secondary hover:bg-amber-200"
           >
             Mentions légales & Politique de confidentialité
           </RippleButton>
@@ -177,7 +181,12 @@
     </div>
   </nav>
 
-  <div class="map w-2/3 watercolor-map-container">
+  <div class="map w-2/3 watercolor-map-container relative">
+    <!-- Question mark pattern overlay -->
+    <div
+      class="absolute inset-0 z-10 pointer-events-none question-mark-pattern"
+    ></div>
+
     <!-- SVG Filters definition -->
     <svg class="filters" style="position: absolute; top: 0; left: 0">
       <defs>
@@ -407,7 +416,7 @@ const loading = ref(true);
 
 const searchTimeout = ref(null);
 const keyword = ref("");
-const pinType = ref([0, 1, 2]);
+const pinType = ref([0, 1]);
 
 const storedCsv = ref({
   dpt: [],
@@ -435,6 +444,9 @@ const { records, postcodes, cities, filteredCities, processCsv } =
     pinType,
     loading
   );
+
+const processedZones = ref([]);
+const filteredZones = ref([]);
 
 const usingZones = computed(() => {
   if (keyword.value?.trim().length) {
@@ -699,6 +711,14 @@ body,
   mask-size: cover, contain;
   mask-position: center;
   mask-repeat: no-repeat;
+}
+
+.question-mark-pattern {
+  background-image: url("/src/assets/question-mark-pattern.png");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  opacity: 0.08;
+  z-index: 20;
 }
 
 .leaflet-container {
