@@ -220,7 +220,7 @@
           width="100%"
           height="100%"
           fill="url(#question-mark-pattern)"
-          opacity="0.64"
+          opacity="0.32"
         />
       </svg>
     </div>
@@ -266,14 +266,14 @@
       @click="resetMapViewGlobal"
     >
       <LTileLayer
-        url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-        attribution="attribution"
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
+        attribution="© OpenStreetMap contributors & CARTOdb"
         layer-type="base"
         name="OpenStreetMap"
         :bounds="franceBounds"
         :options="{
           maxZoom: 19,
-          attribution: '© OpenStreetMap contributors',
+          attribution: '© OpenStreetMap contributors & CARTOdb',
           className: 'watercolor-tiles',
         }"
       />
