@@ -183,9 +183,47 @@
 
   <div class="map w-2/3 watercolor-map-container relative">
     <!-- Question mark pattern overlay -->
-    <div
-      class="absolute inset-0 z-10 pointer-events-none question-mark-pattern"
-    ></div>
+    <div class="absolute inset-0 z-20 pointer-events-none">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern
+            id="question-mark-pattern"
+            x="0"
+            y="0"
+            width="100"
+            height="100"
+            patternUnits="userSpaceOnUse"
+          >
+            <text
+              x="20"
+              y="70"
+              font-family="Arial"
+              font-size="60"
+              fill="#FAC142"
+              opacity="0.32"
+            >
+              ?
+            </text>
+            <text
+              x="60"
+              y="40"
+              font-family="Arial"
+              font-size="40"
+              fill="#000000"
+              opacity="0.08"
+            >
+              ?
+            </text>
+          </pattern>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#question-mark-pattern)"
+          opacity="0.64"
+        />
+      </svg>
+    </div>
 
     <!-- SVG Filters definition -->
     <svg class="filters" style="position: absolute; top: 0; left: 0">
@@ -706,19 +744,6 @@ body,
   height: 100%;
   flex: 1;
   overflow-x: visible;
-
-  mask-image: url("/ink-reversed.gif"), url("/ink.gif");
-  mask-size: cover, contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
-}
-
-.question-mark-pattern {
-  background-image: url("/src/assets/question-mark-pattern.png");
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  opacity: 0.08;
-  z-index: 20;
 }
 
 .leaflet-container {
