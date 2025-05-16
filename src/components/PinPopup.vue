@@ -218,9 +218,6 @@
 import { computed, ref, type Ref } from "vue";
 import { uniqBy } from "lodash";
 
-import { Badge } from "../components/ui/badge";
-import TextHighlight from "./TextHighlight.vue";
-
 type Record = {
   Author: string;
   LinkToPost: string;
