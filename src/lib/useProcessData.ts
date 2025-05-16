@@ -463,7 +463,8 @@ export default function useProcessData(
     const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
 
     if (
-      !keyword.value?.trim()?.length &&
+      typeof keyword.value === "string" &&
+      !keyword.value.trim().length &&
       pinTypeArray.length === 1 &&
       pinTypeArray.includes(2)
     ) {
@@ -473,7 +474,7 @@ export default function useProcessData(
     // Filter by keyword if present
     let result = cities.value;
 
-    if (keyword.value.trim().length) {
+    if (typeof keyword.value === "string" && keyword.value.trim().length) {
       const searchTerm = keyword.value.trim().toLowerCase();
 
       if (usingDptCode.value) {

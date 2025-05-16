@@ -654,7 +654,7 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
       (c) =>
         c.departmentCode == newKeyword ||
         c.zipCode == newKeyword ||
-        c.name.toLowerCase() == newKeyword
+        c.name.toLowerCase().includes(newKeyword)
     );
 
     if (city) {
