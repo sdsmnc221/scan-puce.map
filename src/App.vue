@@ -437,7 +437,7 @@ const { records, postcodes, cities, filteredCities, processCsv } =
   );
 
 const usingZones = computed(() => {
-  if (keyword.value.trim().length) {
+  if (keyword.value?.trim().length) {
     return filteredZones.value;
   } else {
     return processedZones.value;
