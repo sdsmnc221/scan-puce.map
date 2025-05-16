@@ -106,7 +106,7 @@ const getZoneCenter = (coordinates: LatLngExpression[]) => {
 };
 
 // Zone styling options
-const getZoneOptions = (zone: Zone) => ({
+const getZoneOptions = () => ({
   color: "#fac142",
   fillColor: "#fac142",
   fillOpacity: 0.2,
