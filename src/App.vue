@@ -654,24 +654,17 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
       (c) =>
         c.departmentCode == newKeyword ||
         c.zipCode == newKeyword ||
-        c.name.toLowerCase().includes(newKeyword)
+        c.name.toLowerCase() == newKeyword
     );
 
     if (city) {
       selectedCity.value = city;
+    } else {
+      selectedCity.value = null;
+      keyword.value = "";
     }
-  }, 1200);
+  }, 640);
 });
-
-watch(
-  () => selectedCity.value,
-  () => {
-    if (!selectedCity.value) {
-      clearUrlParams("dptCode");
-      onSearchInput("");
-    }
-  }
-);
 </script>
 
 <style lang="scss">
