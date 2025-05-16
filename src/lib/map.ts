@@ -3,13 +3,6 @@ interface LatLngExpression {
   lng: number;
 }
 
-interface Zone {
-  zipCodes: string[];
-  coordinates: LatLngExpression[];
-  cityNames: string[];
-  color: string;
-}
-
 const createPolygonFromPoints = (
   points: LatLngExpression[]
 ): LatLngExpression[] => {
@@ -106,9 +99,9 @@ const getZoneCenter = (coordinates: LatLngExpression[]) => {
 };
 
 // Zone styling options
-const getZoneOptions = (zone: Zone) => ({
-  color: zone.color,
-  fillColor: zone.color,
+const getZoneOptions = () => ({
+  color: "#fac142",
+  fillColor: "#fac142",
   fillOpacity: 0.2,
   weight: 2,
 });

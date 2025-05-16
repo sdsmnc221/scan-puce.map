@@ -1,13 +1,13 @@
 <template>
   <nav
-    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans"
+    class="px-4 pb-14 md:pb-10 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
   >
     <div class="flex flex-col items-center">
-      <h1 class="font-bold text-xl md:text-3xl text-center mt-3">
+      <h1 class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary">
         Réseau Lecteurs de Puce France
       </h1>
 
-      <h2 class="font-bold text-lg mt-1 mb-3 text-center">
+      <h2 class="font-bold text-[0.9rem] mt-1 mb-3 text-center text-secondary">
         <span class="underline"
           >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
         >
@@ -20,60 +20,106 @@
       <IInput
         id="inputDemo"
         placeholder="Tapez ci-dessous le n° de département recherché (ex. 75)"
-        container-class="w-11/12 search-input md:my-3"
+        container-class="w-full md:w-11/12 search-input md:my-3"
         @update:model-value="onSearchInput"
       ></IInput>
-
-      <RippleButton
-        class="toggle-dpt my-3 w-11/12 text-sm"
-        @click="() => (usingDptCode = !usingDptCode)"
-      >
-        <span class="font-bold text-sm">
-          Changer en affichage par
-          {{ !usingDptCode ? "Département" : "Commune" }}</span
-        >
-      </RippleButton>
 
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="font-bold text-lg md:text-xl text-center md:text-left">
+        <h2
+          class="font-bold text-lg md:text-xl text-left md:text-left text-secondary mb-4"
+        >
           Les épingles :
         </h2>
 
         <div
-          class="w-full flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
+          class="w-full mb-4 flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
         >
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-red-800"
-            :class="{
-              'line-through': Array.isArray(pinType) && !pinType.includes(0),
-            }"
+            class="pin-toggle-card relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+            :class="[
+              Array.isArray(pinType) && pinType.includes(0)
+                ? 'bg-amber-50 border-amber-300 shadow-md'
+                : 'bg-gray-100 border-gray-200 opacity-70',
+            ]"
             @click="togglePinType(0)"
           >
-            <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
-            <span
-              >Localisation des lecteurs de puce
-              <span class="font-bold">sans accès à ICAD</span>.</span
-            >
+            <div class="absolute top-2 right-2">
+              <div
+                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                :class="[
+                  Array.isArray(pinType) && pinType.includes(0)
+                    ? 'border-amber-500 bg-amber-100'
+                    : 'border-gray-400 bg-gray-200',
+                ]"
+              >
+                <div
+                  v-if="Array.isArray(pinType) && pinType.includes(0)"
+                  class="w-2 h-2 rounded-full bg-amber-500"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="mr-3 flex-shrink-0">
+                <img class="w-[32px] h-[32px]" src="/pin.png" />
+              </div>
+              <div class="text-center md:text-left">
+                <p class="font-medium text-sm text-secondary">
+                  Lecteurs de puce
+                  <span class="font-bold">sans accès à ICAD</span>
+                </p>
+                <p class="text-[10px] text-gray-500 mt-1">
+                  Affiche les localisations sans accès à la base ICAD
+                </p>
+              </div>
+            </div>
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-sky-700"
-            :class="{
-              'line-through': Array.isArray(pinType) && !pinType.includes(1),
-            }"
+            class="pin-toggle-card ml-2 md:ml-0 md:mt-4 relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+            :class="[
+              Array.isArray(pinType) && pinType.includes(1)
+                ? 'bg-amber-50 border-amber-300 shadow-md'
+                : 'bg-gray-100 border-gray-200 opacity-70',
+            ]"
             @click="togglePinType(1)"
           >
-            <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
-            <span
-              >Localisation des lecteurs de puce
-              <span class="font-bold">avec accès à ICAD</span>.</span
-            >
+            <div class="absolute top-2 right-2">
+              <div
+                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                :class="[
+                  Array.isArray(pinType) && pinType.includes(1)
+                    ? 'border-amber-500 bg-amber-100'
+                    : 'border-gray-400 bg-gray-200',
+                ]"
+              >
+                <div
+                  v-if="Array.isArray(pinType) && pinType.includes(1)"
+                  class="w-2 h-2 rounded-full bg-amber-500"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="mr-3 flex-shrink-0">
+                <img class="w-[32px] h-[32px]" src="/pin-icad.png" />
+              </div>
+              <div class="text-center md:text-left">
+                <p class="font-medium text-sm text-secondary">
+                  Lecteurs de puce
+                  <span class="font-bold">avec accès à ICAD</span>
+                </p>
+                <p class="text-[10px] text-gray-500 mt-1">
+                  Affiche les localisations avec accès à la base ICAD
+                </p>
+              </div>
+            </div>
           </button>
 
           <!-- <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-yellow-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
           >
@@ -91,23 +137,57 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="hidden md:block font-bold text-lg md:text-xl">
-          Pour visualiser l'information de la localisation{{
-            selectedCity ? ":" : "..."
-          }}
-        </h2>
-
-        <p class="hidden md:block text-md text-slate-400">
-          Veuillez choisir une localisation sur la carte.
-        </p>
-
-        <!-- <p class="text-md text-slate-800" v-else>
-          {{ selectedCityZip }}
-        </p> -->
+        <!-- Empty State when no location is selected -->
+        <div
+          v-if="!selectedCity"
+          class="md:flex flex-col items-center justify-center p-6 my-4 bg-white rounded-lg border border-dashed border-amber-300 text-center"
+        >
+          <div class="empty-state-icon mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-amber-400 mx-auto"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <h3 class="text-base md:text-lg font-medium text-secondary mb-2">
+            Aucune localisation sélectionnée
+          </h3>
+          <p class="text-slate-500 mb-4 text-sm md:text-base">
+            Cliquez sur une épingle sur la carte pour afficher les informations
+            de cette localisation.
+          </p>
+          <div class="map-pointer flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-amber-500 animate-bounce"
+            >
+              <path d="M15 10l-4 4l-4-4"></path>
+            </svg>
+          </div>
+        </div>
 
         <div
           v-if="selectedCity"
-          class="city-details hidden md:block mt-20 max-h-[72vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg"
+          class="city-details hidden md:block mt-2 mb-4 max-h-[40vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
@@ -136,10 +216,12 @@
       </div>
     </div>
 
-    <div class="flex justify-between">
+    <div class="flex absolute bottom-2 w-11/12 justify-between mb-4">
       <Sheet>
         <SheetTrigger class="toggle-embed">
-          <RippleButton class="text-[10px] md:text-xs rounded-xl">
+          <RippleButton
+            class="text-[10px] md:text-xs rounded-xl bg-secondary hover:bg-amber-600"
+          >
             Embed
           </RippleButton>
         </SheetTrigger>
@@ -156,7 +238,7 @@
       <Sheet>
         <SheetTrigger class="toggle-legal">
           <RippleButton
-            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-yellow-100"
+            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-amber-100 text-secondary hover:bg-amber-200"
           >
             Mentions légales & Politique de confidentialité
           </RippleButton>
@@ -177,7 +259,50 @@
     </div>
   </nav>
 
-  <div class="map w-2/3 watercolor-map-container">
+  <div class="map w-2/3 watercolor-map-container relative">
+    <!-- Question mark pattern overlay -->
+    <div class="absolute inset-0 z-20 pointer-events-none">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern
+            id="question-mark-pattern"
+            x="0"
+            y="0"
+            width="100"
+            height="100"
+            patternUnits="userSpaceOnUse"
+          >
+            <text
+              x="20"
+              y="70"
+              font-family="Arial"
+              font-size="60"
+              fill="#FAC142"
+              opacity="0.32"
+            >
+              ?
+            </text>
+            <text
+              x="60"
+              y="40"
+              font-family="Arial"
+              font-size="40"
+              fill="#000000"
+              opacity="0.08"
+            >
+              ?
+            </text>
+          </pattern>
+        </defs>
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#question-mark-pattern)"
+          opacity="0.32"
+        />
+      </svg>
+    </div>
+
     <!-- SVG Filters definition -->
     <svg class="filters" style="position: absolute; top: 0; left: 0">
       <defs>
@@ -219,14 +344,14 @@
       @click="resetMapViewGlobal"
     >
       <LTileLayer
-        url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
-        attribution="attribution"
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
+        attribution="© OpenStreetMap contributors & CARTOdb"
         layer-type="base"
         name="OpenStreetMap"
         :bounds="franceBounds"
         :options="{
           maxZoom: 19,
-          attribution: '© OpenStreetMap contributors',
+          attribution: '© OpenStreetMap contributors & CARTOdb',
           className: 'watercolor-tiles',
         }"
       />
@@ -287,6 +412,16 @@
           />
         </LMarker>
       </div>
+
+      <RippleButton
+        class="toggle-dpt absolute z-[9999] mb-2 right-2 bottom-4 text-[10px] md:text-sm bg-muted text-primary-foreground hover:bg-300"
+        @click="() => (usingDptCode = !usingDptCode)"
+      >
+        <span class="font-bold">
+          Changer en affichage par
+          {{ !usingDptCode ? "Département" : "Commune" }}</span
+        >
+      </RippleButton>
     </LMap>
 
     <MapLoader :loading="loading"></MapLoader>
@@ -407,7 +542,7 @@ const loading = ref(true);
 
 const searchTimeout = ref(null);
 const keyword = ref("");
-const pinType = ref([0, 1, 2]);
+const pinType = ref([0, 1]);
 
 const storedCsv = ref({
   dpt: [],
@@ -429,12 +564,14 @@ const { records, postcodes, cities, filteredCities, processCsv } =
   useProcessData(
     usingFilloutBase,
     usingDptCode,
-    storedFilloutCsv,
     storedCsv,
     keyword,
     pinType,
     loading
   );
+
+const processedZones = ref([]);
+const filteredZones = ref([]);
 
 const usingZones = computed(() => {
   if (keyword.value?.trim().length) {
@@ -662,7 +799,10 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
     } else {
       selectedCity.value = null;
       keyword.value = "";
-      usingDptCode.value = true;
+
+      if (window.location.search) {
+        usingDptCode.value = true;
+      }
     }
   }, 640);
 });
@@ -694,11 +834,6 @@ body,
   height: 100%;
   flex: 1;
   overflow-x: visible;
-
-  mask-image: url("/ink-reversed.gif"), url("/ink.gif");
-  mask-size: cover, contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
 }
 
 .leaflet-container {
@@ -732,14 +867,10 @@ nav {
   z-index: 98;
 
   .city-details {
-    position: fixed;
-    right: 32px;
-    top: 32px;
+    position: relative;
     z-index: 5;
-    width: 20vw;
-
+    width: 100%;
     border-radius: 16px;
-    transform: translateY(-16px);
   }
 }
 
@@ -779,6 +910,25 @@ nav {
       #map {
         height: 100% !important;
       }
+    }
+  }
+
+  .empty-state-icon {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 0.7;
     }
   }
 
