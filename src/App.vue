@@ -46,7 +46,9 @@
         >
           <button
             class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-red-800"
-            :class="{ 'line-through': !pinType.includes(0) }"
+            :class="{
+              'line-through': Array.isArray(pinType) && !pinType.includes(0),
+            }"
             @click="togglePinType(0)"
           >
             <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
@@ -58,7 +60,9 @@
 
           <button
             class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-sky-700"
-            :class="{ 'line-through': !pinType.includes(1) }"
+            :class="{
+              'line-through': Array.isArray(pinType) && !pinType.includes(1),
+            }"
             @click="togglePinType(1)"
           >
             <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
@@ -433,7 +437,7 @@ const { records, postcodes, cities, filteredCities, processCsv } =
   );
 
 const usingZones = computed(() => {
-  if (keyword.value.trim().length) {
+  if (keyword.value?.trim().length) {
     return filteredZones.value;
   } else {
     return processedZones.value;
@@ -457,7 +461,13 @@ const selectedCityZip = computed(() => {
 const usingCities = computed(() => {
   let toUse;
 
-  if (pinType.value.length || !pinType.value.includes(2) || keyword.value) {
+  const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
+
+  if (
+    pinType.value.length ||
+    (Array.isArray(pinType.value) && !pinType.value.includes(2)) ||
+    keyword.value
+  ) {
     toUse = filteredCities.value;
   } else {
     toUse = cities.value;
@@ -523,7 +533,7 @@ const onSearchInput = (inputValue) => {
 };
 
 const togglePinType = (pinValue) => {
-  if (pinType.value.includes(pinValue)) {
+  if (Array.isArray(pinType.value) && pinType.value.includes(pinValue)) {
     // Create a new array with the filtered values
     pinType.value = pinType.value.filter((type) => type !== pinValue);
   } else {
@@ -649,19 +659,13 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
 
     if (city) {
       selectedCity.value = city;
+    } else {
+      selectedCity.value = null;
+      keyword.value = "";
+      usingDptCode.value = true;
     }
-  }, 1200);
+  }, 640);
 });
-
-watch(
-  () => selectedCity.value,
-  () => {
-    if (!selectedCity.value) {
-      clearUrlParams("dptCode");
-      onSearchInput("");
-    }
-  }
-);
 </script>
 
 <style lang="scss">
