@@ -476,7 +476,6 @@ const { records, postcodes, cities, filteredCities, processCsv } =
   useProcessData(
     usingFilloutBase,
     usingDptCode,
-    storedFilloutCsv,
     storedCsv,
     keyword,
     pinType,
