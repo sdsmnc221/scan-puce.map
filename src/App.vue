@@ -1,13 +1,13 @@
 <template>
   <nav
-    class="px-4 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
+    class="px-4 pb-14 md:pb-10 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
   >
     <div class="flex flex-col items-center">
       <h1 class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary">
         Réseau Lecteurs de Puce France
       </h1>
 
-      <h2 class="font-bold text-lg mt-1 mb-3 text-center text-secondary">
+      <h2 class="font-bold text-[0.9rem] mt-1 mb-3 text-center text-secondary">
         <span class="underline"
           >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
         >
@@ -20,62 +20,106 @@
       <IInput
         id="inputDemo"
         placeholder="Tapez ci-dessous le n° de département recherché (ex. 75)"
-        container-class="w-11/12 search-input md:my-3"
+        container-class="w-full md:w-11/12 search-input md:my-3"
         @update:model-value="onSearchInput"
       ></IInput>
-
-      <RippleButton
-        class="toggle-dpt my-3 w-11/12 text-sm bg-amber-100 text-primary-foreground hover:bg-yellow-300"
-        @click="() => (usingDptCode = !usingDptCode)"
-      >
-        <span class="font-bold text-sm">
-          Changer en affichage par
-          {{ !usingDptCode ? "Département" : "Commune" }}</span
-        >
-      </RippleButton>
 
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <h2
-          class="font-bold text-lg md:text-xl text-center md:text-left text-secondary"
+          class="font-bold text-lg md:text-xl text-left md:text-left text-secondary mb-4"
         >
           Les épingles :
         </h2>
 
         <div
-          class="w-full flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
+          class="w-full mb-4 flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
         >
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-secondary"
-            :class="{
-              'line-through': Array.isArray(pinType) && !pinType.includes(0),
-            }"
+            class="pin-toggle-card relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+            :class="[
+              Array.isArray(pinType) && pinType.includes(0)
+                ? 'bg-amber-50 border-amber-300 shadow-md'
+                : 'bg-gray-100 border-gray-200 opacity-70',
+            ]"
             @click="togglePinType(0)"
           >
-            <img class="w-[24px] h-[24px] inline-block" src="/pin.png" />
-            <span
-              >Localisation des lecteurs de puce
-              <span class="font-bold">sans accès à ICAD</span>.</span
-            >
+            <div class="absolute top-2 right-2">
+              <div
+                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                :class="[
+                  Array.isArray(pinType) && pinType.includes(0)
+                    ? 'border-amber-500 bg-amber-100'
+                    : 'border-gray-400 bg-gray-200',
+                ]"
+              >
+                <div
+                  v-if="Array.isArray(pinType) && pinType.includes(0)"
+                  class="w-2 h-2 rounded-full bg-amber-500"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="mr-3 flex-shrink-0">
+                <img class="w-[32px] h-[32px]" src="/pin.png" />
+              </div>
+              <div class="text-center md:text-left">
+                <p class="font-medium text-sm text-secondary">
+                  Lecteurs de puce
+                  <span class="font-bold">sans accès à ICAD</span>
+                </p>
+                <p class="text-[10px] text-gray-500 mt-1">
+                  Affiche les localisations sans accès à la base ICAD
+                </p>
+              </div>
+            </div>
           </button>
 
           <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-secondary"
-            :class="{
-              'line-through': Array.isArray(pinType) && !pinType.includes(1),
-            }"
+            class="pin-toggle-card ml-2 md:ml-0 md:mt-4 relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+            :class="[
+              Array.isArray(pinType) && pinType.includes(1)
+                ? 'bg-amber-50 border-amber-300 shadow-md'
+                : 'bg-gray-100 border-gray-200 opacity-70',
+            ]"
             @click="togglePinType(1)"
           >
-            <img class="w-[24px] h-[24px] inline-block" src="/pin-icad.png" />
-            <span
-              >Localisation des lecteurs de puce
-              <span class="font-bold">avec accès à ICAD</span>.</span
-            >
+            <div class="absolute top-2 right-2">
+              <div
+                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                :class="[
+                  Array.isArray(pinType) && pinType.includes(1)
+                    ? 'border-amber-500 bg-amber-100'
+                    : 'border-gray-400 bg-gray-200',
+                ]"
+              >
+                <div
+                  v-if="Array.isArray(pinType) && pinType.includes(1)"
+                  class="w-2 h-2 rounded-full bg-amber-500"
+                ></div>
+              </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="mr-3 flex-shrink-0">
+                <img class="w-[32px] h-[32px]" src="/pin-icad.png" />
+              </div>
+              <div class="text-center md:text-left">
+                <p class="font-medium text-sm text-secondary">
+                  Lecteurs de puce
+                  <span class="font-bold">avec accès à ICAD</span>
+                </p>
+                <p class="text-[10px] text-gray-500 mt-1">
+                  Affiche les localisations avec accès à la base ICAD
+                </p>
+              </div>
+            </div>
           </button>
 
           <!-- <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-yellow-700"
+            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
           >
@@ -96,7 +140,7 @@
         <!-- Empty State when no location is selected -->
         <div
           v-if="!selectedCity"
-          class="md:flex flex-col items-center justify-center p-6 mt-4 bg-white rounded-lg border border-dashed border-amber-300 text-center"
+          class="md:flex flex-col items-center justify-center p-6 my-4 bg-white rounded-lg border border-dashed border-amber-300 text-center"
         >
           <div class="empty-state-icon mb-4">
             <svg
@@ -143,7 +187,7 @@
 
         <div
           v-if="selectedCity"
-          class="city-details hidden md:block mt-2 max-h-[40vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
+          class="city-details hidden md:block mt-2 mb-4 max-h-[40vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
@@ -172,7 +216,7 @@
       </div>
     </div>
 
-    <div class="flex justify-between mb-4">
+    <div class="flex absolute bottom-2 w-11/12 justify-between mb-4">
       <Sheet>
         <SheetTrigger class="toggle-embed">
           <RippleButton
@@ -368,6 +412,16 @@
           />
         </LMarker>
       </div>
+
+      <RippleButton
+        class="toggle-dpt absolute z-[9999] mb-2 right-2 bottom-4 text-[10px] md:text-sm bg-muted text-primary-foreground hover:bg-300"
+        @click="() => (usingDptCode = !usingDptCode)"
+      >
+        <span class="font-bold">
+          Changer en affichage par
+          {{ !usingDptCode ? "Département" : "Commune" }}</span
+        >
+      </RippleButton>
     </LMap>
 
     <MapLoader :loading="loading"></MapLoader>
