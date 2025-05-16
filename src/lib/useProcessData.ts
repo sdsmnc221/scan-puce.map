@@ -195,11 +195,11 @@ export default function useProcessData(
     records.value.forEach((record) => {
       if (record.ZipCode) {
         const codes = record.ZipCode.replaceAll(" ", "").split(",");
-        codes.forEach((code) => {
+        codes.forEach((code: string) => {
           if (!map.has(code)) {
             map.set(code, []);
           }
-          map.get(code)?.push(record);
+          map.get(code)?.push(record as any);
         });
       }
     });
@@ -213,12 +213,12 @@ export default function useProcessData(
     records.value.forEach((record) => {
       if (record.Dept) {
         const codes = record.Dept.replaceAll(" ", "").split(",");
-        codes.forEach((code) => {
+        codes.forEach((code: string) => {
           const normalizedCode = code.replace(/^0+/, "");
           if (!map.has(normalizedCode)) {
             map.set(normalizedCode, []);
           }
-          map.get(normalizedCode)?.push(record);
+          map.get(normalizedCode)?.push(record as any);
         });
       }
     });
@@ -267,7 +267,7 @@ export default function useProcessData(
       records.value.forEach((record) => {
         if (record.Dept) {
           const deptCodes = record.Dept.replaceAll(" ", "").split(",");
-          deptCodes.forEach((code) => {
+          deptCodes.forEach((code: string) => {
             // Add "000" suffix for compatibility with existing code
             codes.push(code.trim() + "000");
           });
@@ -278,7 +278,7 @@ export default function useProcessData(
       records.value.forEach((record) => {
         if (record.ZipCode) {
           const zipCodes = record.ZipCode.replaceAll(" ", "").split(",");
-          zipCodes.forEach((code) => {
+          zipCodes.forEach((code: string) => {
             codes.push(code.trim());
           });
         }
@@ -377,7 +377,7 @@ export default function useProcessData(
   const fetchMissingZipcodes = async (zipCodes: string[]) => {
     // Filter out zip codes that we already have data for
     const missingZipCodes = zipCodes.filter(
-      (code) => !zipCodeLookup.value.has(code)
+      (code: string) => !zipCodeLookup.value.has(code)
     );
 
     if (missingZipCodes.length === 0) return;
