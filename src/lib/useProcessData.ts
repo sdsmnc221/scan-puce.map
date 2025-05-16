@@ -70,12 +70,11 @@ export default function useProcessData(
   usingFilloutBase: Ref<boolean>,
   usingDptCode: Ref<boolean>,
   storedFilloutCsv: Ref<CsvStore>,
-  storedCsv: Ref<CsvStore>,
   keyword: Ref<string>,
   pinType: Ref<number[]>,
   loading: Ref<boolean>
 ) {
-  const { loadRecordsDone, records, batchIndex } = useBase(usingFilloutBase);
+  const { loadRecordsDone, records } = useBase(usingFilloutBase);
 
   const loadCsvDone = ref(false);
   const cities: Ref<City[]> = ref([]);
