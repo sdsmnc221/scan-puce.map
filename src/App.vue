@@ -662,6 +662,7 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
     } else {
       selectedCity.value = null;
       keyword.value = "";
+      usingDptCode.value = true;
     }
   }, 640);
 });
