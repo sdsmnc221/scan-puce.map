@@ -25,7 +25,7 @@
       ></IInput>
 
       <RippleButton
-        class="toggle-dpt my-3 w-11/12 text-sm bg-amber-100 text-primary-foreground hover:bg-amber-600"
+        class="toggle-dpt my-3 w-11/12 text-sm bg-amber-100 text-primary-foreground hover:bg-yellow-300"
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-sm">
@@ -93,23 +93,57 @@
       <div
         class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
-        <h2 class="hidden md:block font-bold text-lg md:text-xl text-secondary">
-          Pour visualiser l'information de la localisation{{
-            selectedCity ? ":" : "..."
-          }}
-        </h2>
-
-        <p class="hidden md:block text-md text-slate-400">
-          Veuillez choisir une localisation sur la carte.
-        </p>
-
-        <!-- <p class="text-md text-slate-800" v-else>
-          {{ selectedCityZip }}
-        </p> -->
+        <!-- Empty State when no location is selected -->
+        <div
+          v-if="!selectedCity"
+          class="md:flex flex-col items-center justify-center p-6 mt-4 bg-white rounded-lg border border-dashed border-amber-300 text-center"
+        >
+          <div class="empty-state-icon mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-amber-400 mx-auto"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </div>
+          <h3 class="text-base md:text-lg font-medium text-secondary mb-2">
+            Aucune localisation sélectionnée
+          </h3>
+          <p class="text-slate-500 mb-4 text-sm md:text-base">
+            Cliquez sur une épingle sur la carte pour afficher les informations
+            de cette localisation.
+          </p>
+          <div class="map-pointer flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-amber-500 animate-bounce"
+            >
+              <path d="M15 10l-4 4l-4-4"></path>
+            </svg>
+          </div>
+        </div>
 
         <div
           v-if="selectedCity"
-          class="city-details hidden md:block mt-20 max-h-[72vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
+          class="city-details hidden md:block mt-2 max-h-[40vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
         >
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
@@ -138,7 +172,7 @@
       </div>
     </div>
 
-    <div class="flex justify-between">
+    <div class="flex justify-between mb-4">
       <Sheet>
         <SheetTrigger class="toggle-embed">
           <RippleButton
@@ -711,7 +745,10 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
     } else {
       selectedCity.value = null;
       keyword.value = "";
-      usingDptCode.value = true;
+
+      if (window.location.search) {
+        usingDptCode.value = true;
+      }
     }
   }, 640);
 });
@@ -776,14 +813,10 @@ nav {
   z-index: 98;
 
   .city-details {
-    position: fixed;
-    right: 32px;
-    top: 32px;
+    position: relative;
     z-index: 5;
-    width: 20vw;
-
+    width: 100%;
     border-radius: 16px;
-    transform: translateY(-16px);
   }
 }
 
@@ -823,6 +856,25 @@ nav {
       #map {
         height: 100% !important;
       }
+    }
+  }
+
+  .empty-state-icon {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 0.7;
     }
   }
 
