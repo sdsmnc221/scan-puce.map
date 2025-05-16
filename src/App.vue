@@ -349,12 +349,15 @@ import markerShadowUrl from "/node_modules/leaflet/dist/images/marker-shadow.png
 import L from "leaflet";
 
 import { getZoneOptions, getZoneCenter } from "./lib/map";
-import { getUrlParams, clearUrlParams } from "./lib/path-utils";
+import {
+  getUrlParams,
+  clearUrlParams,
+  getAllUrlParams,
+} from "./lib/path-utils";
 import { delay } from "./lib/useBase";
 
 import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
-import useZones from "./lib/useZones";
 
 const usingDptCode = ref(true);
 const usingFilloutBase = ref(true);
@@ -437,14 +440,6 @@ const usingZones = computed(() => {
   }
 });
 
-const { processedZones, filteredZones } = useZones(
-  usingDptCode,
-  postcodes,
-  records,
-  storedFilloutCsv,
-  keyword,
-  processCsv
-);
 const mapCities = ref([]);
 const selectedCity = ref(null);
 
@@ -578,19 +573,24 @@ onMounted(() => {
     // addSvgFilters();
 
     if (window.location.search) {
-      const { param, result } = getUrlParams("dptCode");
+      const params = getAllUrlParams();
 
-      if (param === "dptCode") {
+      if (Object.hasOwnProperty.call(params, "dptCode")) {
         usingDptCode.value = true;
-      } else if (param === "zipCode") {
+        keyword.value = params["dptCode"];
+
+        return;
+      } else if (Object.hasOwnProperty.call(params, "zipCode")) {
         usingDptCode.value = false;
+        keyword.value = params["zipCode"];
+
+        return;
+      } else if (Object.hasOwnProperty.call(params, "city")) {
+        usingDptCode.value = false;
+        keyword.value = params["city"].toLowerCase();
+
+        return;
       }
-
-      keyword.value = result;
-
-      setTimeout(() => {
-        clearUrlParams(param);
-      }, 1200);
     }
   });
 });
@@ -640,7 +640,12 @@ watch(
 
 watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
   setTimeout(() => {
-    const city = cities.value.find((c) => c.departmentCode == newKeyword);
+    const city = cities.value.find(
+      (c) =>
+        c.departmentCode == newKeyword ||
+        c.zipCode == newKeyword ||
+        c.name.toLowerCase() == newKeyword
+    );
 
     if (city) {
       selectedCity.value = city;
