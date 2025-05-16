@@ -70,12 +70,12 @@ export default function useProcessData(
   usingFilloutBase: Ref<boolean>,
   usingDptCode: Ref<boolean>,
   storedFilloutCsv: Ref<CsvStore>,
-
+  storedCsv: Ref<CsvStore>,
   keyword: Ref<string>,
   pinType: Ref<number[]>,
   loading: Ref<boolean>
 ) {
-  const { loadRecordsDone, records } = useBase(usingFilloutBase);
+  const { loadRecordsDone, records, batchIndex } = useBase(usingFilloutBase);
 
   const loadCsvDone = ref(false);
   const cities: Ref<City[]> = ref([]);
@@ -460,10 +460,13 @@ export default function useProcessData(
     // Quick return for edge cases
     if (!cities.value.length) return [];
 
+    // Make sure pinType.value is an array and handle edge cases
+    const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
+
     if (
       !keyword.value.trim().length &&
-      pinType.value.length === 1 &&
-      pinType.value.includes(2)
+      pinTypeArray.length === 1 &&
+      pinTypeArray.includes(2)
     ) {
       return [];
     }
@@ -508,12 +511,15 @@ export default function useProcessData(
 
     // Filter by pin type if no keyword
     result = result.filter((city) => {
-      if (pinType.value.includes(0) && pinType.value.includes(1)) {
+      // Make sure pinType.value is an array and handle edge cases
+      const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
+
+      if (pinTypeArray.includes(0) && pinTypeArray.includes(1)) {
         return true;
-      } else if (pinType.value.includes(0) && !pinType.value.includes(1)) {
+      } else if (pinTypeArray.includes(0) && !pinTypeArray.includes(1)) {
         // Red pin (without ICAD)
         return city.baseRecords.some((record) => !record.AccessICAD);
-      } else if (pinType.value.includes(1) && !pinType.value.includes(0)) {
+      } else if (pinTypeArray.includes(1) && !pinTypeArray.includes(0)) {
         // Blue pin (with ICAD)
         return city.baseRecords.some((record) => !!record.AccessICAD);
       } else {
