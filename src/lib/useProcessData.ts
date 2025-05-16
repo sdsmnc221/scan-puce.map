@@ -463,7 +463,7 @@ export default function useProcessData(
     const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
 
     if (
-      !keyword.value.trim().length &&
+      !keyword.value?.trim()?.length &&
       pinTypeArray.length === 1 &&
       pinTypeArray.includes(2)
     ) {
