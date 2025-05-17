@@ -780,13 +780,9 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
 
     if (city) {
       selectedCity.value = city;
-    } else {
+    } else if (newKeyword) {
+      // Ne vide plus le keyword ni ne force le mode
       selectedCity.value = null;
-      keyword.value = "";
-
-      if (window.location.search) {
-        usingDptCode.value = true;
-      }
     }
   }, 640);
 });
