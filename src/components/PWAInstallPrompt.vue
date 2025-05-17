@@ -4,25 +4,25 @@
       v-if="supportsPWA && !isPrompted"
       class="pwa-prompt fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
-      <div class="flex items-center space-x-4">
+      <div class="flex min-w-[72vw] items-center space-x-4">
         <div class="flex-1">
           <h3 class="font-semibold text-gray-900 dark:text-white">
             Installer l'application
           </h3>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-xs text-gray-500 dark:text-gray-400">
             Accédez rapidement à Scan Puce depuis votre appareil
           </p>
         </div>
-        <div class="flex space-x-2">
+        <div class="flex flex-col gap-2">
           <button
             @click="handleClose"
-            class="px-3 py-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors"
+            class="px-3 py-2 text-gray-600 border hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors"
           >
             Fermer
           </button>
           <button
             @click="handleInstall"
-            class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors"
+            class="px-4 py-2 bg-yellow-500 hover:bg-amber-400 text-black rounded-lg transition-colors"
           >
             Installer
           </button>

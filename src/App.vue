@@ -167,22 +167,6 @@
             Cliquez sur une épingle sur la carte pour afficher les informations
             de cette localisation.
           </p>
-          <div class="map-pointer flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-amber-500 animate-bounce"
-            >
-              <path d="M15 10l-4 4l-4-4"></path>
-            </svg>
-          </div>
         </div>
 
         <div
@@ -220,7 +204,7 @@
       <Sheet>
         <SheetTrigger class="toggle-embed">
           <RippleButton
-            class="text-[10px] md:text-xs rounded-xl bg-secondary hover:bg-amber-600"
+            class="text-[10px] md:text-xs rounded-xl bg-secondary hover:bg-amber-200"
           >
             Embed
           </RippleButton>
