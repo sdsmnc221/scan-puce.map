@@ -328,15 +328,14 @@
       @click="resetMapViewGlobal"
     >
       <LTileLayer
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
+        url="https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"
         attribution="© OpenStreetMap contributors & CARTOdb"
         layer-type="base"
         name="OpenStreetMap"
         :bounds="franceBounds"
         :options="{
           maxZoom: 19,
-          attribution: '© OpenStreetMap contributors & CARTOdb',
-          className: 'watercolor-tiles',
+          attribution: '© OpenStreetMap contributors',
         }"
       />
 
