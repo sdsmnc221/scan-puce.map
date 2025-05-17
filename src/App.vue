@@ -790,6 +790,15 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
     }
   }, 640);
 });
+
+watch(usingDptCode, () => {
+  // Relance la recherche avec le keyword courant après un switch de mode
+  if (keyword.value) {
+    // Force le déclenchement du filtrage
+    keyword.value = keyword.value + " ";
+    keyword.value = keyword.value.trim();
+  }
+});
 </script>
 
 <style lang="scss">
