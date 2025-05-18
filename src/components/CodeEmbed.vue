@@ -114,8 +114,8 @@ code {
   top: 8px;
   right: 8px;
   padding: 6px 12px;
-  background: #4caf50;
-  color: white;
+  background: #fac142;
+  color: black;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -123,11 +123,11 @@ code {
 }
 
 .copy-button:hover {
-  background: #45a049;
+  filter: brightness(1.2);
 }
 
 .copy-button.copied {
-  background: #2196f3;
+  filter: brightness(0.8);
 }
 
 .preview-container {

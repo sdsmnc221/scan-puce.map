@@ -90,17 +90,37 @@ watchEffect(() => {
 </script>
 
 <style scoped>
-@keyframes rippling {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
+.ripple-button {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  background-color: #fac142; /* Amber yellow */
+  color: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.ripple-animation {
-  animation: rippling var(--duration) ease-out;
+.ripple-button:hover {
+  background-color: #f59e0b; /* Darker amber on hover */
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 </style>
