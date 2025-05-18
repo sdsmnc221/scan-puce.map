@@ -200,7 +200,7 @@
       </div>
     </div>
 
-    <div class="flex absolute bottom-2 w-11/12 justify-between mb-4">
+    <div class="flex absolute bottom-0 w-11/12 justify-between mb-4 gap-1">
       <Sheet>
         <SheetTrigger class="toggle-embed">
           <RippleButton
@@ -219,10 +219,22 @@
         </SheetContent>
       </Sheet>
 
+      <RippleButton
+        v-if="doSupportsPWA"
+        @click="() => (promptingPWA = true)"
+        class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
+      >
+        Installer sur votre téléphone
+      </RippleButton>
+
       <Sheet>
         <SheetTrigger class="toggle-legal">
           <RippleButton
-            class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 rounded-lg bg-amber-100 text-secondary hover:bg-amber-200"
+            :class="[
+              `xs:text-[${doSupportsPWA ? 8 : 10}px] text-[8px] md:text-[10px]`,
+              `rounded-${doSupportsPWA ? 'xl' : 'lg'}`,
+              'px-2 bg-amber-100 text-secondary hover:bg-amber-200',
+            ]"
           >
             Mentions légales & Politique de confidentialité
           </RippleButton>
@@ -239,7 +251,10 @@
         </SheetContent>
       </Sheet>
 
-      <PWAInstallPrompt></PWAInstallPrompt>
+      <PWAInstallPrompt
+        :is-prompted="promptingPWA"
+        @on-check-p-w-a="({ supportsPWA }) => (doSupportsPWA = supportsPWA)"
+      ></PWAInstallPrompt>
     </div>
   </nav>
 
@@ -522,6 +537,9 @@ const map = ref(null);
 const reloadMapCount = ref(0);
 
 const loading = ref(true);
+
+const promptingPWA = ref(false);
+const doSupportsPWA = ref(false);
 
 const searchTimeout = ref(null);
 const keyword = ref("");

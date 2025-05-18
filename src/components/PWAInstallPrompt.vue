@@ -1,7 +1,7 @@
 <template>
   <Transition name="slide-up">
     <div
-      v-if="supportsPWA && !isPrompted"
+      v-if="supportsPWA && isPrompted"
       class="pwa-prompt fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
       <div class="flex min-w-[72vw] items-center space-x-4">
@@ -33,25 +33,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+withDefaults(defineProps<{ isPrompted: boolean }>(), {
+  isPrompted: false,
+});
+
+const emits = defineEmits(["onCheckPWA"]);
+
 const supportsPWA = ref(false);
 const promptInstall = ref<BeforeInstallPromptEvent | null>(null);
 const isInstalled = ref(false);
-const isPrompted = ref(false);
-
-// Try to get stored prompt state from localStorage
-onMounted(() => {
-  const storedPromptState = localStorage.getItem("pwaPromptState");
-  if (storedPromptState) {
-    isPrompted.value = JSON.parse(storedPromptState);
-  }
-});
 
 const checkInstalled = () => {
   if (window.matchMedia("(display-mode: standalone)").matches) {
@@ -80,7 +77,7 @@ const handleInstall = async () => {
     console.error("Error during installation:", error);
   } finally {
     // Mark as prompted regardless of the outcome
-    isPrompted.value = true;
+
     localStorage.setItem("pwaPromptState", "true");
     promptInstall.value = null;
     supportsPWA.value = false;
@@ -88,7 +85,6 @@ const handleInstall = async () => {
 };
 
 const handleClose = () => {
-  isPrompted.value = true;
   localStorage.setItem("pwaPromptState", "true");
 };
 
@@ -106,6 +102,13 @@ onUnmounted(() => {
     .matchMedia("(display-mode: standalone)")
     .removeEventListener("change", checkInstalled);
 });
+
+watch(
+  () => supportsPWA.value,
+  () => {
+    emits("onCheckPWA", { supportsPWA: supportsPWA.value });
+  }
+);
 </script>
 
 <style scoped>
