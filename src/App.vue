@@ -221,19 +221,9 @@
 
       <RippleButton
         @click="promptingPWA = true"
-        :class="`xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-${
-          !!installPrompt ? 'amber' : 'gray'
-        }-100 text-secondary hover:bg-amber-200 ${
-          !installPrompt
-            ? 'pointer-events-none cursor-not-allowed opacity-[0.5]'
-            : 'pointer-events-none cursor-pointer'
-        }`"
+        class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
-        {{
-          !!installPrompt
-            ? "Installer sur votre appareil"
-            : "Application installée"
-        }}
+        Installer sur votre appareil
       </RippleButton>
 
       <Sheet>
@@ -734,13 +724,13 @@ const onCheckPWA = ({ supportsPWA }) => {
 const onPWAInstalled = () => {
   console.log("PWA installée avec succès");
   promptingPWA.value = false;
-  installPrompt.value = null;
+  // installPrompt.value = null;
 };
 
 const onPWADismissed = () => {
   console.log("Installation PWA refusée ou fermée");
   promptingPWA.value = false;
-  installPrompt.value = null;
+  // installPrompt.value = null;
 };
 
 onMounted(() => {
