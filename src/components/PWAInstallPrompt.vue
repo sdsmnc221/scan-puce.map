@@ -50,6 +50,24 @@ const supportsPWA = ref(false);
 const promptInstall = ref<BeforeInstallPromptEvent | null>(null);
 const isInstalled = ref(false);
 
+const checkPWASupport = () => {
+  // Check if the browser supports service workers
+  const supportsServiceWorker = "serviceWorker" in navigator;
+
+  // Check if the app is not already installed
+  const isStandalone =
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (window.navigator as any).standalone ||
+    document.referrer.includes("android-app://");
+
+  // Check if it's running on HTTPS (required for PWAs)
+  const isHttps =
+    window.location.protocol === "https:" ||
+    window.location.hostname === "localhost";
+
+  supportsPWA.value = supportsServiceWorker && !isStandalone && isHttps;
+};
+
 const checkInstalled = () => {
   if (window.matchMedia("(display-mode: standalone)").matches) {
     isInstalled.value = true;
@@ -89,6 +107,7 @@ const handleClose = () => {
 };
 
 onMounted(() => {
+  checkPWASupport();
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
   window
     .matchMedia("(display-mode: standalone)")
