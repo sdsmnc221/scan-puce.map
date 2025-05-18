@@ -220,7 +220,7 @@
       </Sheet>
 
       <RippleButton
-        @click="() => (promptingPWA = true)"
+        @click="promptingPWA = true"
         class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
         Installer sur votre appareil
@@ -252,8 +252,9 @@
 
       <PWAInstallPrompt
         :is-prompted="promptingPWA"
-        @installed="promptingPWA = false"
-        @dismissed="promptingPWA = false"
+        :prompt="installPrompt"
+        @installed="onPWAInstalled"
+        @dismissed="onPWADismissed"
       ></PWAInstallPrompt>
     </div>
   </nav>
@@ -448,6 +449,7 @@ import {
   ref,
   computed,
   onMounted,
+  onBeforeMount,
   watch,
   nextTick,
   onUnmounted,
@@ -581,6 +583,8 @@ const usingZones = computed(() => {
     return processedZones.value;
   }
 });
+
+const installPrompt = ref(null);
 
 const mapCities = ref([]);
 const selectedCity = ref(null);
@@ -720,16 +724,22 @@ const onCheckPWA = ({ supportsPWA }) => {
 const onPWAInstalled = () => {
   console.log("PWA installée avec succès");
   promptingPWA.value = false;
+  // installPrompt.value = null;
 };
 
 const onPWADismissed = () => {
   console.log("Installation PWA refusée ou fermée");
   promptingPWA.value = false;
+  // installPrompt.value = null;
 };
 
 onMounted(() => {
   nextTick(() => {
     inject();
+
+    window.addEventListener("pwa:ready", (e) => {
+      installPrompt.value = e.detail.prompt;
+    });
 
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({

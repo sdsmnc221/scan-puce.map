@@ -40,14 +40,20 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-const props = withDefaults(defineProps<{ isPrompted: boolean }>(), {
-  isPrompted: false,
-});
+const props = withDefaults(
+  defineProps<{
+    isPrompted: boolean;
+    prompt: BeforeInstallPromptEvent | null;
+  }>(),
+  {
+    isPrompted: false,
+  }
+);
 
 const emits = defineEmits(["onCheckPWA", "installed", "dismissed"]);
 
 const supportsPWA = ref(false);
-const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null);
+const deferredPrompt = computed(() => props.prompt);
 const isInstalled = ref(false);
 const promptDismissed = ref(localStorage.getItem("pwaPromptState") === "true");
 
@@ -107,7 +113,6 @@ const handleBeforeInstallPrompt = (e: Event) => {
   e.preventDefault();
 
   // Store the event for later use
-  deferredPrompt.value = e as BeforeInstallPromptEvent;
 
   console.log("Capture d'événement beforeinstallprompt réussie");
 
@@ -121,19 +126,20 @@ const handleInstall = async () => {
     alert("L'application a été installée sur votre appareil");
   }
 
-  if (!deferredPrompt.value) {
-    console.error(
-      "Installation impossible - pas d'événement prompt disponible"
-    );
-    alert(
-      "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
-    );
-    return;
-  }
+  // if (!deferredPrompt.value) {
+  //   console.error(
+  //     "Installation impossible - pas d'événement prompt disponible"
+  //   );
+  //   alert(
+  //     "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
+  //   );
+  //   return;
+  // }
 
   try {
     console.log("Déclenchement du prompt d'installation...");
 
+    console.log({ deferredPrompt: deferredPrompt.value?.prompt });
     // Trigger the installation prompt
     await deferredPrompt.value?.prompt();
 
@@ -156,7 +162,6 @@ const handleInstall = async () => {
     alert(`Erreur lors de l'installation: ${JSON.stringify(error)}`);
   } finally {
     // Clear the deferred prompt variable since it can't be used again
-    deferredPrompt.value = null;
 
     // Save state to localStorage to avoid showing prompt again
     localStorage.setItem("pwaPromptState", "true");
@@ -175,7 +180,7 @@ const handleClose = () => {
 const handleAppInstalled = () => {
   console.log("Application installée avec succès");
   isInstalled.value = true;
-  deferredPrompt.value = null;
+
   emits("installed");
 };
 
@@ -188,6 +193,7 @@ const handleDisplayModeChange = (e: MediaQueryListEvent) => {
 onMounted(() => {
   // Add listeners
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
   window.addEventListener("appinstalled", handleAppInstalled);
 
   const mediaQuery = window.matchMedia("(display-mode: standalone)");

@@ -7,7 +7,7 @@ const CACHE_NAME = "scan-puce-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/favicon/site.webmanifest",
+  "/favicon/manifest.json",
   "/favicon/android-chrome-192x192.png",
   "/favicon/android-chrome-512x512.png",
   // Ajoutez vos autres ressources importantes (CSS, JS, images) ici

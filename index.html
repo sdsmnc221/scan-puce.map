@@ -36,6 +36,20 @@
     <meta name="language" content="French">
     <meta name="revisit-after" content="7 days">
     <meta name="author" content="Réseau Lecteur Puce France & AnTR (antr.tech)">
+
+    <script>
+      const pwaReadyEvent = (prompt) => new CustomEvent("pwa:ready", { detail: { prompt } })
+      
+
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+      
+      e.preventDefault();
+      window.installPrompt = e;
+
+      window.dispatchEvent(pwaReadyEvent(e));
+    });
+      </script>
   </head>
   <body>
     <div id="app"></div>
