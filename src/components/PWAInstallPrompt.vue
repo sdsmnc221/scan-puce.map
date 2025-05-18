@@ -139,6 +139,7 @@ const handleInstall = async () => {
   try {
     console.log("Déclenchement du prompt d'installation...");
 
+    console.log({ deferredPrompt: deferredPrompt.value });
     // Trigger the installation prompt
     await deferredPrompt.value?.prompt();
 
