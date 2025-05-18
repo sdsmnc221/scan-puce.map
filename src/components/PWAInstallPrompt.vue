@@ -53,6 +53,13 @@ const promptDismissed = ref(localStorage.getItem("pwaPromptState") === "true");
 
 // Computed property to determine if we should show the prompt
 const shouldShowPrompt = computed(() => {
+  console.log(
+    props.isPrompted,
+    supportsPWA.value,
+    deferredPrompt.value,
+    isInstalled.value,
+    promptDismissed.value
+  );
   return (
     props.isPrompted &&
     supportsPWA.value &&
