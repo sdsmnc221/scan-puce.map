@@ -220,7 +220,15 @@
       </Sheet>
 
       <RippleButton
-        @click="() => (promptingPWA = true)"
+        @click="
+          async () => {
+            console.log({ installPrompt });
+            if (!installPrompt) {
+              return;
+            }
+            const result = await installPrompt.prompt();
+          }
+        "
         class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
         Installer sur votre appareil
@@ -448,6 +456,7 @@ import {
   ref,
   computed,
   onMounted,
+  onBeforeMount,
   watch,
   nextTick,
   onUnmounted,
@@ -581,6 +590,8 @@ const usingZones = computed(() => {
     return processedZones.value;
   }
 });
+
+const installPrompt = ref(null);
 
 const mapCities = ref([]);
 const selectedCity = ref(null);
@@ -730,6 +741,8 @@ const onPWADismissed = () => {
 onMounted(() => {
   nextTick(() => {
     inject();
+
+    installPrompt.value = window.installPrompt;
 
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({
