@@ -40,13 +40,13 @@
     ],
     "screenshots": [
         {
-            "src": "/favicon/screenshot1.png",
+            "src": "/favicon/screenshot1.jpg",
             "sizes": "1280x720",
             "type": "image/png",
             "form_factor": "wide"
         },
         {
-            "src": "/favicon/screenshot-mobile.png",
+            "src": "/favicon/screenshot-mobile.jpg",
             "sizes": "720x1280",
             "type": "image/png",
             "form_factor": "narrow"

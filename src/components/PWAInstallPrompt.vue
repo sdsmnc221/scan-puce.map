@@ -60,7 +60,12 @@ const shouldShowPrompt = computed(() => {
     isInstalled.value,
     promptDismissed.value
   );
-  return props.isPrompted && supportsPWA.value && !isInstalled.value;
+  return (
+    props.isPrompted &&
+    supportsPWA.value &&
+    !isInstalled.value &&
+    !promptDismissed.value
+  );
 });
 
 const checkPWASupport = () => {
@@ -117,15 +122,15 @@ const handleBeforeInstallPrompt = (e: Event) => {
 };
 
 const handleInstall = async () => {
-  if (!deferredPrompt.value) {
-    console.error(
-      "Installation impossible - pas d'événement prompt disponible"
-    );
-    alert(
-      "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
-    );
-    return;
-  }
+  // if (!deferredPrompt.value) {
+  //   console.error(
+  //     "Installation impossible - pas d'événement prompt disponible"
+  //   );
+  //   alert(
+  //     "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
+  //   );
+  //   return;
+  // }
 
   try {
     console.log("Déclenchement du prompt d'installation...");
