@@ -104,7 +104,7 @@ const checkInstalled = () => {
 
 const handleBeforeInstallPrompt = (e: Event) => {
   // Important: Prevent default to stop Chrome 76+ from automatically showing the prompt
-  e.preventDefault();
+  // e.preventDefault();
 
   // Store the event for later use
   deferredPrompt.value = e as BeforeInstallPromptEvent;
