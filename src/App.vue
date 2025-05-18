@@ -223,7 +223,7 @@
         @click="() => (promptingPWA = true)"
         class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
-        Installer sur votre téléphone
+        Installer sur votre device
       </RippleButton>
 
       <Sheet>
