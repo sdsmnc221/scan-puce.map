@@ -60,12 +60,7 @@ const shouldShowPrompt = computed(() => {
     isInstalled.value,
     promptDismissed.value
   );
-  return (
-    props.isPrompted &&
-    supportsPWA.value &&
-    !isInstalled.value &&
-    !promptDismissed.value
-  );
+  return props.isPrompted && supportsPWA.value && !isInstalled.value;
 });
 
 const checkPWASupport = () => {
