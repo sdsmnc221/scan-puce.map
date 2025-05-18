@@ -41,7 +41,7 @@ une version corrigée du composant:
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
