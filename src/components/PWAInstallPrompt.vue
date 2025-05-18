@@ -40,14 +40,20 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-const props = withDefaults(defineProps<{ isPrompted: boolean }>(), {
-  isPrompted: false,
-});
+const props = withDefaults(
+  defineProps<{
+    isPrompted: boolean;
+    prompt: BeforeInstallPromptEvent | null;
+  }>(),
+  {
+    isPrompted: false,
+  }
+);
 
 const emits = defineEmits(["onCheckPWA", "installed", "dismissed"]);
 
 const supportsPWA = ref(false);
-const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null);
+const deferredPrompt = computed(() => props.prompt);
 const isInstalled = ref(false);
 const promptDismissed = ref(localStorage.getItem("pwaPromptState") === "true");
 
@@ -104,10 +110,9 @@ const checkInstalled = () => {
 
 const handleBeforeInstallPrompt = (e: Event) => {
   // Important: Prevent default to stop Chrome 76+ from automatically showing the prompt
-  // e.preventDefault();
+  e.preventDefault();
 
   // Store the event for later use
-  deferredPrompt.value = e as BeforeInstallPromptEvent;
 
   console.log("Capture d'événement beforeinstallprompt réussie");
 
@@ -156,7 +161,6 @@ const handleInstall = async () => {
     alert(`Erreur lors de l'installation: ${JSON.stringify(error)}`);
   } finally {
     // Clear the deferred prompt variable since it can't be used again
-    deferredPrompt.value = null;
 
     // Save state to localStorage to avoid showing prompt again
     localStorage.setItem("pwaPromptState", "true");
@@ -175,7 +179,7 @@ const handleClose = () => {
 const handleAppInstalled = () => {
   console.log("Application installée avec succès");
   isInstalled.value = true;
-  deferredPrompt.value = null;
+
   emits("installed");
 };
 

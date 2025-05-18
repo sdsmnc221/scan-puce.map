@@ -220,15 +220,7 @@
       </Sheet>
 
       <RippleButton
-        @click="
-          async () => {
-            console.log({ installPrompt });
-            if (!installPrompt) {
-              return;
-            }
-            const result = await installPrompt.prompt();
-          }
-        "
+        @click="promptingPWA = true"
         class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
         Installer sur votre appareil
@@ -260,6 +252,7 @@
 
       <PWAInstallPrompt
         :is-prompted="promptingPWA"
+        :prompt="installPrompt"
         @installed="promptingPWA = false"
         @dismissed="promptingPWA = false"
       ></PWAInstallPrompt>
@@ -743,7 +736,7 @@ onMounted(() => {
     inject();
 
     window.addEventListener("pwa:ready", (e) => {
-      console.log({ e });
+      installPrompt.value = e;
     });
 
     L.Icon.Default.imagePath = "/";
