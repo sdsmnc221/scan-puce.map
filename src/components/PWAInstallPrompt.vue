@@ -63,7 +63,6 @@ const shouldShowPrompt = computed(() => {
   return (
     props.isPrompted &&
     supportsPWA.value &&
-    deferredPrompt.value !== null &&
     !isInstalled.value &&
     !promptDismissed.value
   );
