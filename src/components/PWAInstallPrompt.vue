@@ -1,7 +1,15 @@
+// PROBLÈME #1: Gestion des props et état interne // Dans votre code actuel,
+vous avez une prop `isPrompted` qui conditionne l'affichage, // mais cette prop
+est indépendante de l'état réel de l'installation // PROBLÈME #2: Événement
+beforeinstallprompt potentiellement non capturé correctement // Votre code
+stocke l'événement, mais il y a un problème possible avec les mises à jour
+d'état // PROBLÈME #3: Installation ne se déclenche pas correctement // Voici
+une version corrigée du composant:
+
 <template>
   <Transition name="slide-up">
     <div
-      v-if="supportsPWA && isPrompted"
+      v-if="shouldShowPrompt"
       class="pwa-prompt fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
       <div class="flex min-w-[72vw] items-center space-x-4">
@@ -33,23 +41,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, watch, computed } from "vue";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-withDefaults(defineProps<{ isPrompted: boolean }>(), {
+const props = withDefaults(defineProps<{ isPrompted: boolean }>(), {
   isPrompted: false,
 });
 
-const emits = defineEmits(["onCheckPWA"]);
+const emits = defineEmits(["onCheckPWA", "installed", "dismissed"]);
 
 const supportsPWA = ref(false);
-const promptInstall = ref<BeforeInstallPromptEvent | null>(null);
-const isInstalled = ref(false);
 const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null);
+const isInstalled = ref(false);
+const promptDismissed = ref(localStorage.getItem("pwaPromptState") === "true");
+
+// Computed property to determine if we should show the prompt
+const shouldShowPrompt = computed(() => {
+  return (
+    props.isPrompted &&
+    supportsPWA.value &&
+    deferredPrompt.value !== null &&
+    !isInstalled.value &&
+    !promptDismissed.value
+  );
+});
 
 const checkPWASupport = () => {
   // Check if the browser supports service workers
@@ -72,85 +91,125 @@ const checkPWASupport = () => {
   supportsPWA.value =
     supportsServiceWorker && !isStandalone && isHttps && hasManifest;
 
-  console.log({
+  console.log("PWA Support Check:", {
     supportsServiceWorker,
     isStandalone,
     isHttps,
     hasManifest,
-    promptInstall: promptInstall.value,
+    deferredPrompt: deferredPrompt.value !== null,
   });
+
+  emits("onCheckPWA", { supportsPWA: supportsPWA.value });
 };
 
 const checkInstalled = () => {
-  if (window.matchMedia("(display-mode: standalone)").matches) {
-    isInstalled.value = true;
+  isInstalled.value = window.matchMedia("(display-mode: standalone)").matches;
+  if (isInstalled.value) {
+    console.log("App is already installed");
   }
 };
 
 const handleBeforeInstallPrompt = (e: Event) => {
+  // Important: Prevent default to stop Chrome 76+ from automatically showing the prompt
   e.preventDefault();
+
+  // Store the event for later use
   deferredPrompt.value = e as BeforeInstallPromptEvent;
-  promptInstall.value = deferredPrompt.value;
+
+  console.log("Capture d'événement beforeinstallprompt réussie");
+
+  // Let the parent component know we can install
   supportsPWA.value = true;
-  localStorage.setItem("deferrerPrompt", "true");
+  emits("onCheckPWA", { supportsPWA: supportsPWA.value });
 };
 
 const handleInstall = async () => {
   if (!deferredPrompt.value) {
-    console.log("No installation prompt available");
+    console.error(
+      "Installation impossible - pas d'événement prompt disponible"
+    );
+    alert(
+      "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
+    );
     return;
   }
 
   try {
-    console.log("Triggering installation prompt");
-    // Show the install prompt
+    console.log("Déclenchement du prompt d'installation...");
+
+    // Trigger the installation prompt
     await deferredPrompt.value.prompt();
 
-    // Wait for the user to respond to the prompt
+    // Wait for the user's choice
     const choiceResult = await deferredPrompt.value.userChoice;
-    console.log("User choice:", choiceResult.outcome);
+    console.log("Résultat du choix:", choiceResult.outcome);
 
     if (choiceResult.outcome === "accepted") {
-      console.log("User accepted the install prompt");
+      console.log("Utilisateur a accepté l'installation");
       isInstalled.value = true;
+      emits("installed");
     } else {
-      console.log("User dismissed the install prompt");
+      console.log("Utilisateur a refusé l'installation");
+      emits("dismissed");
     }
   } catch (error) {
-    console.error("Installation error:", error);
+    console.error("Erreur lors de l'installation:", error);
   } finally {
-    // Clear the deferred prompt
+    // Clear the deferred prompt variable since it can't be used again
     deferredPrompt.value = null;
-    promptInstall.value = null;
-    supportsPWA.value = false;
+
+    // Save state to localStorage to avoid showing prompt again
     localStorage.setItem("pwaPromptState", "true");
+    promptDismissed.value = true;
   }
 };
 
 const handleClose = () => {
+  console.log("Prompt d'installation fermé par l'utilisateur");
   localStorage.setItem("pwaPromptState", "true");
+  promptDismissed.value = true;
+  emits("dismissed");
+};
+
+// Add listener for app install
+const handleAppInstalled = () => {
+  console.log("Application installée avec succès");
+  isInstalled.value = true;
+  deferredPrompt.value = null;
+  emits("installed");
+};
+
+// Add listener for display mode changes
+const handleDisplayModeChange = (e: MediaQueryListEvent) => {
+  isInstalled.value = e.matches;
+  console.log("Mode d'affichage changé:", e.matches ? "standalone" : "browser");
 };
 
 onMounted(() => {
+  // Add listeners
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  window.addEventListener("appinstalled", handleAppInstalled);
 
+  const mediaQuery = window.matchMedia("(display-mode: standalone)");
+  mediaQuery.addEventListener("change", handleDisplayModeChange);
+
+  // Initial checks
   checkPWASupport();
   checkInstalled();
+
+  console.log(
+    "Composant PWA Install monté, en attente d'événement beforeinstallprompt"
+  );
 });
 
 onUnmounted(() => {
+  // Remove listeners
   window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-  window
-    .matchMedia("(display-mode: standalone)")
-    .removeEventListener("change", checkInstalled);
-});
+  window.removeEventListener("appinstalled", handleAppInstalled);
 
-watch(
-  () => supportsPWA.value,
-  () => {
-    emits("onCheckPWA", { supportsPWA: supportsPWA.value });
-  }
-);
+  const mediaQuery = window.matchMedia("(display-mode: standalone)");
+  mediaQuery.removeEventListener("change", handleDisplayModeChange);
+});
 </script>
 
 <style scoped>
