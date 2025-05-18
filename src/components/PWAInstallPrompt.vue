@@ -65,7 +65,19 @@ const checkPWASupport = () => {
     window.location.protocol === "https:" ||
     window.location.hostname === "localhost";
 
-  supportsPWA.value = supportsServiceWorker && !isStandalone && isHttps;
+  // Add manifest check
+  const hasManifest = !!document.querySelector('link[rel="manifest"]');
+
+  supportsPWA.value =
+    supportsServiceWorker && !isStandalone && isHttps && hasManifest;
+
+  console.log({
+    supportsServiceWorker,
+    isStandalone,
+    isHttps,
+    hasManifest,
+    promptInstall: promptInstall.value,
+  });
 };
 
 const checkInstalled = () => {
@@ -78,9 +90,11 @@ const handleBeforeInstallPrompt = (e: Event) => {
   e.preventDefault();
   promptInstall.value = e as BeforeInstallPromptEvent;
   supportsPWA.value = true;
+  localStorage.setItem("deferrerPrompt", "true");
 };
 
 const handleInstall = async () => {
+  console.log(promptInstall.value);
   if (!promptInstall.value) return;
 
   try {
@@ -107,6 +121,9 @@ const handleClose = () => {
 };
 
 onMounted(() => {
+  const hasDeferrefPrompt = localStorage.getItem("deferredPrompt") === "true";
+  supportsPWA.value = hasDeferrefPrompt;
+
   checkPWASupport();
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
   window
