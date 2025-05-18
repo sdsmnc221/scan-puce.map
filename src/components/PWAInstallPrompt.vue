@@ -1,11 +1,3 @@
-// PROBLÈME #1: Gestion des props et état interne // Dans votre code actuel,
-vous avez une prop `isPrompted` qui conditionne l'affichage, // mais cette prop
-est indépendante de l'état réel de l'installation // PROBLÈME #2: Événement
-beforeinstallprompt potentiellement non capturé correctement // Votre code
-stocke l'événement, mais il y a un problème possible avec les mises à jour
-d'état // PROBLÈME #3: Installation ne se déclenche pas correctement // Voici
-une version corrigée du composant:
-
 <template>
   <Transition name="slide-up">
     <div
