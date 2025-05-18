@@ -49,6 +49,7 @@ const emits = defineEmits(["onCheckPWA"]);
 const supportsPWA = ref(false);
 const promptInstall = ref<BeforeInstallPromptEvent | null>(null);
 const isInstalled = ref(false);
+const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null);
 
 const checkPWASupport = () => {
   // Check if the browser supports service workers
@@ -88,31 +89,41 @@ const checkInstalled = () => {
 
 const handleBeforeInstallPrompt = (e: Event) => {
   e.preventDefault();
-  promptInstall.value = e as BeforeInstallPromptEvent;
+  deferredPrompt.value = e as BeforeInstallPromptEvent;
+  promptInstall.value = deferredPrompt.value;
   supportsPWA.value = true;
   localStorage.setItem("deferrerPrompt", "true");
 };
 
 const handleInstall = async () => {
-  console.log(promptInstall.value);
-  if (!promptInstall.value) return;
+  if (!deferredPrompt.value) {
+    console.log("No installation prompt available");
+    return;
+  }
 
   try {
-    await promptInstall.value.prompt();
-    const { outcome } = await promptInstall.value.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
+    console.log("Triggering installation prompt");
+    // Show the install prompt
+    await deferredPrompt.value.prompt();
 
-    if (outcome === "accepted") {
+    // Wait for the user to respond to the prompt
+    const choiceResult = await deferredPrompt.value.userChoice;
+    console.log("User choice:", choiceResult.outcome);
+
+    if (choiceResult.outcome === "accepted") {
+      console.log("User accepted the install prompt");
       isInstalled.value = true;
+    } else {
+      console.log("User dismissed the install prompt");
     }
   } catch (error) {
-    console.error("Error during installation:", error);
+    console.error("Installation error:", error);
   } finally {
-    // Mark as prompted regardless of the outcome
-
-    localStorage.setItem("pwaPromptState", "true");
+    // Clear the deferred prompt
+    deferredPrompt.value = null;
     promptInstall.value = null;
     supportsPWA.value = false;
+    localStorage.setItem("pwaPromptState", "true");
   }
 };
 
@@ -121,14 +132,9 @@ const handleClose = () => {
 };
 
 onMounted(() => {
-  const hasDeferrefPrompt = localStorage.getItem("deferredPrompt") === "true";
-  supportsPWA.value = hasDeferrefPrompt;
+  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
   checkPWASupport();
-  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-  window
-    .matchMedia("(display-mode: standalone)")
-    .addEventListener("change", checkInstalled);
   checkInstalled();
 });
 
