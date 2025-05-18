@@ -736,7 +736,8 @@ onMounted(() => {
     inject();
 
     window.addEventListener("pwa:ready", (e) => {
-      installPrompt.value = e.detail;
+      console.log({ e, detail: e.detail });
+      installPrompt.value = e;
     });
 
     L.Icon.Default.imagePath = "/";
