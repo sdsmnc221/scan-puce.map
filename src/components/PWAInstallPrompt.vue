@@ -127,6 +127,10 @@ const handleInstall = async () => {
   //   return;
   // }
 
+  if (isInstalled.value) {
+    alert("L'application a été installée sur votre appareil");
+  }
+
   try {
     console.log("Déclenchement du prompt d'installation...");
 
