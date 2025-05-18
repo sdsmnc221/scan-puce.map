@@ -192,7 +192,7 @@ const handleDisplayModeChange = (e: MediaQueryListEvent) => {
 
 onMounted(() => {
   // Add listeners
-  // window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
   window.addEventListener("appinstalled", handleAppInstalled);
 
