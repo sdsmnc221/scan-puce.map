@@ -2,7 +2,7 @@
   <Transition name="slide-up">
     <div
       v-if="shouldShowPrompt"
-      class="pwa-prompt fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
+      class="pwa-prompt fixed top-4 md:bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-4"
     >
       <div class="flex min-w-[72vw] items-center space-x-4">
         <div class="flex-1">
