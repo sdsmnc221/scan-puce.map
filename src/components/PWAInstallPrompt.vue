@@ -60,12 +60,7 @@ const shouldShowPrompt = computed(() => {
     isInstalled.value,
     promptDismissed.value
   );
-  return (
-    props.isPrompted &&
-    supportsPWA.value &&
-    !isInstalled.value &&
-    !promptDismissed.value
-  );
+  return props.isPrompted && supportsPWA.value && !isInstalled.value;
 });
 
 const checkPWASupport = () => {
@@ -136,10 +131,12 @@ const handleInstall = async () => {
     console.log("Déclenchement du prompt d'installation...");
 
     // Trigger the installation prompt
-    await deferredPrompt.value.prompt();
+    await deferredPrompt.value?.prompt();
 
     // Wait for the user's choice
-    const choiceResult = await deferredPrompt.value.userChoice;
+    const choiceResult = (await deferredPrompt.value?.userChoice) || {
+      outcome: "",
+    };
     console.log("Résultat du choix:", choiceResult.outcome);
 
     if (choiceResult.outcome === "accepted") {
