@@ -3,122 +3,130 @@
     class="px-4 pb-14 md:pb-10 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
   >
     <div class="flex flex-col items-center">
-      <h1 class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary">
-        Réseau Lecteurs de Puce France
-      </h1>
-
-      <h2 class="font-bold text-[0.9rem] mt-1 mb-3 text-center text-secondary">
-        <span class="underline"
-          >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
-        >
-        <span class="md:ml-1 text-xs text-slate-400">
-          ( <span class="font-bold">{{ mapCities.length }}</span> localisations
-          )</span
-        >
-      </h2>
-
-      <IInput
-        id="inputDemo"
-        placeholder="Tapez ci-dessous le n° de département recherché (ex. 75)"
-        container-class="w-full md:w-11/12 search-input md:my-3"
-        @update:model-value="onSearchInput"
-      ></IInput>
-
       <div
-        class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
+        class="flex flex-col items-center overflow-hidden w-full h-[50dvh] md:h-auto"
       >
-        <h2
-          class="font-bold text-lg md:text-xl text-left md:text-left text-secondary mb-4"
+        <h1
+          class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary"
         >
-          Les épingles :
+          Réseau Lecteurs de Puce France
+        </h1>
+
+        <h2
+          class="font-bold text-[0.9rem] mt-1 mb-3 text-center text-secondary"
+        >
+          <span class="underline"
+            >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
+          >
+          <span class="md:ml-1 text-xs text-slate-400">
+            (
+            <span class="font-bold">{{ mapCities.length }}</span> localisations
+            )</span
+          >
         </h2>
 
+        <IInput
+          id="inputDemo"
+          placeholder="Tapez ici le n° de département recherché (ex. 75)"
+          container-class="w-full md:w-11/12 search-input md:my-3"
+          @update:model-value="onSearchInput"
+        ></IInput>
+
         <div
-          class="w-full mb-4 flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
+          class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
         >
-          <button
-            class="pin-toggle-card relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
-            :class="[
-              Array.isArray(pinType) && pinType.includes(0)
-                ? 'bg-amber-50 border-amber-300 shadow-md'
-                : 'bg-gray-100 border-gray-200 opacity-70',
-            ]"
-            @click="togglePinType(0)"
+          <h2
+            class="font-bold text-lg md:text-xl text-left md:text-left text-secondary mb-4"
           >
-            <div class="absolute top-2 right-2">
-              <div
-                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
-                :class="[
-                  Array.isArray(pinType) && pinType.includes(0)
-                    ? 'border-amber-500 bg-amber-100'
-                    : 'border-gray-400 bg-gray-200',
-                ]"
-              >
-                <div
-                  v-if="Array.isArray(pinType) && pinType.includes(0)"
-                  class="w-2 h-2 rounded-full bg-amber-500"
-                ></div>
-              </div>
-            </div>
+            Les épingles :
+          </h2>
 
-            <div class="flex flex-col md:flex-row items-center">
-              <div class="mr-3 flex-shrink-0">
-                <img class="w-[32px] h-[32px]" src="/pin.png" />
-              </div>
-              <div class="text-center md:text-left">
-                <p class="font-medium text-sm text-secondary">
-                  Lecteurs de puce
-                  <span class="font-bold">sans accès à ICAD</span>
-                </p>
-                <p class="text-[10px] text-gray-500 mt-1">
-                  Affiche les localisations sans accès à la base ICAD
-                </p>
-              </div>
-            </div>
-          </button>
-
-          <button
-            class="pin-toggle-card ml-2 md:ml-0 md:mt-4 relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
-            :class="[
-              Array.isArray(pinType) && pinType.includes(1)
-                ? 'bg-amber-50 border-amber-300 shadow-md'
-                : 'bg-gray-100 border-gray-200 opacity-70',
-            ]"
-            @click="togglePinType(1)"
+          <div
+            class="w-full mb-4 flex md:flex-col sm:justify-center md:justify-start sm:items-center md:items-start mt-4"
           >
-            <div class="absolute top-2 right-2">
-              <div
-                class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
-                :class="[
-                  Array.isArray(pinType) && pinType.includes(1)
-                    ? 'border-amber-500 bg-amber-100'
-                    : 'border-gray-400 bg-gray-200',
-                ]"
-              >
+            <button
+              class="pin-toggle-card relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+              :class="[
+                Array.isArray(pinType) && pinType.includes(0)
+                  ? 'bg-amber-50 border-amber-300 shadow-md'
+                  : 'bg-gray-100 border-gray-200 opacity-70',
+              ]"
+              @click="togglePinType(0)"
+            >
+              <div class="absolute top-2 right-2">
                 <div
-                  v-if="Array.isArray(pinType) && pinType.includes(1)"
-                  class="w-2 h-2 rounded-full bg-amber-500"
-                ></div>
+                  class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                  :class="[
+                    Array.isArray(pinType) && pinType.includes(0)
+                      ? 'border-amber-500 bg-amber-100'
+                      : 'border-gray-400 bg-gray-200',
+                  ]"
+                >
+                  <div
+                    v-if="Array.isArray(pinType) && pinType.includes(0)"
+                    class="w-2 h-2 rounded-full bg-amber-500"
+                  ></div>
+                </div>
               </div>
-            </div>
 
-            <div class="flex flex-col md:flex-row items-center">
-              <div class="mr-3 flex-shrink-0">
-                <img class="w-[32px] h-[32px]" src="/pin-icad.png" />
+              <div class="flex flex-col md:flex-row items-center">
+                <div class="mr-3 flex-shrink-0">
+                  <img class="w-[32px] h-[32px]" src="/pin.png" />
+                </div>
+                <div class="text-center md:text-left">
+                  <p class="font-medium text-sm text-secondary">
+                    Lecteurs de puce
+                    <span class="font-bold">sans accès à ICAD</span>
+                  </p>
+                  <p class="text-[10px] text-gray-500 mt-1">
+                    Affiche les localisations sans accès à la base ICAD
+                  </p>
+                </div>
               </div>
-              <div class="text-center md:text-left">
-                <p class="font-medium text-sm text-secondary">
-                  Lecteurs de puce
-                  <span class="font-bold">avec accès à ICAD</span>
-                </p>
-                <p class="text-[10px] text-gray-500 mt-1">
-                  Affiche les localisations avec accès à la base ICAD
-                </p>
-              </div>
-            </div>
-          </button>
+            </button>
 
-          <!-- <button
+            <button
+              class="pin-toggle-card ml-2 md:ml-0 md:mt-4 relative flex items-center p-3 rounded-lg border transition-all duration-200 w-full"
+              :class="[
+                Array.isArray(pinType) && pinType.includes(1)
+                  ? 'bg-amber-50 border-amber-300 shadow-md'
+                  : 'bg-gray-100 border-gray-200 opacity-70',
+              ]"
+              @click="togglePinType(1)"
+            >
+              <div class="absolute top-2 right-2">
+                <div
+                  class="w-4 h-4 rounded-full border flex items-center justify-center transition-all duration-200"
+                  :class="[
+                    Array.isArray(pinType) && pinType.includes(1)
+                      ? 'border-amber-500 bg-amber-100'
+                      : 'border-gray-400 bg-gray-200',
+                  ]"
+                >
+                  <div
+                    v-if="Array.isArray(pinType) && pinType.includes(1)"
+                    class="w-2 h-2 rounded-full bg-amber-500"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="flex flex-col md:flex-row items-center">
+                <div class="mr-3 flex-shrink-0">
+                  <img class="w-[32px] h-[32px]" src="/pin-icad.png" />
+                </div>
+                <div class="text-center md:text-left">
+                  <p class="font-medium text-sm text-secondary">
+                    Lecteurs de puce
+                    <span class="font-bold">avec accès à ICAD</span>
+                  </p>
+                  <p class="text-[10px] text-gray-500 mt-1">
+                    Affiche les localisations avec accès à la base ICAD
+                  </p>
+                </div>
+              </div>
+            </button>
+
+            <!-- <button
             class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-700"
             :class="{ 'line-through': !pinType.includes(2) }"
             @click="togglePinType(2)"
@@ -131,11 +139,12 @@
               >.</span
             >
           </button> -->
+          </div>
         </div>
       </div>
 
       <div
-        class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
+        class="my-2 mb-5 md:mt-5 md:mb-0 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
         <!-- Empty State when no location is selected -->
         <div
@@ -219,36 +228,40 @@
         </SheetContent>
       </Sheet>
 
-      <RippleButton
-        @click="promptingPWA = true"
-        class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
-      >
-        Installer sur votre appareil
-      </RippleButton>
+      <div class="flex flex-1 gap-2 justify-end items-center">
+        <RippleButton
+          @click="promptingPWA = true"
+          class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
+        >
+          Installer sur votre appareil
+        </RippleButton>
 
-      <Sheet>
-        <SheetTrigger class="toggle-legal">
-          <RippleButton
-            :class="[
-              `xs:text-[${doSupportsPWA ? 8 : 10}px] text-[8px] md:text-[10px]`,
-              `rounded-${doSupportsPWA ? 'xl' : 'lg'}`,
-              'px-2 bg-amber-100 text-secondary hover:bg-amber-200',
-            ]"
-          >
-            Mentions légales & Politique de confidentialité
-          </RippleButton>
-        </SheetTrigger>
-        <SheetContent class="legal-sheet">
-          <SheetHeader>
-            <SheetTitle
-              >Mentions légales & Politique de confidentialité</SheetTitle
+        <Sheet>
+          <SheetTrigger class="toggle-legal">
+            <RippleButton
+              :class="[
+                `xs:text-[${
+                  doSupportsPWA ? 8 : 10
+                }px] text-[8px] md:text-[10px]`,
+                `rounded-${doSupportsPWA ? 'xl' : 'lg'}`,
+                'px-2 bg-amber-100 text-secondary hover:bg-amber-200',
+              ]"
             >
-            <SheetDescription>
-              <LegalNotice></LegalNotice>
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+              Mentions légales & Politique de confidentialité
+            </RippleButton>
+          </SheetTrigger>
+          <SheetContent class="legal-sheet">
+            <SheetHeader>
+              <SheetTitle
+                >Mentions légales & Politique de confidentialité</SheetTitle
+              >
+              <SheetDescription>
+                <LegalNotice></LegalNotice>
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
 
       <PWAInstallPrompt
         :is-prompted="promptingPWA"
@@ -413,10 +426,10 @@
       </div>
 
       <RippleButton
-        class="toggle-dpt absolute z-[9999] mb-2 right-2 bottom-4 text-[10px] md:text-sm bg-muted text-primary-foreground hover:bg-300"
+        class="toggle-dpt absolute z-[9999] mb-2 right-2 rounded-full bottom-4 bg-sky-200 border-blue-500 hover:bg-yellow-400"
         @click="() => (usingDptCode = !usingDptCode)"
       >
-        <span class="font-bold">
+        <span class="font-bold text-black sm:text-sm md:text-xl">
           Changer en affichage par
           {{ !usingDptCode ? "Département" : "Commune" }}</span
         >
