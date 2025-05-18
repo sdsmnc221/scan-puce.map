@@ -188,6 +188,7 @@ const handleDisplayModeChange = (e: MediaQueryListEvent) => {
 onMounted(() => {
   // Add listeners
   // window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
   window.addEventListener("appinstalled", handleAppInstalled);
 
   const mediaQuery = window.matchMedia("(display-mode: standalone)");

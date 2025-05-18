@@ -38,11 +38,17 @@
     <meta name="author" content="Réseau Lecteur Puce France & AnTR (antr.tech)">
 
     <script>
+      const pwaReadyEvent = (prompt) => new CustomEvent("pwa:ready", { detail: { prompt } })
+      
+
+
       window.addEventListener("beforeinstallprompt", (e) => {
-    console.log({ e });
-    e.preventDefault();
-    window.installPrompt = e;
-  });
+      
+      e.preventDefault();
+      window.installPrompt = e;
+
+      window.dispatchEvent(pwaReadyEvent(e));
+    });
       </script>
   </head>
   <body>

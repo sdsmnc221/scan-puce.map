@@ -742,7 +742,9 @@ onMounted(() => {
   nextTick(() => {
     inject();
 
-    installPrompt.value = window.installPrompt;
+    window.addEventListener("pwa:ready", (e) => {
+      console.log({ e });
+    });
 
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({
