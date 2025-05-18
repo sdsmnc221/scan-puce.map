@@ -139,12 +139,14 @@ const handleInstall = async () => {
   try {
     console.log("Déclenchement du prompt d'installation...");
 
-    console.log({ deferredPrompt: deferredPrompt.value.prompt });
+    console.log({ deferredPrompt: deferredPrompt.value?.prompt });
     // Trigger the installation prompt
-    await deferredPrompt.value.prompt();
+    await deferredPrompt.value?.prompt();
 
     // Wait for the user's choice
-    const choiceResult = await deferredPrompt.value.userChoice;
+    const choiceResult = (await deferredPrompt.value?.userChoice) || {
+      outcome: "",
+    };
     console.log("Résultat du choix:", choiceResult.outcome);
 
     if (choiceResult.outcome === "accepted") {
