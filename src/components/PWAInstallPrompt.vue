@@ -126,15 +126,15 @@ const handleInstall = async () => {
     alert("L'application a été installée sur votre appareil");
   }
 
-  if (!deferredPrompt.value) {
-    console.error(
-      "Installation impossible - pas d'événement prompt disponible"
-    );
-    alert(
-      "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
-    );
-    return;
-  }
+  // if (!deferredPrompt.value) {
+  //   console.error(
+  //     "Installation impossible - pas d'événement prompt disponible"
+  //   );
+  //   alert(
+  //     "Installation impossible. Veuillez utiliser l'option 'Ajouter à l'écran d'accueil' dans le menu de votre navigateur."
+  //   );
+  //   return;
+  // }
 
   try {
     console.log("Déclenchement du prompt d'installation...");

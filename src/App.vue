@@ -221,9 +221,19 @@
 
       <RippleButton
         @click="promptingPWA = true"
-        class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
+        :class="`xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-${
+          !!installPrompt ? 'amber' : 'gray'
+        }-100 text-secondary hover:bg-amber-200 ${
+          !installPrompt
+            ? 'pointer-events-none cursor-not-allowed opacity-[0.5]'
+            : 'pointer-events-none cursor-pointer'
+        }`"
       >
-        Installer sur votre appareil
+        {{
+          !!installPrompt
+            ? "Installer sur votre appareil"
+            : "Application installée"
+        }}
       </RippleButton>
 
       <Sheet>
@@ -253,8 +263,8 @@
       <PWAInstallPrompt
         :is-prompted="promptingPWA"
         :prompt="installPrompt"
-        @installed="promptingPWA = false"
-        @dismissed="promptingPWA = false"
+        @installed="onPWAInstalled"
+        @dismissed="onPWADismissed"
       ></PWAInstallPrompt>
     </div>
   </nav>
@@ -724,11 +734,13 @@ const onCheckPWA = ({ supportsPWA }) => {
 const onPWAInstalled = () => {
   console.log("PWA installée avec succès");
   promptingPWA.value = false;
+  installPrompt.value = null;
 };
 
 const onPWADismissed = () => {
   console.log("Installation PWA refusée ou fermée");
   promptingPWA.value = false;
+  installPrompt.value = null;
 };
 
 onMounted(() => {
@@ -736,7 +748,6 @@ onMounted(() => {
     inject();
 
     window.addEventListener("pwa:ready", (e) => {
-      console.log({ e, detail: e.detail });
       installPrompt.value = e.detail.prompt;
     });
 
