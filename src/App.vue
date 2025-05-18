@@ -220,8 +220,7 @@
       </Sheet>
 
       <RippleButton
-        v-if="doSupportsPWA"
-        @click="triggerPWAInstall"
+        @click="() => (promptingPWA = true)"
         class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
       >
         Installer sur votre téléphone
@@ -253,9 +252,8 @@
 
       <PWAInstallPrompt
         :is-prompted="promptingPWA"
-        @on-check-p-w-a="onCheckPWA"
-        @installed="onPWAInstalled"
-        @dismissed="onPWADismissed"
+        @installed="promptingPWA = false"
+        @dismissed="promptingPWA = false"
       ></PWAInstallPrompt>
     </div>
   </nav>
@@ -712,6 +710,11 @@ const onUpdateOpenCitySheet = (open) => {
 const triggerPWAInstall = () => {
   console.log("Déclenchement du prompt d'installation PWA");
   promptingPWA.value = true;
+};
+
+const onCheckPWA = ({ supportsPWA }) => {
+  console.log("onCheckPWA appelé avec:", supportsPWA);
+  doSupportsPWA.value = supportsPWA;
 };
 
 const onPWAInstalled = () => {
