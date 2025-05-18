@@ -4,7 +4,7 @@
   >
     <div class="flex flex-col items-center">
       <div
-        class="flex flex-col items-center overflow-hidden w-full h-[50dvh] md:h-auto"
+        class="flex flex-col items-center justify-between overflow-hidden w-full h-1/2 md:h-auto"
       >
         <h1
           class="font-bold text-xl md:text-3xl text-center mt-3 text-secondary"
