@@ -18,7 +18,13 @@
         <strong>Responsable de publication :</strong><br />
         Thi Van An TRUONG<br />
         Draveil 91210 France<br />
-        Contact : reseau.scanpuce@gmail.com
+        Contact : reseau.scanpuce@gmail.com |
+        <a
+          href="https://www.facebook.com/groups/1078122210620320"
+          target="_blank"
+          class="text-blue-600 hover:underline"
+          >Réseau lecteur de puce France</a
+        >
       </div>
     </section>
 
@@ -79,7 +85,13 @@
       <h3 class="text-lg font-medium mb-2">2.1 Stockage</h3>
       <p>
         Les données sont stockées dans une base de données Airtable, gérée et
-        modérée via reseau.scanpuce@gmail.com
+        modérée via reseau.scanpuce@gmail.com |
+        <a
+          href="https://www.facebook.com/groups/1078122210620320"
+          target="_blank"
+          class="text-blue-600 hover:underline"
+          >Réseau lecteur de puce France</a
+        >
       </p>
 
       <h3 class="text-lg font-medium mb-2">2.2 Durée de Conservation</h3>
@@ -102,30 +114,12 @@
         <li>Opposition au traitement</li>
       </ul>
       <p class="mt-4">
-        Pour exercer ces droits, contactez : reseau.scanpuce@gmail.com
-      </p>
-    </section>
-
-    <section class="mb-8">
-      <h2 class="text-xl font-semibold mb-4">4. Formulaires</h2>
-
-      <h3 class="text-lg font-medium mb-2">4.1 Inscription</h3>
-      <p>
-        Formulaire disponible sur :
+        Pour exercer ces droits, contactez : reseau.scanpuce@gmail.com |
         <a
-          href="https://felisweet.fillout.com/scan-puce"
+          href="https://www.facebook.com/groups/1078122210620320"
+          target="_blank"
           class="text-blue-600 hover:underline"
-          >https://felisweet.fillout.com/scan-puce</a
-        >
-      </p>
-
-      <h3 class="text-lg font-medium mb-2">4.2 Mise à Jour</h3>
-      <p>
-        Formulaire de mise à jour :
-        <a
-          href="https://felisweet.fillout.com/maj-scan-puce"
-          class="text-blue-600 hover:underline"
-          >https://felisweet.fillout.com/maj-scan-puce</a
+          >Réseau lecteur de puce France</a
         >
       </p>
     </section>
@@ -133,8 +127,8 @@
     <section class="mb-8">
       <h2 class="text-xl font-semibold mb-4">5. Cookies et Traceurs</h2>
       <p>
-        Le site utilise uniquement Vercel Analytics (version lite) pour des
-        statistiques de visite anonymisées.
+        Le site utilise uniquement Vercel Analytics pour des statistiques de
+        visite anonymisées.
       </p>
     </section>
 
