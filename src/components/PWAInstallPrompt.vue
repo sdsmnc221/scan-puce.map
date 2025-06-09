@@ -151,7 +151,7 @@ const handleInstall = async () => {
 
     if (choiceResult.outcome === "accepted") {
       console.log("Utilisateur a accepté l'installation");
-      isInstalled.value = true;
+      //isInstalled.value = true;
       emits("installed");
     } else {
       console.log("Utilisateur a refusé l'installation");
