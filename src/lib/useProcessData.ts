@@ -10,6 +10,7 @@ import axios from "axios";
 import { uniqBy } from "lodash";
 
 import useBase from "./useBase";
+import useSheets from "./useSheets";
 import { transformToCapitalize } from "./lexique";
 
 import franceCommunes from "../geojson/communesFr.json";
@@ -74,7 +75,7 @@ export default function useProcessData(
   pinType: Ref<number[]>,
   loading: Ref<boolean>
 ) {
-  const { loadRecordsDone, records } = useBase(usingFilloutBase);
+  const { records, loadRecordsDone, batchIndex } = useSheets(usingFilloutBase);
 
   const loadCsvDone = ref(false);
   const cities: Ref<City[]> = ref([]);
