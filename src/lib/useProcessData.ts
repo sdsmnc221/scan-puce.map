@@ -35,7 +35,7 @@ export type BaseRecord = {
   Notes: string;
   ContactMode: string;
   ContactModeUnfilled: number;
-  AccessICAD?: boolean;
+  AccessICAD?: "checked" | "";
 };
 
 type City = {
@@ -518,10 +518,14 @@ export default function useProcessData(
         return true;
       } else if (pinTypeArray.includes(0) && !pinTypeArray.includes(1)) {
         // Red pin (without ICAD)
-        return city.baseRecords.some((record) => !record.AccessICAD);
+        return city.baseRecords.some(
+          (record) => record.AccessICAD === "checked"
+        );
       } else if (pinTypeArray.includes(1) && !pinTypeArray.includes(0)) {
         // Blue pin (with ICAD)
-        return city.baseRecords.some((record) => !!record.AccessICAD);
+        return city.baseRecords.some(
+          (record) => record.AccessICAD === "checked"
+        );
       } else {
         return false;
       }

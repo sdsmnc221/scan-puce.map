@@ -82,7 +82,7 @@
 
           <!-- ICAD Badge -->
           <div
-            v-if="record.AccessICAD"
+            v-if="record.Access === 'checked'"
             class="icad-badge flex flex-basis-1/2 items-center justify-center text-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium"
           >
             <img alt="icad" src="/pin-icad.png" class="w-6 h-6" />
@@ -221,7 +221,7 @@ import { uniqBy } from "lodash";
 type Record = {
   Author: string;
   LinkToPost: string;
-  AccessICAD?: boolean;
+  AccessICAD?: "checked" | "";
   CommuneName?: string;
   Tel?: string;
   Email?: string;
