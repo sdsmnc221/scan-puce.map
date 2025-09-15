@@ -80,6 +80,12 @@ function formatZipCode(zc: string) {
     } else {
       return `00${zc}`;
     }
+  } else if (zc.length === 2) {
+    if (zc[0] === "0") {
+      return `${zc}000`;
+    } else {
+      return `000${zc}`;
+    }
   } else {
     return zc;
   }
