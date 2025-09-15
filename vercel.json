@@ -1,0 +1,13 @@
+{
+    "functions": {
+        "api/sync-to-sheets.js": {
+            "runtime": "nodejs22.x"
+        }
+    },
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
+        }
+    ]
+}
