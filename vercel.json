@@ -1,7 +1,7 @@
 {
     "functions": {
         "api/sync-to-sheets.js": {
-            "runtime": "@vercel/node@latest"
+            "runtime": "node@22.15.1"
         }
     },
     "rewrites": [
