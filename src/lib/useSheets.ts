@@ -33,9 +33,9 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
             const chunksOfRecs = chunk(
               newRecords.map((r: any) => ({
                 ...r,
-                ZipCode: r.ZipCode.split(",").map((zc: string) =>
-                  formatZipCode(zc)
-                ),
+                ZipCode: r.ZipCode.split(",")
+                  .map((zc: string) => formatZipCode(zc))
+                  .join(","),
               })),
               RECORDS_BATCH_SIZE
             );
