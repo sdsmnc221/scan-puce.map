@@ -1,6 +1,8 @@
 {
     "functions": {
-        "api/sync-to-sheets.js": {}
+        "api/sync-to-sheets.js": {
+            "runtime": "@vercel/node@latest"
+        }
     },
     "rewrites": [
         {
