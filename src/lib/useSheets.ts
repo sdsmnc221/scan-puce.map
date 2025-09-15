@@ -67,24 +67,11 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
 }
 
 function formatZipCode(zc: string) {
-  if (zc.length === 5) return zc;
-  if (zc.length === 4) {
+  if (zc.length < 5) {
     if (zc[0] === "0") {
-      return `${zc}0`;
+      return zc.padEnd(5, "0");
     } else {
-      return `0${zc}`;
-    }
-  } else if (zc.length === 3) {
-    if (zc[0] === "0") {
-      return `${zc}00`;
-    } else {
-      return `00${zc}`;
-    }
-  } else if (zc.length === 2) {
-    if (zc[0] === "0") {
-      return `${zc}000`;
-    } else {
-      return `000${zc}`;
+      return zc.padStart(5, "0");
     }
   } else {
     return zc;
