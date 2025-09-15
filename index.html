@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/favicon.svg" />
+    <link rel="manifest" href="/favicon/manifest.json" />
+    <meta name="theme-color" content="#FAC142">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://scan-puce.antr.tech/">
+    <meta property="og:title" content="Réseau Lecteur Puce France - Carte des Lecteurs de Puce pour Animaux">
+    <meta property="og:description" content="Carte interactive regroupant tous les lecteurs de puce électronique pour animaux en France. Trouvez rapidement les points de lecture près de chez vous pour identifier un animal perdu.">
+    <meta property="og:image" content="/favicon/meta-img.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://scan-puce.antr.tech/">
+    <meta property="twitter:title" content="Réseau Lecteur Puce France - Carte Interactive">
+    <meta property="twitter:description" content="Localisez les lecteurs de puce électronique pour animaux en France. Une initiative collaborative pour aider à retrouver les animaux perdus.">
+    <meta property="twitter:image" content="/favicon/meta-img.jpg">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Réseau Lecteur Puce France - Carte des Lecteurs de Puce pour Animaux</title>
+    <meta name="title" content="Réseau Lecteur Puce France - Carte des Lecteurs de Puce pour Animaux">
+    <meta name="description" content="Découvrez la carte interactive des lecteurs de puce électronique p  our animaux en France. Une initiative du groupe Facebook 'Réseau Lecteur Puce France' pour faciliter l'identification des animaux perdus.">
+
+    <meta name="keywords" content="lecteur puce, animaux perdus, identification animale, puce électronique, carte interactive, France, scanner puce animaux, réseau bénévoles">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="French">
+    <meta name="revisit-after" content="7 days">
+    <meta name="author" content="Réseau Lecteur Puce France & AnTR (antr.tech)">
+
+    <script>
+      const pwaReadyEvent = (prompt) => new CustomEvent("pwa:ready", { detail: { prompt } })
+      
+
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+      
+      e.preventDefault();
+      window.installPrompt = e;
+
+      window.dispatchEvent(pwaReadyEvent(e));
+    });
+      </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

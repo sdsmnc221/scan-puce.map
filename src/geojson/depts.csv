@@ -1,0 +1,1017 @@
+postcode,commune,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Sciecq,-0.475373,46.373166,0.9335799999999999,0.5831946464646465,Sciecq,municipality,79308,,Sciecq,,79000,Sciecq,"79, Deux-Sèvres, Nouvelle-Aquitaine",79308,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+16000,Angouleme,0.148409,45.644018,0.9523854545454543,0.5932230303030303,Angoulême,municipality,16015,,Angoulême,,16000,Angoulême,"16, Charente, Nouvelle-Aquitaine",16015,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+27000,Evreux,1.146898,49.020599,0.9530245454545454,0.5377204761904762,Évreux,municipality,27229,,Évreux,,27000,Évreux,"27, Eure, Normandie",27229,,,,ok
+27000,Evreux,1.146898,49.020599,0.9530245454545454,0.5377204761904762,Évreux,municipality,27229,,Évreux,,27000,Évreux,"27, Eure, Normandie",27229,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+14000,Caen,-0.37193,49.184316,0.9567872727272726,0.5011238277511961,Caen,municipality,14118,,Caen,,14000,Caen,"14, Calvados, Normandie",14118,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+14000,Caen,-0.37193,49.184316,0.9567872727272726,0.5011238277511961,Caen,municipality,14118,,Caen,,14000,Caen,"14, Calvados, Normandie",14118,,,,ok
+35000,Rennes,-1.68365,48.110899,0.9601163636363635,0.5693227272727273,Rennes,municipality,35238,,Rennes,,35000,Rennes,"35, Ille-et-Vilaine, Bretagne",35238,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+88000,Chantraine,6.427863,48.159753,0.9407545454545453,0.5744364335664335,Chantraine,municipality,88087,,Chantraine,,88000,Chantraine,"88, Vosges, Grand Est",88087,,,,ok
+88000,Deyvillers,6.516524,48.200074,0.9368799999999998,0.5874233201581027,Deyvillers,municipality,88132,,Deyvillers,,88000,Deyvillers,"88, Vosges, Grand Est",88132,,,,ok
+88000,Dignonville,6.504864,48.244439,0.9284454545454545,0.6053490909090908,Dignonville,municipality,88133,,Dignonville,,88000,Dignonville,"88, Vosges, Grand Est",88133,,,,ok
+88000,Dinoze,6.483418,48.141433,0.93351,0.41787902097902097,Dinozé,municipality,88134,,Dinozé,,88000,Dinozé,"88, Vosges, Grand Est",88134,,,,ok
+88000,Dogneville,6.455368,48.212524,0.9373572727272727,0.6052936363636363,Dogneville,municipality,88136,,Dogneville,,88000,Dogneville,"88, Vosges, Grand Est",88136,,,,ok
+88000,Epinal,6.484474,48.170059,0.9512899999999999,0.5543841414141414,Épinal,municipality,88160,,Épinal,,88000,Épinal,"88, Vosges, Grand Est",88160,,,,ok
+88000,Jeuxey,6.488195,48.195937,0.9337027272727271,0.5131113852813852,Jeuxey,municipality,88253,,Jeuxey,,88000,Jeuxey,"88, Vosges, Grand Est",88253,,,,ok
+88000,Longchamp,6.512187,48.225971,0.9320054545454546,0.5778309917355372,Longchamp,municipality,88273,,Longchamp,,88000,Longchamp,"88, Vosges, Grand Est",88273,,,,ok
+88000,Vaudeville,6.540849,48.227553,0.9280654545454545,0.4954948902821317,Vaudéville,municipality,88495,,Vaudéville,,88000,Vaudéville,"88, Vosges, Grand Est",88495,,,,ok
+70000,Andelarre,6.096153,47.590217,0.9268427272727273,0.59033329004329,Andelarre,municipality,70019,,Andelarre,,70000,Andelarre,"70, Haute-Saône, Bourgogne-Franche-Comté",70019,,,,ok
+70000,Andelarrot,6.105367,47.581629,0.92914,0.5476755244755244,Andelarrot,municipality,70020,,Andelarrot,,70000,Andelarrot,"70, Haute-Saône, Bourgogne-Franche-Comté",70020,,,,ok
+70000,Auxon,6.152239,47.695083,0.9313763636363634,0.4831318181818181,Auxon,municipality,70044,,Auxon,,70000,Auxon,"70, Haute-Saône, Bourgogne-Franche-Comté",70044,,,,ok
+70000,Baignes,6.051891,47.586263,0.9251645454545454,0.5302163636363636,Baignes,municipality,70047,,Baignes,,70000,Baignes,"70, Haute-Saône, Bourgogne-Franche-Comté",70047,,,,ok
+70000,Boursieres,6.043018,47.608767,0.923000909090909,0.5754142292490118,Boursières,municipality,70090,,Boursières,,70000,Boursières,"70, Haute-Saône, Bourgogne-Franche-Comté",70090,,,,ok
+70000,Cerre les Noroy,6.317349,47.600284,0.9290090909090909,0.6212384457478005,Cerre-lès-Noroy,municipality,70115,,Cerre-lès-Noroy,,70000,Cerre-lès-Noroy,"70, Haute-Saône, Bourgogne-Franche-Comté",70115,,,,ok
+70000,Chariez,6.084808,47.620375,0.9285090909090908,0.5345323140495867,Chariez,municipality,70134,,Chariez,,70000,Chariez,"70, Haute-Saône, Bourgogne-Franche-Comté",70134,,,,ok
+70000,Charmoille,6.109689,47.664407,0.9323272727272727,0.5718418181818181,Charmoille,municipality,70136,,Charmoille,,70000,Charmoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70136,,,,ok
+70000,Clans,6.041589,47.602237,0.9253372727272726,0.40234969696969697,Clans,municipality,70158,,Clans,,70000,Clans,"70, Haute-Saône, Bourgogne-Franche-Comté",70158,,,,ok
+70000,Colombe les Vesoul,6.213439,47.611525,0.93216,0.6556387165775401,Colombe-lès-Vesoul,municipality,70162,,Colombe-lès-Vesoul,,70000,Colombe-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70162,,,,ok
+70000,Colombier,6.218848,47.667665,0.9317436363636363,0.6337069696969696,Colombier,municipality,70163,,Colombier,,70000,Colombier,"70, Haute-Saône, Bourgogne-Franche-Comté",70163,,,,ok
+70000,Comberjon,6.200452,47.648104,0.9268727272727272,0.5300236363636364,Comberjon,municipality,70166,,Comberjon,,70000,Comberjon,"70, Haute-Saône, Bourgogne-Franche-Comté",70166,,,,ok
+70000,Coulevon,6.182842,47.645611,0.9274945454545453,0.5541287012987013,Coulevon,municipality,70179,,Coulevon,,70000,Coulevon,"70, Haute-Saône, Bourgogne-Franche-Comté",70179,,,,ok
+70000,Dampvalley les Colombe,6.241005,47.628881,0.925970909090909,0.6770648325358851,Dampvalley-lès-Colombe,municipality,70199,,Dampvalley-lès-Colombe,,70000,Dampvalley-lès-Colombe,"70, Haute-Saône, Bourgogne-Franche-Comté",70199,,,,ok
+70000,La Demie,6.175869,47.585032,0.9270799999999999,0.5511532467532466,La Demie,municipality,70203,,La Demie,,70000,La Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70203,,,,ok
+70000,Echenoz la Meline,6.141029,47.601168,0.9408227272727272,0.6598827272727272,Échenoz-la-Méline,municipality,70207,,Échenoz-la-Méline,,70000,Échenoz-la-Méline,"70, Haute-Saône, Bourgogne-Franche-Comté",70207,,,,ok
+70000,Echenoz le Sec,6.123281,47.537794,0.9299009090909091,0.6673360839160838,Échenoz-le-Sec,municipality,70208,,Échenoz-le-Sec,,70000,Échenoz-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70208,,,,ok
+70000,Flagy,6.189582,47.698764,0.9265590909090908,0.4665295238095238,Flagy,municipality,70235,,Flagy,,70000,Flagy,"70, Haute-Saône, Bourgogne-Franche-Comté",70235,,,,ok
+70000,Frotey les Vesoul,6.183176,47.62666,0.9368872727272726,0.6693309090909091,Frotey-lès-Vesoul,municipality,70261,,Frotey-lès-Vesoul,,70000,Frotey-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70261,,,,ok
+70000,Le Magnoray,6.101967,47.528452,0.9245,0.5780005594405594,Le Magnoray,municipality,70316,,Le Magnoray,,70000,Le Magnoray,"70, Haute-Saône, Bourgogne-Franche-Comté",70316,,,,ok
+70000,Mailley et Chazelot,6.045265,47.53296,0.9333672727272727,0.688583388429752,Mailley-et-Chazelot,municipality,70324,,Mailley-et-Chazelot,,70000,Mailley-et-Chazelot,"70, Haute-Saône, Bourgogne-Franche-Comté",70324,,,,ok
+70000,Montcey,6.236462,47.654856,0.9295445454545455,0.5309472727272727,Montcey,municipality,70358,,Montcey,,70000,Montcey,"70, Haute-Saône, Bourgogne-Franche-Comté",70358,,,,ok
+70000,Montigny les Vesoul,6.074624,47.639184,0.9334672727272726,0.6808975935828877,Montigny-lès-Vesoul,municipality,70363,,Montigny-lès-Vesoul,,70000,Montigny-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70363,,,,ok
+70000,Mont le Vernois,6.060231,47.604354,0.9279945454545454,0.5920790909090908,Mont-le-Vernois,municipality,70367,,Mont-le-Vernois,,70000,Mont-le-Vernois,"70, Haute-Saône, Bourgogne-Franche-Comté",70367,,,,ok
+70000,Navenne,6.158118,47.60929,0.93763,0.5357014049586776,Navenne,municipality,70378,,Navenne,,70000,Navenne,"70, Haute-Saône, Bourgogne-Franche-Comté",70378,,,,ok
+70000,Neurey les la Demie,6.192553,47.574002,0.9307754545454544,0.68214,Neurey-lès-la-Demie,municipality,70381,,Neurey-lès-la-Demie,,70000,Neurey-lès-la-Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70381,,,,ok
+70000,Noidans les Vesoul,6.131158,47.61586,0.9385990909090909,0.6289575757575757,Noidans-lès-Vesoul,municipality,70388,,Noidans-lès-Vesoul,,70000,Noidans-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70388,,,,ok
+70000,Noroy le Bourg,6.276667,47.584686,0.9324172727272727,0.6354721943573667,Noroy-le-Bourg,municipality,70390,,Noroy-le-Bourg,,70000,Noroy-le-Bourg,"70, Haute-Saône, Bourgogne-Franche-Comté",70390,,,,ok
+70000,Pusey,6.131447,47.653335,0.9371727272727273,0.5097007177033492,Pusey,municipality,70428,,Pusey,,70000,Pusey,"70, Haute-Saône, Bourgogne-Franche-Comté",70428,,,,ok
+70000,Pusy et Epenoux,6.153945,47.667471,0.9327372727272727,0.5834550964187327,Pusy-et-Épenoux,municipality,70429,,Pusy-et-Épenoux,,70000,Pusy-et-Épenoux,"70, Haute-Saône, Bourgogne-Franche-Comté",70429,,,,ok
+70000,Quincey,6.191676,47.605217,0.93697,0.5827854545454545,Quincey,municipality,70433,,Quincey,,70000,Quincey,"70, Haute-Saône, Bourgogne-Franche-Comté",70433,,,,ok
+70000,Raze,6.011824,47.583884,0.9310254545454544,0.467862918660287,Raze,municipality,70439,,Raze,,70000,Raze,"70, Haute-Saône, Bourgogne-Franche-Comté",70439,,,,ok
+70000,Rosey,6.025976,47.565074,0.9293199999999999,0.4900972727272727,Rosey,municipality,70452,,Rosey,,70000,Rosey,"70, Haute-Saône, Bourgogne-Franche-Comté",70452,,,,ok
+70000,Vaivre et Montoille,6.110465,47.632112,0.9395336363636363,0.7154118181818181,Vaivre-et-Montoille,municipality,70513,,Vaivre-et-Montoille,,70000,Vaivre-et-Montoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70513,,,,ok
+70000,Vallerois le Bois,6.29374,47.550608,0.9290090909090909,0.6393624242424242,Vallerois-le-Bois,municipality,70516,,Vallerois-le-Bois,,70000,Vallerois-le-Bois,"70, Haute-Saône, Bourgogne-Franche-Comté",70516,,,,ok
+70000,Vallerois Lorioz,6.145582,47.569331,0.9315199999999999,0.6574892476489028,Vallerois-Lorioz,municipality,70517,,Vallerois-Lorioz,,70000,Vallerois-Lorioz,"70, Haute-Saône, Bourgogne-Franche-Comté",70517,,,,ok
+70000,Vellefaux,6.137695,47.555171,0.9326099999999999,0.5800296837944663,Vellefaux,municipality,70532,,Vellefaux,,70000,Vellefaux,"70, Haute-Saône, Bourgogne-Franche-Comté",70532,,,,ok
+70000,Velleguindry et Levrecey,6.096385,47.554767,0.9269927272727272,0.6682327937915742,Velleguindry-et-Levrecey,municipality,70535,,Velleguindry-et-Levrecey,,70000,Velleguindry-et-Levrecey,"70, Haute-Saône, Bourgogne-Franche-Comté",70535,,,,ok
+70000,Velle le Chatel,6.045079,47.603718,0.926291818181818,0.5981321212121211,Velle-le-Châtel,municipality,70536,,Velle-le-Châtel,,70000,Velle-le-Châtel,"70, Haute-Saône, Bourgogne-Franche-Comté",70536,,,,ok
+70000,Vesoul,6.157979,47.628692,0.9478454545454544,0.5151179904306219,Vesoul,municipality,70550,,Vesoul,,70000,Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70550,,,,ok
+70000,Villeparois,6.181472,47.657424,0.9280418181818181,0.5608223569023568,Villeparois,municipality,70559,,Villeparois,,70000,Villeparois,"70, Haute-Saône, Bourgogne-Franche-Comté",70559,,,,ok
+70000,Villers le Sec,6.228575,47.590247,0.9326018181818182,0.6291094670846394,Villers-le-Sec,municipality,70563,,Villers-le-Sec,,70000,Villers-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70563,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+14000,Caen,-0.37193,49.184316,0.9567872727272726,0.5011238277511961,Caen,municipality,14118,,Caen,,14000,Caen,"14, Calvados, Normandie",14118,,,,ok
+15000,Aurillac,2.435053,44.918771,0.9502736363636363,0.5316,Aurillac,municipality,15014,,Aurillac,,15000,Aurillac,"15, Cantal, Auvergne-Rhône-Alpes",15014,,,,ok
+15000,Ytrac,2.362811,44.911261,0.9421527272727271,0.39984909090909093,Ytrac,municipality,15267,,Ytrac,,15000,Ytrac,"15, Cantal, Auvergne-Rhône-Alpes",15267,,,,ok
+19000,Les Angles sur Correze,1.798025,45.309237,0.9261872727272727,0.7421724064171121,Les Angles-sur-Corrèze,municipality,19009,,Les Angles-sur-Corrèze,,19000,Les Angles-sur-Corrèze,"19, Corrèze, Nouvelle-Aquitaine",19009,,,,ok
+19000,Tulle,1.764073,45.267177,0.9474899999999998,0.5063281818181818,Tulle,municipality,19272,,Tulle,,19000,Tulle,"19, Corrèze, Nouvelle-Aquitaine",19272,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+39000,Lons le Saunier,5.559875,46.677499,0.9483863636363636,0.6584942424242424,Lons-le-Saunier,municipality,39300,,Lons-le-Saunier,,39000,Lons-le-Saunier,"39, Jura, Bourgogne-Franche-Comté",39300,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+83000,Toulon,5.933457,43.136385,0.9591118181818181,0.5430913852813852,Toulon,municipality,83137,,Toulon,,83000,Toulon,"83, Var, Provence-Alpes-Côte d'Azur",83137,,,,ok
+82000,Montauban,1.363799,44.020606,0.9542499999999998,0.5761972727272727,Montauban,municipality,82121,,Montauban,,82000,Montauban,"82, Tarn-et-Garonne, Occitanie",82121,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+36000,Chateauroux,1.692994,46.804353,0.9525890909090909,0.6045823569023567,Châteauroux,municipality,36044,,Châteauroux,,36000,Châteauroux,"36, Indre, Centre-Val de Loire",36044,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+79000,Bessines,-0.51113,46.297382,0.9382454545454545,0.5694955371900826,Bessines,municipality,79034,,Bessines,,79000,Bessines,"79, Deux-Sèvres, Nouvelle-Aquitaine",79034,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Sciecq,-0.475373,46.373166,0.9335799999999999,0.5831946464646465,Sciecq,municipality,79308,,Sciecq,,79000,Sciecq,"79, Deux-Sèvres, Nouvelle-Aquitaine",79308,,,,ok
+10000,Troyes,4.075149,48.292817,0.9543127272727272,0.5194527272727272,Troyes,municipality,10387,,Troyes,,10000,Troyes,"10, Aube, Grand Est",10387,,,,ok
+86000,Poitiers,0.35668,46.586578,0.9559618181818181,0.584258537549407,Poitiers,municipality,86194,,Poitiers,,86000,Poitiers,"86, Vienne, Nouvelle-Aquitaine",86194,,,,ok
+66000,Perpignan,2.902878,42.701392,0.9572445454545454,0.5211554545454545,Perpignan,municipality,66136,,Perpignan,,66000,Perpignan,"66, Pyrénées-Orientales, Occitanie",66136,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+34000,Montpellier,3.87048,43.610476,0.9614590909090908,0.64994,Montpellier,municipality,34172,,Montpellier,,34000,Montpellier,"34, Hérault, Occitanie",34172,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+31000,Toulouse,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+73000,Barberaz,5.941618,45.555269,0.9430445454545454,0.5140373913043478,Barberaz,municipality,73029,,Barberaz,,73000,Barberaz,"73, Savoie, Auvergne-Rhône-Alpes",73029,,,,ok
+73000,Bassens,5.941721,45.579952,0.9429363636363637,0.49800260869565216,Bassens,municipality,73031,,Bassens,,73000,Bassens,"73, Savoie, Auvergne-Rhône-Alpes",73031,,,,ok
+73000,Chambery,5.909299,45.583223,0.9540963636363636,0.5341454545454545,Chambéry,municipality,73065,,Chambéry,,73000,Chambéry,"73, Savoie, Auvergne-Rhône-Alpes",73065,,,,ok
+73000,Jacob Bellecombette,5.915006,45.553711,0.9420018181818182,0.6501641711229946,Jacob-Bellecombette,municipality,73137,,Jacob-Bellecombette,,73000,Jacob-Bellecombette,"73, Savoie, Auvergne-Rhône-Alpes",73137,,,,ok
+73000,Montagnole,5.91413,45.532078,0.9354363636363636,0.5550009090909092,Montagnole,municipality,73160,,Montagnole,,73000,Montagnole,"73, Savoie, Auvergne-Rhône-Alpes",73160,,,,ok
+73000,Sonnaz,5.916684,45.614987,0.9388363636363636,0.5368579904306219,Sonnaz,municipality,73288,,Sonnaz,,73000,Sonnaz,"73, Savoie, Auvergne-Rhône-Alpes",73288,,,,ok
+76000,Rouen,1.093912,49.440044,0.9570272727272726,0.5461507177033492,Rouen,municipality,76540,,Rouen,,76000,Rouen,"76, Seine-Maritime, Normandie",76540,,,,ok
+76000,Rouen,1.093912,49.440044,0.9570272727272726,0.5461507177033492,Rouen,municipality,76540,,Rouen,,76000,Rouen,"76, Seine-Maritime, Normandie",76540,,,,ok
+76000,Rouen,1.093912,49.440044,0.9570272727272726,0.5461507177033492,Rouen,municipality,76540,,Rouen,,76000,Rouen,"76, Seine-Maritime, Normandie",76540,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+66000,Perpignan,2.902878,42.701392,0.9572445454545454,0.5211554545454545,Perpignan,municipality,66136,,Perpignan,,66000,Perpignan,"66, Pyrénées-Orientales, Occitanie",66136,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+52000,Brethenay,5.134561,48.15594,0.9311690909090908,0.5454218181818182,Brethenay,municipality,52072,,Brethenay,,52000,Brethenay,"52, Haute-Marne, Grand Est",52072,,,,ok
+52000,Buxieres les Villiers,5.039204,48.105923,0.9284663636363635,0.61913,Buxières-lès-Villiers,municipality,52087,,Buxières-lès-Villiers,,52000,Buxières-lès-Villiers,"52, Haute-Marne, Grand Est",52087,,,,ok
+52000,Chaumont,5.129976,48.104307,0.9494845454545453,0.5716303557312252,Chaumont,municipality,52121,,Chaumont,,52000,Chaumont,"52, Haute-Marne, Grand Est",52121,,,,ok
+52000,Chaumont,5.129976,48.104307,0.9494845454545453,0.5716303557312252,Chaumont,municipality,52121,,Chaumont,,52000,Chaumont,"52, Haute-Marne, Grand Est",52121,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Condes,5.144677,48.143891,0.9299781818181818,0.4470057575757575,Condes,municipality,52141,,Condes,,52000,Condes,"52, Haute-Marne, Grand Est",52141,,,,ok
+52000,Euffigneix,5.047755,48.131293,0.9300536363636362,0.5607446153846153,Euffigneix,municipality,52193,,Euffigneix,,52000,Euffigneix,"52, Haute-Marne, Grand Est",52193,,,,ok
+52000,Foulain,5.209981,48.037744,0.9338227272727271,0.5329086776859504,Foulain,municipality,52205,,Foulain,,52000,Foulain,"52, Haute-Marne, Grand Est",52205,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Laville aux Bois,5.230916,48.095771,0.9289136363636363,0.6341036363636363,Laville-aux-Bois,municipality,52276,,Laville-aux-Bois,,52000,Laville-aux-Bois,"52, Haute-Marne, Grand Est",52276,,,,ok
+52000,Luzy sur Marne,5.184642,48.056802,0.9297263636363636,0.6267131034482758,Luzy-sur-Marne,municipality,52297,,Luzy-sur-Marne,,52000,Luzy-sur-Marne,"52, Haute-Marne, Grand Est",52297,,,,ok
+52000,Neuilly sur Suize,5.14852,48.050755,0.9300236363636363,0.6180125668449198,Neuilly-sur-Suize,municipality,52349,,Neuilly-sur-Suize,,52000,Neuilly-sur-Suize,"52, Haute-Marne, Grand Est",52349,,,,ok
+52000,Riaucourt,5.15091,48.177507,0.9317127272727271,0.5679057575757576,Riaucourt,municipality,52421,,Riaucourt,,52000,Riaucourt,"52, Haute-Marne, Grand Est",52421,,,,ok
+52000,Semoutiers Montsaon,5.051148,48.061289,0.934040909090909,0.6640793506493505,Semoutiers-Montsaon,municipality,52469,,Semoutiers-Montsaon,,52000,Semoutiers-Montsaon,"52, Haute-Marne, Grand Est",52469,,,,ok
+52000,Semoutiers Montsaon,5.051148,48.061289,0.934040909090909,0.6640793506493505,Semoutiers-Montsaon,municipality,52469,,Semoutiers-Montsaon,,52000,Semoutiers-Montsaon,"52, Haute-Marne, Grand Est",52469,,,,ok
+52000,Treix,5.188324,48.147824,0.9285299999999999,0.3989690909090909,Treix,municipality,52494,,Treix,,52000,Treix,"52, Haute-Marne, Grand Est",52494,,,,ok
+52000,Verbiesles,5.185683,48.070576,0.9305254545454545,0.5797672727272727,Verbiesles,municipality,52514,,Verbiesles,,52000,Verbiesles,"52, Haute-Marne, Grand Est",52514,,,,ok
+52000,Villiers le Sec,5.066112,48.106477,0.9340654545454544,0.6334684457478005,Villiers-le-Sec,municipality,52535,,Villiers-le-Sec,,52000,Villiers-le-Sec,"52, Haute-Marne, Grand Est",52535,,,,ok
+35000,Rennes,-1.68365,48.110899,0.9601163636363635,0.5693227272727273,Rennes,municipality,35238,,Rennes,,35000,Rennes,"35, Ille-et-Vilaine, Bretagne",35238,,,,ok
+10000,Troyes,4.075149,48.292817,0.9543127272727272,0.5194527272727272,Troyes,municipality,10387,,Troyes,,10000,Troyes,"10, Aube, Grand Est",10387,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+46000,Cahors,1.438342,44.457559,0.9491454545454544,0.531998658008658,Cahors,municipality,46042,,Cahors,,46000,Cahors,"46, Lot, Occitanie",46042,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+26000,Valence,4.92286,44.920647,0.9544345454545454,0.5571041322314049,Valence,municipality,26362,,Valence,,26000,Valence,"26, Drôme, Auvergne-Rhône-Alpes",26362,,,,ok
+49000,Angers,-0.561615,47.467471,0.9584845454545453,0.5722881818181819,Angers,municipality,49007,,Angers,,49000,Angers,"49, Maine-et-Loire, Pays de la Loire",49007,,,,ok
+49000,Ecouflant,-0.51978,47.517947,0.9423109090909091,0.560000909090909,Écouflant,municipality,49129,,Écouflant,,49000,Écouflant,"49, Maine-et-Loire, Pays de la Loire",49129,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+34000,Montpellier,3.87048,43.610476,0.9614590909090908,0.64994,Montpellier,municipality,34172,,Montpellier,,34000,Montpellier,"34, Hérault, Occitanie",34172,,,,ok
+88000,Chantraine,6.427863,48.159753,0.9407545454545453,0.5744364335664335,Chantraine,municipality,88087,,Chantraine,,88000,Chantraine,"88, Vosges, Grand Est",88087,,,,ok
+88000,Deyvillers,6.516524,48.200074,0.9368799999999998,0.5874233201581027,Deyvillers,municipality,88132,,Deyvillers,,88000,Deyvillers,"88, Vosges, Grand Est",88132,,,,ok
+88000,Dignonville,6.504864,48.244439,0.9284454545454545,0.6053490909090908,Dignonville,municipality,88133,,Dignonville,,88000,Dignonville,"88, Vosges, Grand Est",88133,,,,ok
+88000,Dinoze,6.483418,48.141433,0.93351,0.41787902097902097,Dinozé,municipality,88134,,Dinozé,,88000,Dinozé,"88, Vosges, Grand Est",88134,,,,ok
+88000,Dogneville,6.455368,48.212524,0.9373572727272727,0.6052936363636363,Dogneville,municipality,88136,,Dogneville,,88000,Dogneville,"88, Vosges, Grand Est",88136,,,,ok
+88000,Epinal,6.484474,48.170059,0.9512899999999999,0.5543841414141414,Épinal,municipality,88160,,Épinal,,88000,Épinal,"88, Vosges, Grand Est",88160,,,,ok
+88000,Jeuxey,6.488195,48.195937,0.9337027272727271,0.5131113852813852,Jeuxey,municipality,88253,,Jeuxey,,88000,Jeuxey,"88, Vosges, Grand Est",88253,,,,ok
+88000,Longchamp,6.512187,48.225971,0.9320054545454546,0.5778309917355372,Longchamp,municipality,88273,,Longchamp,,88000,Longchamp,"88, Vosges, Grand Est",88273,,,,ok
+88000,Vaudeville,6.540849,48.227553,0.9280654545454545,0.4954948902821317,Vaudéville,municipality,88495,,Vaudéville,,88000,Vaudéville,"88, Vosges, Grand Est",88495,,,,ok
+85000,Mouilleron le Captif,-1.461904,46.709533,0.9428481818181819,0.7297779614325068,Mouilleron-le-Captif,municipality,85155,,Mouilleron-le-Captif,,85000,Mouilleron-le-Captif,"85, Vendée, Pays de la Loire",85155,,,,ok
+85000,La Roche sur Yon,-1.412585,46.670848,0.9537072727272726,0.7060744827586206,La Roche-sur-Yon,municipality,85191,,La Roche-sur-Yon,,85000,La Roche-sur-Yon,"85, Vendée, Pays de la Loire",85191,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+50000,Baudre,-1.06874,49.089822,0.9330281818181818,0.5883373737373737,Baudre,municipality,50034,,Baudre,,50000,Baudre,"50, Manche, Normandie",50034,,,,ok
+50000,Le Mesnil Rouxelin,-1.076422,49.140879,0.9321881818181817,0.6796572727272727,Le Mesnil-Rouxelin,municipality,50321,,Le Mesnil-Rouxelin,,50000,Le Mesnil-Rouxelin,"50, Manche, Normandie",50321,,,,ok
+50000,Rampan,-1.131726,49.145384,0.9286345454545454,0.554003971291866,Rampan,municipality,50423,,Rampan,,50000,Rampan,"50, Manche, Normandie",50423,,,,ok
+50000,St Georges Montcocq,-1.105058,49.138319,0.7730523376623376,0.6286953246753246,Saint-Georges-Montcocq,municipality,50475,,Saint-Georges-Montcocq,,50000,Saint-Georges-Montcocq,"50, Manche, Normandie",50475,,,,ok
+50000,St Lo,-1.080182,49.113843,0.6242937662337662,0.39838363636363633,Saint-Lô,municipality,50502,,Saint-Lô,,50000,Saint-Lô,"50, Manche, Normandie",50502,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+40000,Mont de Marsan,-0.50031,43.891274,0.9510572727272726,0.6156856598240469,Mont-de-Marsan,municipality,40192,,Mont-de-Marsan,,40000,Mont-de-Marsan,"40, Landes, Nouvelle-Aquitaine",40192,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+94000,Creteil,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+47000,Agen,0.631041,44.202304,0.9513181818181818,0.48938382775119615,Agen,municipality,47001,,Agen,,47000,Agen,"47, Lot-et-Garonne, Nouvelle-Aquitaine",47001,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+18000,Bourges,2.397634,47.082492,0.9543790909090908,0.6407335885167463,Bourges,municipality,18033,,Bourges,,18000,Bourges,"18, Cher, Centre-Val de Loire",18033,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+50000,Baudre,-1.06874,49.089822,0.9330281818181818,0.5883373737373737,Baudre,municipality,50034,,Baudre,,50000,Baudre,"50, Manche, Normandie",50034,,,,ok
+50000,Le Mesnil Rouxelin,-1.076422,49.140879,0.9321881818181817,0.6796572727272727,Le Mesnil-Rouxelin,municipality,50321,,Le Mesnil-Rouxelin,,50000,Le Mesnil-Rouxelin,"50, Manche, Normandie",50321,,,,ok
+50000,Rampan,-1.131726,49.145384,0.9286345454545454,0.554003971291866,Rampan,municipality,50423,,Rampan,,50000,Rampan,"50, Manche, Normandie",50423,,,,ok
+50000,St Georges Montcocq,-1.105058,49.138319,0.7730523376623376,0.6286953246753246,Saint-Georges-Montcocq,municipality,50475,,Saint-Georges-Montcocq,,50000,Saint-Georges-Montcocq,"50, Manche, Normandie",50475,,,,ok
+50000,St Lo,-1.080182,49.113843,0.6242937662337662,0.39838363636363633,Saint-Lô,municipality,50502,,Saint-Lô,,50000,Saint-Lô,"50, Manche, Normandie",50502,,,,ok
+84000,Avignon,4.845053,43.936694,0.9559663636363636,0.5859814285714284,Avignon,municipality,84007,,Avignon,,84000,Avignon,"84, Vaucluse, Provence-Alpes-Côte d'Azur",84007,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Sance,4.831367,46.338965,0.9390136363636363,0.5130681818181817,Sancé,municipality,71497,,Sancé,,71000,Sancé,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71497,,,,ok
+71000,Varennes les Macon,4.800525,46.270695,0.9329963636363636,0.8131262289562289,Varennes-lès-Mâcon,municipality,71556,,Varennes-lès-Mâcon,,71000,Varennes-lès-Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71556,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+83000,Toulon,5.933457,43.136385,0.9591118181818181,0.5430913852813852,Toulon,municipality,83137,,Toulon,,83000,Toulon,"83, Var, Provence-Alpes-Côte d'Azur",83137,,,,ok
+23000,Anzeme,1.846928,46.252237,0.9327454545454544,0.6595545454545454,Anzême,municipality,23004,,Anzême,,23000,Anzême,"23, Creuse, Nouvelle-Aquitaine",23004,,,,ok
+23000,La Brionne,1.791046,46.168094,0.9319263636363637,0.6555483471074379,La Brionne,municipality,23033,,La Brionne,,23000,La Brionne,"23, Creuse, Nouvelle-Aquitaine",23033,,,,ok
+23000,La Chapelle Taillefert,1.839345,46.119516,0.9318054545454544,0.7546269518716576,La Chapelle-Taillefert,municipality,23052,,La Chapelle-Taillefert,,23000,La Chapelle-Taillefert,"23, Creuse, Nouvelle-Aquitaine",23052,,,,ok
+23000,Gueret,1.875015,46.171558,0.9470999999999998,0.5093218181818182,Guéret,municipality,23096,,Guéret,,23000,Guéret,"23, Creuse, Nouvelle-Aquitaine",23096,,,,ok
+23000,Peyrabout,1.91426,46.10657,0.9270509090909091,0.5996233057851239,Peyrabout,municipality,23150,,Peyrabout,,23000,Peyrabout,"23, Creuse, Nouvelle-Aquitaine",23150,,,,ok
+23000,La Sauniere,1.943116,46.130292,0.9335799999999999,0.7202797835497834,La Saunière,municipality,23169,,La Saunière,,23000,La Saunière,"23, Creuse, Nouvelle-Aquitaine",23169,,,,ok
+23000,Savennes,1.886137,46.109475,0.9284663636363635,0.6257445454545454,Savennes,municipality,23170,,Savennes,,23000,Savennes,"23, Creuse, Nouvelle-Aquitaine",23170,,,,ok
+23000,St Christophe,1.861676,46.101599,0.7204102479338842,0.5287737243401759,Saint-Christophe,municipality,23186,,Saint-Christophe,,23000,Saint-Christophe,"23, Creuse, Nouvelle-Aquitaine",23186,,,,ok
+23000,St Eloi,1.819057,46.082244,0.6436354545454546,0.4647135177865612,Saint-Éloi,municipality,23191,,Saint-Éloi,,23000,Saint-Éloi,"23, Creuse, Nouvelle-Aquitaine",23191,,,,ok
+23000,Ste Feyre,1.908354,46.162131,0.6871356565656564,0.59923604743083,Sainte-Feyre,municipality,23193,,Sainte-Feyre,,23000,Sainte-Feyre,"23, Creuse, Nouvelle-Aquitaine",23193,,,,ok
+23000,St Fiel,1.892315,46.211887,0.6516872727272727,0.4985354545454545,Saint-Fiel,municipality,23195,,Saint-Fiel,,23000,Saint-Fiel,"23, Creuse, Nouvelle-Aquitaine",23195,,,,ok
+23000,St Laurent,1.959891,46.164894,0.694561913875598,0.5262113986013985,Saint-Laurent,municipality,23206,,Saint-Laurent,,23000,Saint-Laurent,"23, Creuse, Nouvelle-Aquitaine",23206,,,,ok
+23000,St Leger le Gueretois,1.812525,46.154623,0.7798948484848485,0.6586258585858584,Saint-Léger-le-Guérétois,municipality,23208,,Saint-Léger-le-Guérétois,,23000,Saint-Léger-le-Guérétois,"23, Creuse, Nouvelle-Aquitaine",23208,,,,ok
+23000,St Sulpice le Gueretois,1.830736,46.197827,0.7964018181818181,0.6939748325358851,Saint-Sulpice-le-Guérétois,municipality,23245,,Saint-Sulpice-le-Guérétois,,23000,Saint-Sulpice-le-Guérétois,"23, Creuse, Nouvelle-Aquitaine",23245,,,,ok
+23000,St Victor en Marche,1.808821,46.123416,0.7684377922077922,0.6512896256684492,Saint-Victor-en-Marche,municipality,23248,,Saint-Victor-en-Marche,,23000,Saint-Victor-en-Marche,"23, Creuse, Nouvelle-Aquitaine",23248,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Le Monastere,2.577685,44.331241,0.9393036363636362,0.59381987012987,Le Monastère,municipality,12146,,Le Monastère,,12000,Le Monastère,"12, Aveyron, Occitanie",12146,,,,ok
+12000,Onet le Chateau,2.562007,44.377987,0.9467436363636362,,Onet-le-Château,municipality,12176,,Onet-le-Château,,12000,Onet-le-Château,"12, Aveyron, Occitanie",12176,,,,ok
+12000,Rodez,2.566732,44.359272,0.9499818181818181,0.5609223232323233,Rodez,municipality,12202,,Rodez,,12000,Rodez,"12, Aveyron, Occitanie",12202,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+76000,Rouen,1.093912,49.440044,0.9570272727272726,0.5461507177033492,Rouen,municipality,76540,,Rouen,,76000,Rouen,"76, Seine-Maritime, Normandie",76540,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+68000,Colmar,7.352569,48.081502,0.9546581818181817,0.5411332034632034,Colmar,municipality,68066,,Colmar,,68000,Colmar,"68, Haut-Rhin, Grand Est",68066,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+85000,Mouilleron le Captif,-1.461904,46.709533,0.9428481818181819,0.7297779614325068,Mouilleron-le-Captif,municipality,85155,,Mouilleron-le-Captif,,85000,Mouilleron-le-Captif,"85, Vendée, Pays de la Loire",85155,,,,ok
+85000,La Roche sur Yon,-1.412585,46.670848,0.9537072727272726,0.7060744827586206,La Roche-sur-Yon,municipality,85191,,La Roche-sur-Yon,,85000,La Roche-sur-Yon,"85, Vendée, Pays de la Loire",85191,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+60000,Allonne,2.116604,49.406403,0.9379372727272726,0.5849112440191387,Allonne,municipality,60009,,Allonne,,60000,Allonne,"60, Oise, Hauts-de-France",60009,,,,ok
+60000,Beauvais,2.087703,49.440006,0.9538481818181818,0.5605005194805194,Beauvais,municipality,60057,,Beauvais,,60000,Beauvais,"60, Oise, Hauts-de-France",60057,,,,ok
+60000,Fouquenies,2.041437,49.465883,0.9315090909090907,0.6107196837944664,Fouquenies,municipality,60250,,Fouquenies,,60000,Fouquenies,"60, Oise, Hauts-de-France",60250,,,,ok
+60000,Frocourt,2.088645,49.382408,0.9325145454545454,0.5629014285714284,Frocourt,municipality,60264,,Frocourt,,60000,Frocourt,"60, Oise, Hauts-de-France",60264,,,,ok
+60000,Goincourt,2.03133,49.427153,0.9375581818181818,0.531115944055944,Goincourt,municipality,60277,,Goincourt,,60000,Goincourt,"60, Oise, Hauts-de-France",60277,,,,ok
+60000,St Martin le Noeud,2.060259,49.395842,0.7673934680134679,0.5833963636363636,Saint-Martin-le-Nœud,municipality,60586,,Saint-Martin-le-Nœud,,60000,Saint-Martin-le-Nœud,"60, Oise, Hauts-de-France",60586,,,,ok
+60000,Tille,2.117175,49.463427,0.9365999999999999,0.5166054545454546,Tillé,municipality,60639,,Tillé,,60000,Tillé,"60, Oise, Hauts-de-France",60639,,,,ok
+60000,Aux Marais,2.040119,49.412357,0.9350372727272726,0.5909124110671937,Aux Marais,municipality,60703,,Aux Marais,,60000,Aux Marais,"60, Oise, Hauts-de-France",60703,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+33000,Bordeaux,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+47000,Agen,0.631041,44.202304,0.9513181818181818,0.48938382775119615,Agen,municipality,47001,,Agen,,47000,Agen,"47, Lot-et-Garonne, Nouvelle-Aquitaine",47001,,,,ok
+47000,Agen,0.631041,44.202304,0.9513181818181818,0.48938382775119615,Agen,municipality,47001,,Agen,,47000,Agen,"47, Lot-et-Garonne, Nouvelle-Aquitaine",47001,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+18000,Bourges,2.397634,47.082492,0.9543790909090908,0.6407335885167463,Bourges,municipality,18033,,Bourges,,18000,Bourges,"18, Cher, Centre-Val de Loire",18033,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+76000,Rouen,1.093912,49.440044,0.9570272727272726,0.5461507177033492,Rouen,municipality,76540,,Rouen,,76000,Rouen,"76, Seine-Maritime, Normandie",76540,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+70000,Andelarre,6.096153,47.590217,0.9268427272727273,0.59033329004329,Andelarre,municipality,70019,,Andelarre,,70000,Andelarre,"70, Haute-Saône, Bourgogne-Franche-Comté",70019,,,,ok
+70000,Andelarrot,6.105367,47.581629,0.92914,0.5476755244755244,Andelarrot,municipality,70020,,Andelarrot,,70000,Andelarrot,"70, Haute-Saône, Bourgogne-Franche-Comté",70020,,,,ok
+70000,Auxon,6.152239,47.695083,0.9313763636363634,0.4831318181818181,Auxon,municipality,70044,,Auxon,,70000,Auxon,"70, Haute-Saône, Bourgogne-Franche-Comté",70044,,,,ok
+70000,Baignes,6.051891,47.586263,0.9251645454545454,0.5302163636363636,Baignes,municipality,70047,,Baignes,,70000,Baignes,"70, Haute-Saône, Bourgogne-Franche-Comté",70047,,,,ok
+70000,Boursieres,6.043018,47.608767,0.923000909090909,0.5754142292490118,Boursières,municipality,70090,,Boursières,,70000,Boursières,"70, Haute-Saône, Bourgogne-Franche-Comté",70090,,,,ok
+70000,Cerre les Noroy,6.317349,47.600284,0.9290090909090909,0.6212384457478005,Cerre-lès-Noroy,municipality,70115,,Cerre-lès-Noroy,,70000,Cerre-lès-Noroy,"70, Haute-Saône, Bourgogne-Franche-Comté",70115,,,,ok
+70000,Chariez,6.084808,47.620375,0.9285090909090908,0.5345323140495867,Chariez,municipality,70134,,Chariez,,70000,Chariez,"70, Haute-Saône, Bourgogne-Franche-Comté",70134,,,,ok
+70000,Charmoille,6.109689,47.664407,0.9323272727272727,0.5718418181818181,Charmoille,municipality,70136,,Charmoille,,70000,Charmoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70136,,,,ok
+70000,Clans,6.041589,47.602237,0.9253372727272726,0.40234969696969697,Clans,municipality,70158,,Clans,,70000,Clans,"70, Haute-Saône, Bourgogne-Franche-Comté",70158,,,,ok
+70000,Colombe les Vesoul,6.213439,47.611525,0.93216,0.6556387165775401,Colombe-lès-Vesoul,municipality,70162,,Colombe-lès-Vesoul,,70000,Colombe-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70162,,,,ok
+70000,Colombier,6.218848,47.667665,0.9317436363636363,0.6337069696969696,Colombier,municipality,70163,,Colombier,,70000,Colombier,"70, Haute-Saône, Bourgogne-Franche-Comté",70163,,,,ok
+70000,Comberjon,6.200452,47.648104,0.9268727272727272,0.5300236363636364,Comberjon,municipality,70166,,Comberjon,,70000,Comberjon,"70, Haute-Saône, Bourgogne-Franche-Comté",70166,,,,ok
+70000,Coulevon,6.182842,47.645611,0.9274945454545453,0.5541287012987013,Coulevon,municipality,70179,,Coulevon,,70000,Coulevon,"70, Haute-Saône, Bourgogne-Franche-Comté",70179,,,,ok
+70000,Dampvalley les Colombe,6.241005,47.628881,0.925970909090909,0.6770648325358851,Dampvalley-lès-Colombe,municipality,70199,,Dampvalley-lès-Colombe,,70000,Dampvalley-lès-Colombe,"70, Haute-Saône, Bourgogne-Franche-Comté",70199,,,,ok
+70000,La Demie,6.175869,47.585032,0.9270799999999999,0.5511532467532466,La Demie,municipality,70203,,La Demie,,70000,La Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70203,,,,ok
+70000,Echenoz la Meline,6.141029,47.601168,0.9408227272727272,0.6598827272727272,Échenoz-la-Méline,municipality,70207,,Échenoz-la-Méline,,70000,Échenoz-la-Méline,"70, Haute-Saône, Bourgogne-Franche-Comté",70207,,,,ok
+70000,Echenoz le Sec,6.123281,47.537794,0.9299009090909091,0.6673360839160838,Échenoz-le-Sec,municipality,70208,,Échenoz-le-Sec,,70000,Échenoz-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70208,,,,ok
+70000,Flagy,6.189582,47.698764,0.9265590909090908,0.4665295238095238,Flagy,municipality,70235,,Flagy,,70000,Flagy,"70, Haute-Saône, Bourgogne-Franche-Comté",70235,,,,ok
+70000,Frotey les Vesoul,6.183176,47.62666,0.9368872727272726,0.6693309090909091,Frotey-lès-Vesoul,municipality,70261,,Frotey-lès-Vesoul,,70000,Frotey-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70261,,,,ok
+70000,Le Magnoray,6.101967,47.528452,0.9245,0.5780005594405594,Le Magnoray,municipality,70316,,Le Magnoray,,70000,Le Magnoray,"70, Haute-Saône, Bourgogne-Franche-Comté",70316,,,,ok
+70000,Mailley et Chazelot,6.045265,47.53296,0.9333672727272727,0.688583388429752,Mailley-et-Chazelot,municipality,70324,,Mailley-et-Chazelot,,70000,Mailley-et-Chazelot,"70, Haute-Saône, Bourgogne-Franche-Comté",70324,,,,ok
+70000,Montcey,6.236462,47.654856,0.9295445454545455,0.5309472727272727,Montcey,municipality,70358,,Montcey,,70000,Montcey,"70, Haute-Saône, Bourgogne-Franche-Comté",70358,,,,ok
+70000,Montigny les Vesoul,6.074624,47.639184,0.9334672727272726,0.6808975935828877,Montigny-lès-Vesoul,municipality,70363,,Montigny-lès-Vesoul,,70000,Montigny-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70363,,,,ok
+70000,Mont le Vernois,6.060231,47.604354,0.9279945454545454,0.5920790909090908,Mont-le-Vernois,municipality,70367,,Mont-le-Vernois,,70000,Mont-le-Vernois,"70, Haute-Saône, Bourgogne-Franche-Comté",70367,,,,ok
+70000,Navenne,6.158118,47.60929,0.93763,0.5357014049586776,Navenne,municipality,70378,,Navenne,,70000,Navenne,"70, Haute-Saône, Bourgogne-Franche-Comté",70378,,,,ok
+70000,Neurey les la Demie,6.192553,47.574002,0.9307754545454544,0.68214,Neurey-lès-la-Demie,municipality,70381,,Neurey-lès-la-Demie,,70000,Neurey-lès-la-Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70381,,,,ok
+70000,Noidans les Vesoul,6.131158,47.61586,0.9385990909090909,0.6289575757575757,Noidans-lès-Vesoul,municipality,70388,,Noidans-lès-Vesoul,,70000,Noidans-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70388,,,,ok
+70000,Noroy le Bourg,6.276667,47.584686,0.9324172727272727,0.6354721943573667,Noroy-le-Bourg,municipality,70390,,Noroy-le-Bourg,,70000,Noroy-le-Bourg,"70, Haute-Saône, Bourgogne-Franche-Comté",70390,,,,ok
+70000,Pusey,6.131447,47.653335,0.9371727272727273,0.5097007177033492,Pusey,municipality,70428,,Pusey,,70000,Pusey,"70, Haute-Saône, Bourgogne-Franche-Comté",70428,,,,ok
+70000,Pusy et Epenoux,6.153945,47.667471,0.9327372727272727,0.5834550964187327,Pusy-et-Épenoux,municipality,70429,,Pusy-et-Épenoux,,70000,Pusy-et-Épenoux,"70, Haute-Saône, Bourgogne-Franche-Comté",70429,,,,ok
+70000,Quincey,6.191676,47.605217,0.93697,0.5827854545454545,Quincey,municipality,70433,,Quincey,,70000,Quincey,"70, Haute-Saône, Bourgogne-Franche-Comté",70433,,,,ok
+70000,Raze,6.011824,47.583884,0.9310254545454544,0.467862918660287,Raze,municipality,70439,,Raze,,70000,Raze,"70, Haute-Saône, Bourgogne-Franche-Comté",70439,,,,ok
+70000,Rosey,6.025976,47.565074,0.9293199999999999,0.4900972727272727,Rosey,municipality,70452,,Rosey,,70000,Rosey,"70, Haute-Saône, Bourgogne-Franche-Comté",70452,,,,ok
+70000,Vaivre et Montoille,6.110465,47.632112,0.9395336363636363,0.7154118181818181,Vaivre-et-Montoille,municipality,70513,,Vaivre-et-Montoille,,70000,Vaivre-et-Montoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70513,,,,ok
+70000,Vallerois le Bois,6.29374,47.550608,0.9290090909090909,0.6393624242424242,Vallerois-le-Bois,municipality,70516,,Vallerois-le-Bois,,70000,Vallerois-le-Bois,"70, Haute-Saône, Bourgogne-Franche-Comté",70516,,,,ok
+70000,Vallerois Lorioz,6.145582,47.569331,0.9315199999999999,0.6574892476489028,Vallerois-Lorioz,municipality,70517,,Vallerois-Lorioz,,70000,Vallerois-Lorioz,"70, Haute-Saône, Bourgogne-Franche-Comté",70517,,,,ok
+70000,Vellefaux,6.137695,47.555171,0.9326099999999999,0.5800296837944663,Vellefaux,municipality,70532,,Vellefaux,,70000,Vellefaux,"70, Haute-Saône, Bourgogne-Franche-Comté",70532,,,,ok
+70000,Velleguindry et Levrecey,6.096385,47.554767,0.9269927272727272,0.6682327937915742,Velleguindry-et-Levrecey,municipality,70535,,Velleguindry-et-Levrecey,,70000,Velleguindry-et-Levrecey,"70, Haute-Saône, Bourgogne-Franche-Comté",70535,,,,ok
+70000,Velle le Chatel,6.045079,47.603718,0.926291818181818,0.5981321212121211,Velle-le-Châtel,municipality,70536,,Velle-le-Châtel,,70000,Velle-le-Châtel,"70, Haute-Saône, Bourgogne-Franche-Comté",70536,,,,ok
+70000,Vesoul,6.157979,47.628692,0.9478454545454544,0.5151179904306219,Vesoul,municipality,70550,,Vesoul,,70000,Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70550,,,,ok
+70000,Villeparois,6.181472,47.657424,0.9280418181818181,0.5608223569023568,Villeparois,municipality,70559,,Villeparois,,70000,Villeparois,"70, Haute-Saône, Bourgogne-Franche-Comté",70559,,,,ok
+70000,Villers le Sec,6.228575,47.590247,0.9326018181818182,0.6291094670846394,Villers-le-Sec,municipality,70563,,Villers-le-Sec,,70000,Villers-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70563,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+40000,Mont de Marsan,-0.50031,43.891274,0.9510572727272726,0.6156856598240469,Mont-de-Marsan,municipality,40192,,Mont-de-Marsan,,40000,Mont-de-Marsan,"40, Landes, Nouvelle-Aquitaine",40192,,,,ok
+35000,Rennes,-1.68365,48.110899,0.9601163636363635,0.5693227272727273,Rennes,municipality,35238,,Rennes,,35000,Rennes,"35, Ille-et-Vilaine, Bretagne",35238,,,,ok
+82000,Montauban,1.363799,44.020606,0.9542499999999998,0.5761972727272727,Montauban,municipality,82121,,Montauban,,82000,Montauban,"82, Tarn-et-Garonne, Occitanie",82121,,,,ok
+64000,Pau,-0.343106,43.313159,0.9552445454545454,0.4659476767676767,Pau,municipality,64445,,Pau,,64000,Pau,"64, Pyrénées-Atlantiques, Nouvelle-Aquitaine",64445,,,,ok
+40000,Mont de Marsan,-0.50031,43.891274,0.9510572727272726,0.6156856598240469,Mont-de-Marsan,municipality,40192,,Mont-de-Marsan,,40000,Mont-de-Marsan,"40, Landes, Nouvelle-Aquitaine",40192,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+59000,Lille,3.045449,50.630993,0.9603454545454545,0.506451341991342,Lille,municipality,59350,,Lille,,59000,Lille,"59, Nord, Hauts-de-France",59350,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+37000,Tours,0.694273,47.395476,0.957881818181818,0.5242227272727272,Tours,municipality,37261,,Tours,,37000,Tours,"37, Indre-et-Loire, Centre-Val de Loire",37261,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+46000,Cahors,1.438342,44.457559,0.9491454545454544,0.531998658008658,Cahors,municipality,46042,,Cahors,,46000,Cahors,"46, Lot, Occitanie",46042,,,,ok
+82000,Montauban,1.363799,44.020606,0.9542499999999998,0.5761972727272727,Montauban,municipality,82121,,Montauban,,82000,Montauban,"82, Tarn-et-Garonne, Occitanie",82121,,,,ok
+34000,Montpellier,3.87048,43.610476,0.9614590909090908,0.64994,Montpellier,municipality,34172,,Montpellier,,34000,Montpellier,"34, Hérault, Occitanie",34172,,,,ok
+60000,Allonne,2.116604,49.406403,0.9379372727272726,0.5849112440191387,Allonne,municipality,60009,,Allonne,,60000,Allonne,"60, Oise, Hauts-de-France",60009,,,,ok
+60000,Beauvais,2.087703,49.440006,0.9538481818181818,0.5605005194805194,Beauvais,municipality,60057,,Beauvais,,60000,Beauvais,"60, Oise, Hauts-de-France",60057,,,,ok
+60000,Fouquenies,2.041437,49.465883,0.9315090909090907,0.6107196837944664,Fouquenies,municipality,60250,,Fouquenies,,60000,Fouquenies,"60, Oise, Hauts-de-France",60250,,,,ok
+60000,Frocourt,2.088645,49.382408,0.9325145454545454,0.5629014285714284,Frocourt,municipality,60264,,Frocourt,,60000,Frocourt,"60, Oise, Hauts-de-France",60264,,,,ok
+60000,Goincourt,2.03133,49.427153,0.9375581818181818,0.531115944055944,Goincourt,municipality,60277,,Goincourt,,60000,Goincourt,"60, Oise, Hauts-de-France",60277,,,,ok
+60000,St Martin le Noeud,2.060259,49.395842,0.7673934680134679,0.5833963636363636,Saint-Martin-le-Nœud,municipality,60586,,Saint-Martin-le-Nœud,,60000,Saint-Martin-le-Nœud,"60, Oise, Hauts-de-France",60586,,,,ok
+60000,Tille,2.117175,49.463427,0.9365999999999999,0.5166054545454546,Tillé,municipality,60639,,Tillé,,60000,Tillé,"60, Oise, Hauts-de-France",60639,,,,ok
+60000,Aux Marais,2.040119,49.412357,0.9350372727272726,0.5909124110671937,Aux Marais,municipality,60703,,Aux Marais,,60000,Aux Marais,"60, Oise, Hauts-de-France",60703,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+60000,Allonne,2.116604,49.406403,0.9379372727272726,0.5849112440191387,Allonne,municipality,60009,,Allonne,,60000,Allonne,"60, Oise, Hauts-de-France",60009,,,,ok
+60000,Beauvais,2.087703,49.440006,0.9538481818181818,0.5605005194805194,Beauvais,municipality,60057,,Beauvais,,60000,Beauvais,"60, Oise, Hauts-de-France",60057,,,,ok
+60000,Fouquenies,2.041437,49.465883,0.9315090909090907,0.6107196837944664,Fouquenies,municipality,60250,,Fouquenies,,60000,Fouquenies,"60, Oise, Hauts-de-France",60250,,,,ok
+60000,Frocourt,2.088645,49.382408,0.9325145454545454,0.5629014285714284,Frocourt,municipality,60264,,Frocourt,,60000,Frocourt,"60, Oise, Hauts-de-France",60264,,,,ok
+60000,Goincourt,2.03133,49.427153,0.9375581818181818,0.531115944055944,Goincourt,municipality,60277,,Goincourt,,60000,Goincourt,"60, Oise, Hauts-de-France",60277,,,,ok
+60000,St Martin le Noeud,2.060259,49.395842,0.7673934680134679,0.5833963636363636,Saint-Martin-le-Nœud,municipality,60586,,Saint-Martin-le-Nœud,,60000,Saint-Martin-le-Nœud,"60, Oise, Hauts-de-France",60586,,,,ok
+60000,Tille,2.117175,49.463427,0.9365999999999999,0.5166054545454546,Tillé,municipality,60639,,Tillé,,60000,Tillé,"60, Oise, Hauts-de-France",60639,,,,ok
+60000,Aux Marais,2.040119,49.412357,0.9350372727272726,0.5909124110671937,Aux Marais,municipality,60703,,Aux Marais,,60000,Aux Marais,"60, Oise, Hauts-de-France",60703,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+60000,Allonne,2.116604,49.406403,0.9379372727272726,0.5849112440191387,Allonne,municipality,60009,,Allonne,,60000,Allonne,"60, Oise, Hauts-de-France",60009,,,,ok
+60000,Beauvais,2.087703,49.440006,0.9538481818181818,0.5605005194805194,Beauvais,municipality,60057,,Beauvais,,60000,Beauvais,"60, Oise, Hauts-de-France",60057,,,,ok
+60000,Fouquenies,2.041437,49.465883,0.9315090909090907,0.6107196837944664,Fouquenies,municipality,60250,,Fouquenies,,60000,Fouquenies,"60, Oise, Hauts-de-France",60250,,,,ok
+60000,Frocourt,2.088645,49.382408,0.9325145454545454,0.5629014285714284,Frocourt,municipality,60264,,Frocourt,,60000,Frocourt,"60, Oise, Hauts-de-France",60264,,,,ok
+60000,Goincourt,2.03133,49.427153,0.9375581818181818,0.531115944055944,Goincourt,municipality,60277,,Goincourt,,60000,Goincourt,"60, Oise, Hauts-de-France",60277,,,,ok
+60000,St Martin le Noeud,2.060259,49.395842,0.7673934680134679,0.5833963636363636,Saint-Martin-le-Nœud,municipality,60586,,Saint-Martin-le-Nœud,,60000,Saint-Martin-le-Nœud,"60, Oise, Hauts-de-France",60586,,,,ok
+60000,Tille,2.117175,49.463427,0.9365999999999999,0.5166054545454546,Tillé,municipality,60639,,Tillé,,60000,Tillé,"60, Oise, Hauts-de-France",60639,,,,ok
+60000,Aux Marais,2.040119,49.412357,0.9350372727272726,0.5909124110671937,Aux Marais,municipality,60703,,Aux Marais,,60000,Aux Marais,"60, Oise, Hauts-de-France",60703,,,,ok
+81000,Albi,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+57000,Metz,6.194897,49.108385,0.9572909090909091,0.4763345454545454,Metz,municipality,57463,,Metz,,57000,Metz,"57, Moselle, Grand Est",57463,,,,ok
+38000,Grenoble,5.7243,45.182081,0.9584927272727273,0.5800039920948616,Grenoble,municipality,38185,,Grenoble,,38000,Grenoble,"38, Isère, Auvergne-Rhône-Alpes",38185,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+73000,Barberaz,5.941618,45.555269,0.9430445454545454,0.5140373913043478,Barberaz,municipality,73029,,Barberaz,,73000,Barberaz,"73, Savoie, Auvergne-Rhône-Alpes",73029,,,,ok
+73000,Bassens,5.941721,45.579952,0.9429363636363637,0.49800260869565216,Bassens,municipality,73031,,Bassens,,73000,Bassens,"73, Savoie, Auvergne-Rhône-Alpes",73031,,,,ok
+73000,Chambery,5.909299,45.583223,0.9540963636363636,0.5341454545454545,Chambéry,municipality,73065,,Chambéry,,73000,Chambéry,"73, Savoie, Auvergne-Rhône-Alpes",73065,,,,ok
+73000,Jacob Bellecombette,5.915006,45.553711,0.9420018181818182,0.6501641711229946,Jacob-Bellecombette,municipality,73137,,Jacob-Bellecombette,,73000,Jacob-Bellecombette,"73, Savoie, Auvergne-Rhône-Alpes",73137,,,,ok
+73000,Montagnole,5.91413,45.532078,0.9354363636363636,0.5550009090909092,Montagnole,municipality,73160,,Montagnole,,73000,Montagnole,"73, Savoie, Auvergne-Rhône-Alpes",73160,,,,ok
+73000,Sonnaz,5.916684,45.614987,0.9388363636363636,0.5368579904306219,Sonnaz,municipality,73288,,Sonnaz,,73000,Sonnaz,"73, Savoie, Auvergne-Rhône-Alpes",73288,,,,ok
+06000,Nice,7.25092,43.71273,0.9620981818181817,0.500282009569378,Nice,municipality,06088,,Nice,,06000,Nice,"06, Alpes-Maritimes, Provence-Alpes-Côte d'Azur",06088,,,,ok
+82000,Montauban,1.363799,44.020606,0.9542499999999998,0.5761972727272727,Montauban,municipality,82121,,Montauban,,82000,Montauban,"82, Tarn-et-Garonne, Occitanie",82121,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+93000,Bobigny,2.443342,48.907365,0.9537163636363636,0.5808732467532467,Bobigny,municipality,93008,,Bobigny,,93000,Bobigny,"93, Seine-Saint-Denis, Île-de-France",93008,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+62000,Arras,2.768267,50.287896,0.95255,0.5307506951871657,Arras,municipality,62041,,Arras,,62000,Arras,"62, Pas-de-Calais, Hauts-de-France",62041,,,,ok
+62000,Dainville,2.726019,50.279681,0.9434118181818181,0.5580436363636364,Dainville,municipality,62263,,Dainville,,62000,Dainville,"62, Pas-de-Calais, Hauts-de-France",62263,,,,ok
+19000,Les Angles sur Correze,1.798025,45.309237,0.9261872727272727,0.7421724064171121,Les Angles-sur-Corrèze,municipality,19009,,Les Angles-sur-Corrèze,,19000,Les Angles-sur-Corrèze,"19, Corrèze, Nouvelle-Aquitaine",19009,,,,ok
+19000,Tulle,1.764073,45.267177,0.9474899999999998,0.5063281818181818,Tulle,municipality,19272,,Tulle,,19000,Tulle,"19, Corrèze, Nouvelle-Aquitaine",19272,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+61000,Alencon,0.092935,48.429859,0.9502272727272727,0.576353062200957,Alençon,municipality,61001,,Alençon,,61000,Alençon,"61, Orne, Normandie",61001,,,,ok
+61000,Cerise,0.122656,48.444739,0.9348372727272727,0.5844519191919192,Cerisé,municipality,61077,,Cerisé,,61000,Cerisé,"61, Orne, Normandie",61077,,,,ok
+61000,St Germain du Corbeis,0.058762,48.417428,0.7899230303030302,0.6547424324324324,Saint-Germain-du-Corbéis,municipality,61397,,Saint-Germain-du-Corbéis,,61000,Saint-Germain-du-Corbéis,"61, Orne, Normandie",61397,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+14000,Caen,-0.37193,49.184316,0.9567872727272726,0.5011238277511961,Caen,municipality,14118,,Caen,,14000,Caen,"14, Calvados, Normandie",14118,,,,ok
+88000,Chantraine,6.427863,48.159753,0.9407545454545453,0.5744364335664335,Chantraine,municipality,88087,,Chantraine,,88000,Chantraine,"88, Vosges, Grand Est",88087,,,,ok
+88000,Deyvillers,6.516524,48.200074,0.9368799999999998,0.5874233201581027,Deyvillers,municipality,88132,,Deyvillers,,88000,Deyvillers,"88, Vosges, Grand Est",88132,,,,ok
+88000,Dignonville,6.504864,48.244439,0.9284454545454545,0.6053490909090908,Dignonville,municipality,88133,,Dignonville,,88000,Dignonville,"88, Vosges, Grand Est",88133,,,,ok
+88000,Dinoze,6.483418,48.141433,0.93351,0.41787902097902097,Dinozé,municipality,88134,,Dinozé,,88000,Dinozé,"88, Vosges, Grand Est",88134,,,,ok
+88000,Dogneville,6.455368,48.212524,0.9373572727272727,0.6052936363636363,Dogneville,municipality,88136,,Dogneville,,88000,Dogneville,"88, Vosges, Grand Est",88136,,,,ok
+88000,Epinal,6.484474,48.170059,0.9512899999999999,0.5543841414141414,Épinal,municipality,88160,,Épinal,,88000,Épinal,"88, Vosges, Grand Est",88160,,,,ok
+88000,Jeuxey,6.488195,48.195937,0.9337027272727271,0.5131113852813852,Jeuxey,municipality,88253,,Jeuxey,,88000,Jeuxey,"88, Vosges, Grand Est",88253,,,,ok
+88000,Longchamp,6.512187,48.225971,0.9320054545454546,0.5778309917355372,Longchamp,municipality,88273,,Longchamp,,88000,Longchamp,"88, Vosges, Grand Est",88273,,,,ok
+88000,Vaudeville,6.540849,48.227553,0.9280654545454545,0.4954948902821317,Vaudéville,municipality,88495,,Vaudéville,,88000,Vaudéville,"88, Vosges, Grand Est",88495,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Macon,4.810979,46.325859,0.9515845454545454,0.5357725358851674,Mâcon,municipality,71270,,Mâcon,,71000,Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71270,,,,ok
+71000,Sance,4.831367,46.338965,0.9390136363636363,0.5130681818181817,Sancé,municipality,71497,,Sancé,,71000,Sancé,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71497,,,,ok
+71000,Varennes les Macon,4.800525,46.270695,0.9329963636363636,0.8131262289562289,Varennes-lès-Mâcon,municipality,71556,,Varennes-lès-Mâcon,,71000,Varennes-lès-Mâcon,"71, Saône-et-Loire, Bourgogne-Franche-Comté",71556,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+91000,Evry Courcouronnes,2.433066,48.627362,0.9545527272727272,0.6571162337662337,Évry-Courcouronnes,municipality,91228,,Évry-Courcouronnes,,91000,Évry-Courcouronnes,"91, Essonne, Île-de-France",91228,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+17000,La Rochelle,-1.171305,46.158141,0.955330909090909,0.62608,La Rochelle,municipality,17300,,La Rochelle,,17000,La Rochelle,"17, Charente-Maritime, Nouvelle-Aquitaine",17300,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+27000,Evreux,1.146898,49.020599,0.9530245454545454,0.5377204761904762,Évreux,municipality,27229,,Évreux,,27000,Évreux,"27, Eure, Normandie",27229,,,,ok
+27000,Evreux,1.146898,49.020599,0.9530245454545454,0.5377204761904762,Évreux,municipality,27229,,Évreux,,27000,Évreux,"27, Eure, Normandie",27229,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+40000,Mont de Marsan,-0.50031,43.891274,0.9510572727272726,0.6156856598240469,Mont-de-Marsan,municipality,40192,,Mont-de-Marsan,,40000,Mont-de-Marsan,"40, Landes, Nouvelle-Aquitaine",40192,,,,ok
+14000,Caen,-0.37193,49.184316,0.9567872727272726,0.5011238277511961,Caen,municipality,14118,,Caen,,14000,Caen,"14, Calvados, Normandie",14118,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+90000,Belfort,6.857469,47.640938,0.9528154545454545,0.5545732231404957,Belfort,municipality,90010,,Belfort,,90000,Belfort,"90, Territoire de Belfort, Bourgogne-Franche-Comté",90010,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+09000,Arabaux,1.642226,42.983895,0.9241827272727273,0.5942481339712918,Arabaux,municipality,09013,,Arabaux,,09000,Arabaux,"09, Ariège, Occitanie",09013,,,,ok
+09000,Baulou,1.538754,43.013424,0.9274418181818181,0.6165734759358288,Baulou,municipality,09044,,Baulou,,09000,Baulou,"09, Ariège, Occitanie",09044,,,,ok
+09000,Benac,1.528773,42.959778,0.9275990909090909,0.5940063636363635,Bénac,municipality,09049,,Bénac,,09000,Bénac,"09, Ariège, Occitanie",09049,,,,ok
+09000,Le Bosc,1.450301,42.944364,0.9257436363636363,0.6277069696969696,Le Bosc,municipality,09063,,Le Bosc,,09000,Le Bosc,"09, Ariège, Occitanie",09063,,,,ok
+09000,Brassac,1.52466,42.943469,0.9333527272727272,0.501720118577075,Brassac,municipality,09066,,Brassac,,09000,Brassac,"09, Ariège, Occitanie",09066,,,,ok
+09000,Burret,1.474001,42.950826,0.9215981818181816,0.520650909090909,Burret,municipality,09068,,Burret,,09000,Burret,"09, Ariège, Occitanie",09068,,,,ok
+09000,Celles,1.688867,42.91968,0.9268727272727272,0.5764882828282828,Celles,municipality,09093,,Celles,,09000,Celles,"09, Ariège, Occitanie",09093,,,,ok
+09000,Cos,1.570537,42.976539,0.930989090909091,0.5844896503496503,Cos,municipality,09099,,Cos,,09000,Cos,"09, Ariège, Occitanie",09099,,,,ok
+09000,Ferrieres sur Ariege,1.616614,42.942695,0.9342727272727273,0.7633132844574779,Ferrières-sur-Ariège,municipality,09121,,Ferrières-sur-Ariège,,09000,Ferrières-sur-Ariège,"09, Ariège, Occitanie",09121,,,,ok
+09000,Foix,1.607355,42.968777,0.9457172727272727,0.48086564593301434,Foix,municipality,09122,,Foix,,09000,Foix,"09, Ariège, Occitanie",09122,,,,ok
+09000,Ganac,1.569395,42.948311,0.9341090909090908,0.596350909090909,Ganac,municipality,09130,,Ganac,,09000,Ganac,"09, Ariège, Occitanie",09130,,,,ok
+09000,L Herm,1.686574,42.973086,0.9280654545454545,0.6471254545454544,L'Herm,municipality,09138,,L'Herm,,09000,L'Herm,"09, Ariège, Occitanie",09138,,,,ok
+09000,Loubieres,1.604337,43.008328,0.9308645454545454,0.6034369421487603,Loubières,municipality,09174,,Loubières,,09000,Loubières,"09, Ariège, Occitanie",09174,,,,ok
+09000,Montoulieu,1.621706,42.906563,0.9315090909090907,0.6472465289256197,Montoulieu,municipality,09210,,Montoulieu,,09000,Montoulieu,"09, Ariège, Occitanie",09210,,,,ok
+09000,Pradieres,1.648729,42.968086,0.92608,0.6991555502392343,Pradières,municipality,09234,,Pradières,,09000,Pradières,"09, Ariège, Occitanie",09234,,,,ok
+09000,Prayols,1.616695,42.928057,0.9309763636363635,0.632940606060606,Prayols,municipality,09236,,Prayols,,09000,Prayols,"09, Ariège, Occitanie",09236,,,,ok
+09000,St Jean de Verges,1.622738,43.023358,0.7618420979020978,0.6092396694214876,Saint-Jean-de-Verges,municipality,09264,,Saint-Jean-de-Verges,,09000,Saint-Jean-de-Verges,"09, Ariège, Occitanie",09264,,,,ok
+09000,St Jean de Verges,1.622738,43.023358,0.7618420979020978,0.6092396694214876,Saint-Jean-de-Verges,municipality,09264,,Saint-Jean-de-Verges,,09000,Saint-Jean-de-Verges,"09, Ariège, Occitanie",09264,,,,ok
+09000,St Martin de Caralp,1.54146,42.99057,0.7686387012987013,0.6613999999999999,Saint-Martin-de-Caralp,municipality,09269,,Saint-Martin-de-Caralp,,09000,Saint-Martin-de-Caralp,"09, Ariège, Occitanie",09269,,,,ok
+09000,St Paul de Jarrat,1.654327,42.912353,0.7620320979020978,0.561219393939394,Saint-Paul-de-Jarrat,municipality,09272,,Saint-Paul-de-Jarrat,,09000,Saint-Paul-de-Jarrat,"09, Ariège, Occitanie",09272,,,,ok
+09000,St Pierre de Riviere,1.560744,42.966168,0.7769829153605015,0.6430024242424242,Saint-Pierre-de-Rivière,municipality,09273,,Saint-Pierre-de-Rivière,,09000,Saint-Pierre-de-Rivière,"09, Ariège, Occitanie",09273,,,,ok
+09000,Serres sur Arget,1.508243,42.9686,0.9340527272727271,0.7351834343434343,Serres-sur-Arget,municipality,09293,,Serres-sur-Arget,,09000,Serres-sur-Arget,"09, Ariège, Occitanie",09293,,,,ok
+09000,Soula,1.684389,42.943003,0.9275990909090909,0.5317032323232322,Soula,municipality,09300,,Soula,,09000,Soula,"09, Ariège, Occitanie",09300,,,,ok
+09000,Vernajoul,1.60016,42.987849,0.9339581818181818,0.6643818181818181,Vernajoul,municipality,09329,,Vernajoul,,09000,Vernajoul,"09, Ariège, Occitanie",09329,,,,ok
+28000,Chartres,1.502286,48.446525,0.9520845454545454,0.576857628458498,Chartres,municipality,28085,,Chartres,,28000,Chartres,"28, Eure-et-Loir, Centre-Val de Loire",28085,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+27000,Evreux,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+27000,Evreux,1.146898,49.020599,0.9530245454545454,0.5377204761904762,Évreux,municipality,27229,,Évreux,,27000,Évreux,"27, Eure, Normandie",27229,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+38000,Grenoble,5.7243,45.182081,0.9584927272727273,0.5800039920948616,Grenoble,municipality,38185,,Grenoble,,38000,Grenoble,"38, Isère, Auvergne-Rhône-Alpes",38185,,,,ok
+54000,Nancy,6.171263,48.688135,0.9566181818181818,0.5017940692640692,Nancy,municipality,54395,,Nancy,,54000,Nancy,"54, Meurthe-et-Moselle, Grand Est",54395,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+94000,Creteil,2.452976,48.784506,0.9560981818181818,0.5805377922077921,Créteil,municipality,94028,,Créteil,,94000,Créteil,"94, Val-de-Marne, Île-de-France",94028,,,,ok
+28000,Chartres,1.502286,48.446525,0.9520845454545454,0.576857628458498,Chartres,municipality,28085,,Chartres,,28000,Chartres,"28, Eure-et-Loir, Centre-Val de Loire",28085,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Le Monastere,2.577685,44.331241,0.9393036363636362,0.59381987012987,Le Monastère,municipality,12146,,Le Monastère,,12000,Le Monastère,"12, Aveyron, Occitanie",12146,,,,ok
+12000,Onet le Chateau,2.562007,44.377987,0.9467436363636362,,Onet-le-Château,municipality,12176,,Onet-le-Château,,12000,Onet-le-Château,"12, Aveyron, Occitanie",12176,,,,ok
+12000,Rodez,2.566732,44.359272,0.9499818181818181,0.5609223232323233,Rodez,municipality,12202,,Rodez,,12000,Rodez,"12, Aveyron, Occitanie",12202,,,,ok
+24000,Perigueux,0.711299,45.19334,0.9508827272727272,0.5915966666666667,Périgueux,municipality,24322,,Périgueux,,24000,Périgueux,"24, Dordogne, Nouvelle-Aquitaine",24322,,,,ok
+38000,Grenoble,5.7243,45.182081,0.9584927272727273,0.5800039920948616,Grenoble,municipality,38185,,Grenoble,,38000,Grenoble,"38, Isère, Auvergne-Rhône-Alpes",38185,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+59000,Lille,3.045449,50.630993,0.9603454545454545,0.506451341991342,Lille,municipality,59350,,Lille,,59000,Lille,"59, Nord, Hauts-de-France",59350,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+59000,Lille,3.045449,50.630993,0.9603454545454545,0.506451341991342,Lille,municipality,59350,,Lille,,59000,Lille,"59, Nord, Hauts-de-France",59350,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+59000,Lille,3.045449,50.630993,0.9603454545454545,0.506451341991342,Lille,municipality,59350,,Lille,,59000,Lille,"59, Nord, Hauts-de-France",59350,,,,ok
+57000,Metz,6.194897,49.108385,0.9572909090909091,0.4763345454545454,Metz,municipality,57463,,Metz,,57000,Metz,"57, Moselle, Grand Est",57463,,,,ok
+52000,Brethenay,5.134561,48.15594,0.9311690909090908,0.5454218181818182,Brethenay,municipality,52072,,Brethenay,,52000,Brethenay,"52, Haute-Marne, Grand Est",52072,,,,ok
+52000,Buxieres les Villiers,5.039204,48.105923,0.9284663636363635,0.61913,Buxières-lès-Villiers,municipality,52087,,Buxières-lès-Villiers,,52000,Buxières-lès-Villiers,"52, Haute-Marne, Grand Est",52087,,,,ok
+52000,Chaumont,5.129976,48.104307,0.9494845454545453,0.5716303557312252,Chaumont,municipality,52121,,Chaumont,,52000,Chaumont,"52, Haute-Marne, Grand Est",52121,,,,ok
+52000,Chaumont,5.129976,48.104307,0.9494845454545453,0.5716303557312252,Chaumont,municipality,52121,,Chaumont,,52000,Chaumont,"52, Haute-Marne, Grand Est",52121,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Chamarandes Choignes,5.16279,48.098906,0.9356390909090909,0.6738904040404039,Chamarandes-Choignes,municipality,52125,,Chamarandes-Choignes,,52000,Chamarandes-Choignes,"52, Haute-Marne, Grand Est",52125,,,,ok
+52000,Condes,5.144677,48.143891,0.9299781818181818,0.4470057575757575,Condes,municipality,52141,,Condes,,52000,Condes,"52, Haute-Marne, Grand Est",52141,,,,ok
+52000,Euffigneix,5.047755,48.131293,0.9300536363636362,0.5607446153846153,Euffigneix,municipality,52193,,Euffigneix,,52000,Euffigneix,"52, Haute-Marne, Grand Est",52193,,,,ok
+52000,Foulain,5.209981,48.037744,0.9338227272727271,0.5329086776859504,Foulain,municipality,52205,,Foulain,,52000,Foulain,"52, Haute-Marne, Grand Est",52205,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Jonchery,5.077993,48.139064,0.9353763636363637,0.5352442424242423,Jonchery,municipality,52251,,Jonchery,,52000,Jonchery,"52, Haute-Marne, Grand Est",52251,,,,ok
+52000,Laville aux Bois,5.230916,48.095771,0.9289136363636363,0.6341036363636363,Laville-aux-Bois,municipality,52276,,Laville-aux-Bois,,52000,Laville-aux-Bois,"52, Haute-Marne, Grand Est",52276,,,,ok
+52000,Luzy sur Marne,5.184642,48.056802,0.9297263636363636,0.6267131034482758,Luzy-sur-Marne,municipality,52297,,Luzy-sur-Marne,,52000,Luzy-sur-Marne,"52, Haute-Marne, Grand Est",52297,,,,ok
+52000,Neuilly sur Suize,5.14852,48.050755,0.9300236363636363,0.6180125668449198,Neuilly-sur-Suize,municipality,52349,,Neuilly-sur-Suize,,52000,Neuilly-sur-Suize,"52, Haute-Marne, Grand Est",52349,,,,ok
+52000,Riaucourt,5.15091,48.177507,0.9317127272727271,0.5679057575757576,Riaucourt,municipality,52421,,Riaucourt,,52000,Riaucourt,"52, Haute-Marne, Grand Est",52421,,,,ok
+52000,Semoutiers Montsaon,5.051148,48.061289,0.934040909090909,0.6640793506493505,Semoutiers-Montsaon,municipality,52469,,Semoutiers-Montsaon,,52000,Semoutiers-Montsaon,"52, Haute-Marne, Grand Est",52469,,,,ok
+52000,Semoutiers Montsaon,5.051148,48.061289,0.934040909090909,0.6640793506493505,Semoutiers-Montsaon,municipality,52469,,Semoutiers-Montsaon,,52000,Semoutiers-Montsaon,"52, Haute-Marne, Grand Est",52469,,,,ok
+52000,Treix,5.188324,48.147824,0.9285299999999999,0.3989690909090909,Treix,municipality,52494,,Treix,,52000,Treix,"52, Haute-Marne, Grand Est",52494,,,,ok
+52000,Verbiesles,5.185683,48.070576,0.9305254545454545,0.5797672727272727,Verbiesles,municipality,52514,,Verbiesles,,52000,Verbiesles,"52, Haute-Marne, Grand Est",52514,,,,ok
+52000,Villiers le Sec,5.066112,48.106477,0.9340654545454544,0.6334684457478005,Villiers-le-Sec,municipality,52535,,Villiers-le-Sec,,52000,Villiers-le-Sec,"52, Haute-Marne, Grand Est",52535,,,,ok
+57000,Metz,6.194897,49.108385,0.9572909090909091,0.4763345454545454,Metz,municipality,57463,,Metz,,57000,Metz,"57, Moselle, Grand Est",57463,,,,ok
+03000,Avermes,3.31989,46.595982,0.9418681818181817,0.5635532467532467,Avermes,municipality,03013,,Avermes,,03000,Avermes,"03, Allier, Auvergne-Rhône-Alpes",03013,,,,ok
+03000,Bressolles,3.312843,46.534927,0.9360999999999998,0.7478624401913875,Bressolles,municipality,03040,,Bressolles,,03000,Bressolles,"03, Allier, Auvergne-Rhône-Alpes",03040,,,,ok
+03000,Coulandon,3.242043,46.555634,0.9334672727272726,0.5266324242424242,Coulandon,municipality,03085,,Coulandon,,03000,Coulandon,"03, Allier, Auvergne-Rhône-Alpes",03085,,,,ok
+03000,Montilly,3.252061,46.611036,0.9324,0.6173681818181819,Montilly,municipality,03184,,Montilly,,03000,Montilly,"03, Allier, Auvergne-Rhône-Alpes",03184,,,,ok
+03000,Moulins,3.327856,46.55907,0.948961818181818,0.550885041322314,Moulins,municipality,03190,,Moulins,,03000,Moulins,"03, Allier, Auvergne-Rhône-Alpes",03190,,,,ok
+03000,Neuvy,3.289618,46.564735,0.9373236363636362,0.5995654545454545,Neuvy,municipality,03200,,Neuvy,,03000,Neuvy,"03, Allier, Auvergne-Rhône-Alpes",03200,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Druelle Balsac,2.468327,44.376681,0.94077,0.5787681818181818,Druelle Balsac,municipality,12090,,Druelle Balsac,,12000,Druelle Balsac,"12, Aveyron, Occitanie",12090,,,,ok
+12000,Le Monastere,2.577685,44.331241,0.9393036363636362,0.59381987012987,Le Monastère,municipality,12146,,Le Monastère,,12000,Le Monastère,"12, Aveyron, Occitanie",12146,,,,ok
+12000,Onet le Chateau,2.562007,44.377987,0.9467436363636362,,Onet-le-Château,municipality,12176,,Onet-le-Château,,12000,Onet-le-Château,"12, Aveyron, Occitanie",12176,,,,ok
+12000,Rodez,2.566732,44.359272,0.9499818181818181,0.5609223232323233,Rodez,municipality,12202,,Rodez,,12000,Rodez,"12, Aveyron, Occitanie",12202,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+26000,Valence,4.92286,44.920647,0.9544345454545454,0.5571041322314049,Valence,municipality,26362,,Valence,,26000,Valence,"26, Drôme, Auvergne-Rhône-Alpes",26362,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+95000,Boisemont,2.000546,49.02012,0.934820909090909,0.5539336363636364,Boisemont,municipality,95074,,Boisemont,,95000,Boisemont,"95, Val-d'Oise, Île-de-France",95074,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Cergy,2.045547,49.04227,0.9546990909090908,0.5132918181818181,Cergy,municipality,95127,,Cergy,,95000,Cergy,"95, Val-d'Oise, Île-de-France",95127,,,,ok
+95000,Neuville sur Oise,2.066174,49.01529,0.9388099999999999,0.6518087878787878,Neuville-sur-Oise,municipality,95450,,Neuville-sur-Oise,,95000,Neuville-sur-Oise,"95, Val-d'Oise, Île-de-France",95450,,,,ok
+95000,Pontoise,2.099968,49.047592,0.9511536363636364,0.5833859740259739,Pontoise,municipality,95500,,Pontoise,,95000,Pontoise,"95, Val-d'Oise, Île-de-France",95500,,,,ok
+61000,Alencon,0.092935,48.429859,0.9502272727272727,0.576353062200957,Alençon,municipality,61001,,Alençon,,61000,Alençon,"61, Orne, Normandie",61001,,,,ok
+61000,Cerise,0.122656,48.444739,0.9348372727272727,0.5844519191919192,Cerisé,municipality,61077,,Cerisé,,61000,Cerisé,"61, Orne, Normandie",61077,,,,ok
+61000,St Germain du Corbeis,0.058762,48.417428,0.7899230303030302,0.6547424324324324,Saint-Germain-du-Corbéis,municipality,61397,,Saint-Germain-du-Corbéis,,61000,Saint-Germain-du-Corbéis,"61, Orne, Normandie",61397,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+29000,Quimper,-4.093145,47.998749,0.9543745454545454,0.538049209486166,Quimper,municipality,29232,,Quimper,,29000,Quimper,"29, Finistère, Bretagne",29232,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+28000,Chartres,1.502286,48.446525,0.9520845454545454,0.576857628458498,Chartres,municipality,28085,,Chartres,,28000,Chartres,"28, Eure-et-Loir, Centre-Val de Loire",28085,,,,ok
+48000,Badaroux,3.554805,44.534812,0.9354645454545453,0.5433576284584979,Badaroux,municipality,48013,,Badaroux,,48000,Badaroux,"48, Lozère, Occitanie",48013,,,,ok
+48000,Balsieges,3.441114,44.479685,0.932940909090909,0.6055133057851239,Balsièges,municipality,48016,,Balsièges,,48000,Balsièges,"48, Lozère, Occitanie",48016,,,,ok
+48000,Barjac,3.405749,44.528847,0.9343436363636364,0.5398836363636363,Barjac,municipality,48018,,Barjac,,48000,Barjac,"48, Lozère, Occitanie",48018,,,,ok
+48000,Le Born,3.549099,44.565205,0.9270509090909091,0.5254868595041321,Le Born,municipality,48029,,Le Born,,48000,Le Born,"48, Lozère, Occitanie",48029,,,,ok
+48000,Brenoux,3.532116,44.484417,0.9312163636363635,0.48680363636363627,Brenoux,municipality,48030,,Brenoux,,48000,Brenoux,"48, Lozère, Occitanie",48030,,,,ok
+48000,Chastel Nouvel,3.506699,44.553726,0.9351609090909091,0.6461040259740259,Chastel-Nouvel,municipality,48042,,Chastel-Nouvel,,48000,Chastel-Nouvel,"48, Lozère, Occitanie",48042,,,,ok
+48000,Lanuejols,3.600549,44.48558,0.9307890909090908,0.6309087878787878,Lanuéjols,municipality,48081,,Lanuéjols,,48000,Lanuéjols,"48, Lozère, Occitanie",48081,,,,ok
+48000,Mende,3.484851,44.526181,0.9469099999999999,0.5081181818181818,Mende,municipality,48095,,Mende,,48000,Mende,"48, Lozère, Occitanie",48095,,,,ok
+48000,Pelouse,3.61573,44.546759,0.9289136363636363,0.6290342424242423,Pelouse,municipality,48111,,Pelouse,,48000,Pelouse,"48, Lozère, Occitanie",48111,,,,ok
+48000,Monts de Randon,3.479777,44.635894,0.9364699999999999,0.46343043290043284,Monts-de-Randon,municipality,48127,,Monts-de-Randon,,48000,Monts-de-Randon,"48, Lozère, Occitanie",48127,,,,ok
+48000,St Bauzile,3.50189,44.470466,0.6939700956937799,0.4986450168350168,Saint-Bauzile,municipality,48137,,Saint-Bauzile,,48000,Saint-Bauzile,"48, Lozère, Occitanie",48137,,,,ok
+48000,St Etienne du Valdonnez,3.5614,44.433152,0.7914290909090909,0.6734675598086124,Saint-Étienne-du-Valdonnez,municipality,48147,,Saint-Étienne-du-Valdonnez,,48000,Saint-Étienne-du-Valdonnez,"48, Lozère, Occitanie",48147,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+35000,Rennes,-1.68365,48.110899,0.9601163636363635,0.5693227272727273,Rennes,municipality,35238,,Rennes,,35000,Rennes,"35, Ille-et-Vilaine, Bretagne",35238,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+61000,Alencon,0.092935,48.429859,0.9502272727272727,0.576353062200957,Alençon,municipality,61001,,Alençon,,61000,Alençon,"61, Orne, Normandie",61001,,,,ok
+61000,Cerise,0.122656,48.444739,0.9348372727272727,0.5844519191919192,Cerisé,municipality,61077,,Cerisé,,61000,Cerisé,"61, Orne, Normandie",61077,,,,ok
+61000,St Germain du Corbeis,0.058762,48.417428,0.7899230303030302,0.6547424324324324,Saint-Germain-du-Corbéis,municipality,61397,,Saint-Germain-du-Corbéis,,61000,Saint-Germain-du-Corbéis,"61, Orne, Normandie",61397,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+46000,Cahors,1.438342,44.457559,0.9491454545454544,0.531998658008658,Cahors,municipality,46042,,Cahors,,46000,Cahors,"46, Lot, Occitanie",46042,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+22000,St Brieuc,longitude,latitude,result_score,result_score_next,result_label,result_type,result_id,result_housenumber,result_name,result_street,result_postcode,result_city,result_context,result_citycode,result_oldcitycode,result_oldcity,result_district,result_status
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+02000,Aulnois sous Laon,3.610652,49.615005,0.9369336363636362,0.7018248484848484,Aulnois-sous-Laon,municipality,02037,,Aulnois-sous-Laon,,02000,Aulnois-sous-Laon,"02, Aisne, Hauts-de-France",02037,,,,ok
+02000,Barenton Bugny,3.650831,49.631451,0.9328609090909089,0.6026775757575756,Barenton-Bugny,municipality,02046,,Barenton-Bugny,,02000,Barenton-Bugny,"02, Aisne, Hauts-de-France",02046,,,,ok
+02000,Barenton Cel,3.652119,49.643228,0.9255045454545453,0.5855625974025973,Barenton-Cel,municipality,02047,,Barenton-Cel,,02000,Barenton-Cel,"02, Aisne, Hauts-de-France",02047,,,,ok
+02000,Bourguignon sous Montbavin,3.54104,49.527125,0.9270218181818182,0.7084432372505544,Bourguignon-sous-Montbavin,municipality,02108,,Bourguignon-sous-Montbavin,,02000,Bourguignon-sous-Montbavin,"02, Aisne, Hauts-de-France",02108,,,,ok
+02000,Braye en Laonnois,3.609879,49.441463,0.9278509090909091,0.6158398395721925,Braye-en-Laonnois,municipality,02115,,Braye-en-Laonnois,,02000,Braye-en-Laonnois,"02, Aisne, Hauts-de-France",02115,,,,ok
+02000,Chaillevois,3.525377,49.513459,0.9279472727272727,0.5716269023569023,Chaillevois,municipality,02155,,Chaillevois,,02000,Chaillevois,"02, Aisne, Hauts-de-France",02155,,,,ok
+02000,Chambry,3.671256,49.601908,0.9346763636363635,0.5539114285714285,Chambry,municipality,02157,,Chambry,,02000,Chambry,"02, Aisne, Hauts-de-France",02157,,,,ok
+02000,Chavignon,3.518532,49.478612,0.9347254545454544,0.5378754545454546,Chavignon,municipality,02174,,Chavignon,,02000,Chavignon,"02, Aisne, Hauts-de-France",02174,,,,ok
+02000,Chery les Pouilly,3.60567,49.656556,0.9341209090909091,0.6581745454545453,Chéry-lès-Pouilly,municipality,02180,,Chéry-lès-Pouilly,,02000,Chéry-lès-Pouilly,"02, Aisne, Hauts-de-France",02180,,,,ok
+02000,Chevregny,3.591836,49.47161,0.9278990909090908,0.5522621212121213,Chevregny,municipality,02183,,Chevregny,,02000,Chevregny,"02, Aisne, Hauts-de-France",02183,,,,ok
+02000,Chivy les Etouvelles,3.585395,49.532246,0.9323727272727271,0.815125423197492,Chivy-lès-Étouvelles,municipality,02191,,Chivy-lès-Étouvelles,,02000,Chivy-lès-Étouvelles,"02, Aisne, Hauts-de-France",02191,,,,ok
+02000,Clacy et Thierret,3.570382,49.548857,0.930069090909091,0.6692894721407625,Clacy-et-Thierret,municipality,02196,,Clacy-et-Thierret,,02000,Clacy-et-Thierret,"02, Aisne, Hauts-de-France",02196,,,,ok
+02000,Etouvelles,3.58141,49.521666,0.9284018181818181,0.5687363636363636,Étouvelles,municipality,02294,,Étouvelles,,02000,Étouvelles,"02, Aisne, Hauts-de-France",02294,,,,ok
+02000,Filain,3.556954,49.458214,0.9259336363636362,0.5758028282828282,Filain,municipality,02311,,Filain,,02000,Filain,"02, Aisne, Hauts-de-France",02311,,,,ok
+02000,Laniscourt,3.540317,49.549393,0.9284663636363635,0.5907081818181817,Laniscourt,municipality,02407,,Laniscourt,,02000,Laniscourt,"02, Aisne, Hauts-de-France",02407,,,,ok
+02000,Laon,3.614719,49.570287,0.9499463636363634,0.60427,Laon,municipality,02408,,Laon,,02000,Laon,"02, Aisne, Hauts-de-France",02408,,,,ok
+02000,Merlieux et Fouquerolles,3.499607,49.511937,0.9293727272727272,0.7012661305361305,Merlieux-et-Fouquerolles,municipality,02478,,Merlieux-et-Fouquerolles,,02000,Merlieux-et-Fouquerolles,"02, Aisne, Hauts-de-France",02478,,,,ok
+02000,Molinchart,3.53963,49.562762,0.93075,0.5555864335664334,Molinchart,municipality,02489,,Molinchart,,02000,Molinchart,"02, Aisne, Hauts-de-France",02489,,,,ok
+02000,Monampteuil,3.569191,49.475511,0.92608,0.6019581818181818,Monampteuil,municipality,02490,,Monampteuil,,02000,Monampteuil,"02, Aisne, Hauts-de-France",02490,,,,ok
+02000,Mons en Laonnois,3.560077,49.538783,0.9361390909090908,0.6885063009404389,Mons-en-Laonnois,municipality,02497,,Mons-en-Laonnois,,02000,Mons-en-Laonnois,"02, Aisne, Hauts-de-France",02497,,,,ok
+02000,Montbavin,3.510368,49.529939,0.9212981818181818,0.5669464462809917,Montbavin,municipality,02499,,Montbavin,,02000,Montbavin,"02, Aisne, Hauts-de-France",02499,,,,ok
+02000,Pargny Filain,3.546525,49.46517,0.9293381818181818,0.576600909090909,Pargny-Filain,municipality,02589,,Pargny-Filain,,02000,Pargny-Filain,"02, Aisne, Hauts-de-France",02589,,,,ok
+02000,Royaucourt et Chailvet,3.532965,49.514739,0.92899,0.640850909090909,Royaucourt-et-Chailvet,municipality,02661,,Royaucourt-et-Chailvet,,02000,Royaucourt-et-Chailvet,"02, Aisne, Hauts-de-France",02661,,,,ok
+02000,Urcel,3.558783,49.492156,0.9328445454545454,0.4598040692640692,Urcel,municipality,02755,,Urcel,,02000,Urcel,"02, Aisne, Hauts-de-France",02755,,,,ok
+02000,Vaucelles et Beffecourt,3.560701,49.528944,0.9289709090909091,0.7503036363636363,Vaucelles-et-Beffecourt,municipality,02765,,Vaucelles-et-Beffecourt,,02000,Vaucelles-et-Beffecourt,"02, Aisne, Hauts-de-France",02765,,,,ok
+02000,Verneuil sur Serre,3.673548,49.650442,0.9294427272727271,0.5794355980861243,Verneuil-sur-Serre,municipality,02787,,Verneuil-sur-Serre,,02000,Verneuil-sur-Serre,"02, Aisne, Hauts-de-France",02787,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+46000,Cahors,1.438342,44.457559,0.9491454545454544,0.531998658008658,Cahors,municipality,46042,,Cahors,,46000,Cahors,"46, Lot, Occitanie",46042,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+68000,Colmar,7.352569,48.081502,0.9546581818181817,0.5411332034632034,Colmar,municipality,68066,,Colmar,,68000,Colmar,"68, Haut-Rhin, Grand Est",68066,,,,ok
+88000,Chantraine,6.427863,48.159753,0.9407545454545453,0.5744364335664335,Chantraine,municipality,88087,,Chantraine,,88000,Chantraine,"88, Vosges, Grand Est",88087,,,,ok
+88000,Deyvillers,6.516524,48.200074,0.9368799999999998,0.5874233201581027,Deyvillers,municipality,88132,,Deyvillers,,88000,Deyvillers,"88, Vosges, Grand Est",88132,,,,ok
+88000,Dignonville,6.504864,48.244439,0.9284454545454545,0.6053490909090908,Dignonville,municipality,88133,,Dignonville,,88000,Dignonville,"88, Vosges, Grand Est",88133,,,,ok
+88000,Dinoze,6.483418,48.141433,0.93351,0.41787902097902097,Dinozé,municipality,88134,,Dinozé,,88000,Dinozé,"88, Vosges, Grand Est",88134,,,,ok
+88000,Dogneville,6.455368,48.212524,0.9373572727272727,0.6052936363636363,Dogneville,municipality,88136,,Dogneville,,88000,Dogneville,"88, Vosges, Grand Est",88136,,,,ok
+88000,Epinal,6.484474,48.170059,0.9512899999999999,0.5543841414141414,Épinal,municipality,88160,,Épinal,,88000,Épinal,"88, Vosges, Grand Est",88160,,,,ok
+88000,Jeuxey,6.488195,48.195937,0.9337027272727271,0.5131113852813852,Jeuxey,municipality,88253,,Jeuxey,,88000,Jeuxey,"88, Vosges, Grand Est",88253,,,,ok
+88000,Longchamp,6.512187,48.225971,0.9320054545454546,0.5778309917355372,Longchamp,municipality,88273,,Longchamp,,88000,Longchamp,"88, Vosges, Grand Est",88273,,,,ok
+88000,Vaudeville,6.540849,48.227553,0.9280654545454545,0.4954948902821317,Vaudéville,municipality,88495,,Vaudéville,,88000,Vaudéville,"88, Vosges, Grand Est",88495,,,,ok
+33000,Bordeaux,-0.587877,44.851895,0.9608036363636362,0.6092019008264462,Bordeaux,municipality,33063,,Bordeaux,,33000,Bordeaux,"33, Gironde, Nouvelle-Aquitaine",33063,,,,ok
+44000,Nantes,-1.555335,47.239367,0.9617609090909089,0.5471577489177489,Nantes,municipality,44109,,Nantes,,44000,Nantes,"44, Loire-Atlantique, Pays de la Loire",44109,,,,ok
+88000,Chantraine,6.427863,48.159753,0.9407545454545453,0.5744364335664335,Chantraine,municipality,88087,,Chantraine,,88000,Chantraine,"88, Vosges, Grand Est",88087,,,,ok
+88000,Deyvillers,6.516524,48.200074,0.9368799999999998,0.5874233201581027,Deyvillers,municipality,88132,,Deyvillers,,88000,Deyvillers,"88, Vosges, Grand Est",88132,,,,ok
+88000,Dignonville,6.504864,48.244439,0.9284454545454545,0.6053490909090908,Dignonville,municipality,88133,,Dignonville,,88000,Dignonville,"88, Vosges, Grand Est",88133,,,,ok
+88000,Dinoze,6.483418,48.141433,0.93351,0.41787902097902097,Dinozé,municipality,88134,,Dinozé,,88000,Dinozé,"88, Vosges, Grand Est",88134,,,,ok
+88000,Dogneville,6.455368,48.212524,0.9373572727272727,0.6052936363636363,Dogneville,municipality,88136,,Dogneville,,88000,Dogneville,"88, Vosges, Grand Est",88136,,,,ok
+88000,Epinal,6.484474,48.170059,0.9512899999999999,0.5543841414141414,Épinal,municipality,88160,,Épinal,,88000,Épinal,"88, Vosges, Grand Est",88160,,,,ok
+88000,Jeuxey,6.488195,48.195937,0.9337027272727271,0.5131113852813852,Jeuxey,municipality,88253,,Jeuxey,,88000,Jeuxey,"88, Vosges, Grand Est",88253,,,,ok
+88000,Longchamp,6.512187,48.225971,0.9320054545454546,0.5778309917355372,Longchamp,municipality,88273,,Longchamp,,88000,Longchamp,"88, Vosges, Grand Est",88273,,,,ok
+88000,Vaudeville,6.540849,48.227553,0.9280654545454545,0.4954948902821317,Vaudéville,municipality,88495,,Vaudéville,,88000,Vaudéville,"88, Vosges, Grand Est",88495,,,,ok
+70000,Andelarre,6.096153,47.590217,0.9268427272727273,0.59033329004329,Andelarre,municipality,70019,,Andelarre,,70000,Andelarre,"70, Haute-Saône, Bourgogne-Franche-Comté",70019,,,,ok
+70000,Andelarrot,6.105367,47.581629,0.92914,0.5476755244755244,Andelarrot,municipality,70020,,Andelarrot,,70000,Andelarrot,"70, Haute-Saône, Bourgogne-Franche-Comté",70020,,,,ok
+70000,Auxon,6.152239,47.695083,0.9313763636363634,0.4831318181818181,Auxon,municipality,70044,,Auxon,,70000,Auxon,"70, Haute-Saône, Bourgogne-Franche-Comté",70044,,,,ok
+70000,Baignes,6.051891,47.586263,0.9251645454545454,0.5302163636363636,Baignes,municipality,70047,,Baignes,,70000,Baignes,"70, Haute-Saône, Bourgogne-Franche-Comté",70047,,,,ok
+70000,Boursieres,6.043018,47.608767,0.923000909090909,0.5754142292490118,Boursières,municipality,70090,,Boursières,,70000,Boursières,"70, Haute-Saône, Bourgogne-Franche-Comté",70090,,,,ok
+70000,Cerre les Noroy,6.317349,47.600284,0.9290090909090909,0.6212384457478005,Cerre-lès-Noroy,municipality,70115,,Cerre-lès-Noroy,,70000,Cerre-lès-Noroy,"70, Haute-Saône, Bourgogne-Franche-Comté",70115,,,,ok
+70000,Chariez,6.084808,47.620375,0.9285090909090908,0.5345323140495867,Chariez,municipality,70134,,Chariez,,70000,Chariez,"70, Haute-Saône, Bourgogne-Franche-Comté",70134,,,,ok
+70000,Charmoille,6.109689,47.664407,0.9323272727272727,0.5718418181818181,Charmoille,municipality,70136,,Charmoille,,70000,Charmoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70136,,,,ok
+70000,Clans,6.041589,47.602237,0.9253372727272726,0.40234969696969697,Clans,municipality,70158,,Clans,,70000,Clans,"70, Haute-Saône, Bourgogne-Franche-Comté",70158,,,,ok
+70000,Colombe les Vesoul,6.213439,47.611525,0.93216,0.6556387165775401,Colombe-lès-Vesoul,municipality,70162,,Colombe-lès-Vesoul,,70000,Colombe-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70162,,,,ok
+70000,Colombier,6.218848,47.667665,0.9317436363636363,0.6337069696969696,Colombier,municipality,70163,,Colombier,,70000,Colombier,"70, Haute-Saône, Bourgogne-Franche-Comté",70163,,,,ok
+70000,Comberjon,6.200452,47.648104,0.9268727272727272,0.5300236363636364,Comberjon,municipality,70166,,Comberjon,,70000,Comberjon,"70, Haute-Saône, Bourgogne-Franche-Comté",70166,,,,ok
+70000,Coulevon,6.182842,47.645611,0.9274945454545453,0.5541287012987013,Coulevon,municipality,70179,,Coulevon,,70000,Coulevon,"70, Haute-Saône, Bourgogne-Franche-Comté",70179,,,,ok
+70000,Dampvalley les Colombe,6.241005,47.628881,0.925970909090909,0.6770648325358851,Dampvalley-lès-Colombe,municipality,70199,,Dampvalley-lès-Colombe,,70000,Dampvalley-lès-Colombe,"70, Haute-Saône, Bourgogne-Franche-Comté",70199,,,,ok
+70000,La Demie,6.175869,47.585032,0.9270799999999999,0.5511532467532466,La Demie,municipality,70203,,La Demie,,70000,La Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70203,,,,ok
+70000,Echenoz la Meline,6.141029,47.601168,0.9408227272727272,0.6598827272727272,Échenoz-la-Méline,municipality,70207,,Échenoz-la-Méline,,70000,Échenoz-la-Méline,"70, Haute-Saône, Bourgogne-Franche-Comté",70207,,,,ok
+70000,Echenoz le Sec,6.123281,47.537794,0.9299009090909091,0.6673360839160838,Échenoz-le-Sec,municipality,70208,,Échenoz-le-Sec,,70000,Échenoz-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70208,,,,ok
+70000,Flagy,6.189582,47.698764,0.9265590909090908,0.4665295238095238,Flagy,municipality,70235,,Flagy,,70000,Flagy,"70, Haute-Saône, Bourgogne-Franche-Comté",70235,,,,ok
+70000,Frotey les Vesoul,6.183176,47.62666,0.9368872727272726,0.6693309090909091,Frotey-lès-Vesoul,municipality,70261,,Frotey-lès-Vesoul,,70000,Frotey-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70261,,,,ok
+70000,Le Magnoray,6.101967,47.528452,0.9245,0.5780005594405594,Le Magnoray,municipality,70316,,Le Magnoray,,70000,Le Magnoray,"70, Haute-Saône, Bourgogne-Franche-Comté",70316,,,,ok
+70000,Mailley et Chazelot,6.045265,47.53296,0.9333672727272727,0.688583388429752,Mailley-et-Chazelot,municipality,70324,,Mailley-et-Chazelot,,70000,Mailley-et-Chazelot,"70, Haute-Saône, Bourgogne-Franche-Comté",70324,,,,ok
+70000,Montcey,6.236462,47.654856,0.9295445454545455,0.5309472727272727,Montcey,municipality,70358,,Montcey,,70000,Montcey,"70, Haute-Saône, Bourgogne-Franche-Comté",70358,,,,ok
+70000,Montigny les Vesoul,6.074624,47.639184,0.9334672727272726,0.6808975935828877,Montigny-lès-Vesoul,municipality,70363,,Montigny-lès-Vesoul,,70000,Montigny-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70363,,,,ok
+70000,Mont le Vernois,6.060231,47.604354,0.9279945454545454,0.5920790909090908,Mont-le-Vernois,municipality,70367,,Mont-le-Vernois,,70000,Mont-le-Vernois,"70, Haute-Saône, Bourgogne-Franche-Comté",70367,,,,ok
+70000,Navenne,6.158118,47.60929,0.93763,0.5357014049586776,Navenne,municipality,70378,,Navenne,,70000,Navenne,"70, Haute-Saône, Bourgogne-Franche-Comté",70378,,,,ok
+70000,Neurey les la Demie,6.192553,47.574002,0.9307754545454544,0.68214,Neurey-lès-la-Demie,municipality,70381,,Neurey-lès-la-Demie,,70000,Neurey-lès-la-Demie,"70, Haute-Saône, Bourgogne-Franche-Comté",70381,,,,ok
+70000,Noidans les Vesoul,6.131158,47.61586,0.9385990909090909,0.6289575757575757,Noidans-lès-Vesoul,municipality,70388,,Noidans-lès-Vesoul,,70000,Noidans-lès-Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70388,,,,ok
+70000,Noroy le Bourg,6.276667,47.584686,0.9324172727272727,0.6354721943573667,Noroy-le-Bourg,municipality,70390,,Noroy-le-Bourg,,70000,Noroy-le-Bourg,"70, Haute-Saône, Bourgogne-Franche-Comté",70390,,,,ok
+70000,Pusey,6.131447,47.653335,0.9371727272727273,0.5097007177033492,Pusey,municipality,70428,,Pusey,,70000,Pusey,"70, Haute-Saône, Bourgogne-Franche-Comté",70428,,,,ok
+70000,Pusy et Epenoux,6.153945,47.667471,0.9327372727272727,0.5834550964187327,Pusy-et-Épenoux,municipality,70429,,Pusy-et-Épenoux,,70000,Pusy-et-Épenoux,"70, Haute-Saône, Bourgogne-Franche-Comté",70429,,,,ok
+70000,Quincey,6.191676,47.605217,0.93697,0.5827854545454545,Quincey,municipality,70433,,Quincey,,70000,Quincey,"70, Haute-Saône, Bourgogne-Franche-Comté",70433,,,,ok
+70000,Raze,6.011824,47.583884,0.9310254545454544,0.467862918660287,Raze,municipality,70439,,Raze,,70000,Raze,"70, Haute-Saône, Bourgogne-Franche-Comté",70439,,,,ok
+70000,Rosey,6.025976,47.565074,0.9293199999999999,0.4900972727272727,Rosey,municipality,70452,,Rosey,,70000,Rosey,"70, Haute-Saône, Bourgogne-Franche-Comté",70452,,,,ok
+70000,Vaivre et Montoille,6.110465,47.632112,0.9395336363636363,0.7154118181818181,Vaivre-et-Montoille,municipality,70513,,Vaivre-et-Montoille,,70000,Vaivre-et-Montoille,"70, Haute-Saône, Bourgogne-Franche-Comté",70513,,,,ok
+70000,Vallerois le Bois,6.29374,47.550608,0.9290090909090909,0.6393624242424242,Vallerois-le-Bois,municipality,70516,,Vallerois-le-Bois,,70000,Vallerois-le-Bois,"70, Haute-Saône, Bourgogne-Franche-Comté",70516,,,,ok
+70000,Vallerois Lorioz,6.145582,47.569331,0.9315199999999999,0.6574892476489028,Vallerois-Lorioz,municipality,70517,,Vallerois-Lorioz,,70000,Vallerois-Lorioz,"70, Haute-Saône, Bourgogne-Franche-Comté",70517,,,,ok
+70000,Vellefaux,6.137695,47.555171,0.9326099999999999,0.5800296837944663,Vellefaux,municipality,70532,,Vellefaux,,70000,Vellefaux,"70, Haute-Saône, Bourgogne-Franche-Comté",70532,,,,ok
+70000,Velleguindry et Levrecey,6.096385,47.554767,0.9269927272727272,0.6682327937915742,Velleguindry-et-Levrecey,municipality,70535,,Velleguindry-et-Levrecey,,70000,Velleguindry-et-Levrecey,"70, Haute-Saône, Bourgogne-Franche-Comté",70535,,,,ok
+70000,Velle le Chatel,6.045079,47.603718,0.926291818181818,0.5981321212121211,Velle-le-Châtel,municipality,70536,,Velle-le-Châtel,,70000,Velle-le-Châtel,"70, Haute-Saône, Bourgogne-Franche-Comté",70536,,,,ok
+70000,Vesoul,6.157979,47.628692,0.9478454545454544,0.5151179904306219,Vesoul,municipality,70550,,Vesoul,,70000,Vesoul,"70, Haute-Saône, Bourgogne-Franche-Comté",70550,,,,ok
+70000,Villeparois,6.181472,47.657424,0.9280418181818181,0.5608223569023568,Villeparois,municipality,70559,,Villeparois,,70000,Villeparois,"70, Haute-Saône, Bourgogne-Franche-Comté",70559,,,,ok
+70000,Villers le Sec,6.228575,47.590247,0.9326018181818182,0.6291094670846394,Villers-le-Sec,municipality,70563,,Villers-le-Sec,,70000,Villers-le-Sec,"70, Haute-Saône, Bourgogne-Franche-Comté",70563,,,,ok
+35000,Rennes,-1.68365,48.110899,0.9601163636363635,0.5693227272727273,Rennes,municipality,35238,,Rennes,,35000,Rennes,"35, Ille-et-Vilaine, Bretagne",35238,,,,ok
+56000,Vannes,-2.752192,47.659971,0.9536636363636362,0.5006789723320157,Vannes,municipality,56260,,Vannes,,56000,Vannes,"56, Morbihan, Bretagne",56260,,,,ok
+18000,Bourges,2.397634,47.082492,0.9543790909090908,0.6407335885167463,Bourges,municipality,18033,,Bourges,,18000,Bourges,"18, Cher, Centre-Val de Loire",18033,,,,ok
+18000,Bourges,2.397634,47.082492,0.9543790909090908,0.6407335885167463,Bourges,municipality,18033,,Bourges,,18000,Bourges,"18, Cher, Centre-Val de Loire",18033,,,,ok
+67000,Strasbourg,7.761454,48.579831,0.9612890909090908,0.6194136363636362,Strasbourg,municipality,67482,,Strasbourg,,67000,Strasbourg,"67, Bas-Rhin, Grand Est",67482,,,,ok
+83000,Toulon,5.933457,43.136385,0.9591118181818181,0.5430913852813852,Toulon,municipality,83137,,Toulon,,83000,Toulon,"83, Var, Provence-Alpes-Côte d'Azur",83137,,,,ok
+53000,Laval,-0.772562,48.061435,0.9532472727272727,0.4961686147186146,Laval,municipality,53130,,Laval,,53000,Laval,"53, Mayenne, Pays de la Loire",53130,,,,ok
+30000,Nimes,4.356289,43.814652,0.9582136363636363,0.5714768686868688,Nîmes,municipality,30189,,Nîmes,,30000,Nîmes,"30, Gard, Occitanie",30189,,,,ok
+93000,Bobigny,2.443342,48.907365,0.9537163636363636,0.5808732467532467,Bobigny,municipality,93008,,Bobigny,,93000,Bobigny,"93, Seine-Saint-Denis, Île-de-France",93008,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+68000,Colmar,7.352569,48.081502,0.9546581818181817,0.5411332034632034,Colmar,municipality,68066,,Colmar,,68000,Colmar,"68, Haut-Rhin, Grand Est",68066,,,,ok
+22000,St Brieuc,-2.766074,48.508238,0.7001947474747474,0.48645428571428573,Saint-Brieuc,municipality,22278,,Saint-Brieuc,,22000,Saint-Brieuc,"22, Côtes-d'Armor, Bretagne",22278,,,,ok
+19000,Les Angles sur Correze,1.798025,45.309237,0.9261872727272727,0.7421724064171121,Les Angles-sur-Corrèze,municipality,19009,,Les Angles-sur-Corrèze,,19000,Les Angles-sur-Corrèze,"19, Corrèze, Nouvelle-Aquitaine",19009,,,,ok
+19000,Tulle,1.764073,45.267177,0.9474899999999998,0.5063281818181818,Tulle,municipality,19272,,Tulle,,19000,Tulle,"19, Corrèze, Nouvelle-Aquitaine",19272,,,,ok
+63000,Clermont Ferrand,3.107129,45.786671,0.9581899999999999,0.6828066862170087,Clermont-Ferrand,municipality,63113,,Clermont-Ferrand,,63000,Clermont-Ferrand,"63, Puy-de-Dôme, Auvergne-Rhône-Alpes",63113,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+78000,Versailles,2.131319,48.803019,0.9556136363636363,0.609280909090909,Versailles,municipality,78646,,Versailles,,78000,Versailles,"78, Yvelines, Île-de-France",78646,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+77000,Livry sur Seine,2.684761,48.51127,0.9391172727272726,0.6322893548387096,Livry-sur-Seine,municipality,77255,,Livry-sur-Seine,,77000,Livry-sur-Seine,"77, Seine-et-Marne, Île-de-France",77255,,,,ok
+77000,Melun,2.655574,48.541415,0.9525254545454546,0.5375125358851675,Melun,municipality,77288,,Melun,,77000,Melun,"77, Seine-et-Marne, Île-de-France",77288,,,,ok
+77000,La Rochette,2.662485,48.507905,0.9416509090909091,0.6307281818181818,La Rochette,municipality,77389,,La Rochette,,77000,La Rochette,"77, Seine-et-Marne, Île-de-France",77389,,,,ok
+77000,Vaux le Penil,2.684418,48.528238,0.9464681818181817,0.6594669696969696,Vaux-le-Pénil,municipality,77487,,Vaux-le-Pénil,,77000,Vaux-le-Pénil,"77, Seine-et-Marne, Île-de-France",77487,,,,ok
+57000,Metz,6.194897,49.108385,0.9572909090909091,0.4763345454545454,Metz,municipality,57463,,Metz,,57000,Metz,"57, Moselle, Grand Est",57463,,,,ok
+82000,Montauban,1.363799,44.020606,0.9542499999999998,0.5761972727272727,Montauban,municipality,82121,,Montauban,,82000,Montauban,"82, Tarn-et-Garonne, Occitanie",82121,,,,ok
+79000,Bessines,-0.51113,46.297382,0.9382454545454545,0.5694955371900826,Bessines,municipality,79034,,Bessines,,79000,Bessines,"79, Deux-Sèvres, Nouvelle-Aquitaine",79034,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Niort,-0.466291,46.327232,0.9540545454545454,0.5188845454545454,Niort,municipality,79191,,Niort,,79000,Niort,"79, Deux-Sèvres, Nouvelle-Aquitaine",79191,,,,ok
+79000,Sciecq,-0.475373,46.373166,0.9335799999999999,0.5831946464646465,Sciecq,municipality,79308,,Sciecq,,79000,Sciecq,"79, Deux-Sèvres, Nouvelle-Aquitaine",79308,,,,ok
+59000,Lille,3.045449,50.630993,0.9603454545454545,0.506451341991342,Lille,municipality,59350,,Lille,,59000,Lille,"59, Nord, Hauts-de-France",59350,,,,ok
+92000,Nanterre,2.202314,48.898095,0.9563063636363635,0.559501515151515,Nanterre,municipality,92050,,Nanterre,,92000,Nanterre,"92, Hauts-de-Seine, Île-de-France",92050,,,,ok
+25000,Besancon,6.000637,47.243778,0.9572272727272727,0.5795667193675889,Besançon,municipality,25056,,Besançon,,25000,Besançon,"25, Doubs, Bourgogne-Franche-Comté",25056,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+11000,Berriac,2.402763,43.213286,0.93521,0.5529150649350648,Berriac,municipality,11037,,Berriac,,11000,Berriac,"11, Aude, Occitanie",11037,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+11000,Carcassonne,2.349415,43.206781,0.9529209090909091,0.6220305594405595,Carcassonne,municipality,11069,,Carcassonne,,11000,Carcassonne,"11, Aude, Occitanie",11069,,,,ok
+26000,Valence,4.92286,44.920647,0.9544345454545454,0.5571041322314049,Valence,municipality,26362,,Valence,,26000,Valence,"26, Drôme, Auvergne-Rhône-Alpes",26362,,,,ok
+05000,La Batie Vieille,6.157503,44.556689,0.9304563636363635,0.6421948680351905,La Bâtie-Vieille,municipality,05018,,La Bâtie-Vieille,,05000,La Bâtie-Vieille,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05018,,,,ok
+05000,Chateauvieux,6.048613,44.483855,0.9326190909090909,0.64486,Châteauvieux,municipality,05037,,Châteauvieux,,05000,Châteauvieux,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05037,,,,ok
+05000,La Freissinouse,6.010092,44.535629,0.9352481818181817,0.6152993939393938,La Freissinouse,municipality,05059,,La Freissinouse,,05000,La Freissinouse,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05059,,,,ok
+05000,Gap,6.078031,44.552807,0.9523209090909089,0.44562966507177026,Gap,municipality,05061,,Gap,,05000,Gap,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05061,,,,ok
+05000,Gap,6.078031,44.552807,0.9523209090909089,0.44562966507177026,Gap,municipality,05061,,Gap,,05000,Gap,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05061,,,,ok
+05000,Neffes,6.024501,44.50029,0.9344472727272727,0.4907613419913419,Neffes,municipality,05092,,Neffes,,05000,Neffes,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05092,,,,ok
+05000,Pelleautier,6.011465,44.500768,0.9345827272727272,0.668802885375494,Pelleautier,municipality,05100,,Pelleautier,,05000,Pelleautier,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05100,,,,ok
+05000,Rambaud,6.130795,44.551588,0.9312627272727272,0.5125845454545453,Rambaud,municipality,05113,,Rambaud,,05000,Rambaud,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05113,,,,ok
+05000,La Rochette,6.131589,44.582626,0.9321409090909091,0.5645146153846153,La Rochette,municipality,05124,,La Rochette,,05000,La Rochette,"05, Hautes-Alpes, Provence-Alpes-Côte d'Azur",05124,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+31000,Toulouse,1.433805,43.604082,0.9637809090909091,0.6329205627705627,Toulouse,municipality,31555,,Toulouse,,31000,Toulouse,"31, Haute-Garonne, Occitanie",31555,,,,ok
+16000,Angouleme,0.148409,45.644018,0.9523854545454543,0.5932230303030303,Angoulême,municipality,16015,,Angoulême,,16000,Angoulême,"16, Charente, Nouvelle-Aquitaine",16015,,,,ok
+18000,Bourges,2.397634,47.082492,0.9543790909090908,0.6407335885167463,Bourges,municipality,18033,,Bourges,,18000,Bourges,"18, Cher, Centre-Val de Loire",18033,,,,ok

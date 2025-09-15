@@ -1,0 +1,42 @@
+{
+  "name": "scan-puce.map",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1",
+    "@vueuse/core": "^12.8.2",
+    "@vueuse/motion": "^2.2.6",
+    "airtable": "^0.12.2",
+    "axios": "^1.7.9",
+    "lodash": "^4.17.21",
+    "lucide-vue-next": "^0.469.0",
+    "minireset.css": "^0.0.7",
+    "radix-vue": "^1.9.12",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@inspira-ui/plugins": "^0.0.1",
+    "@rollup/plugin-dsv": "^3.0.5",
+    "@types/lodash": "^4.17.14",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vue/tsconfig": "^0.7.0",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "leaflet": "^1.9.4",
+    "sass-embedded": "^1.83.1",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5",
+    "vue-tsc": "^2.2.0"
+  }
+}
