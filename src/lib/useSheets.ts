@@ -64,7 +64,8 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
   };
 }
 
-function formatZipCode(zc: string) {
+function formatZipCode(zipcode: number) {
+  let zc = `${zipcode}`;
   //   if (zc.length === 5) return zc;
   if (zc.length === 4) {
     if (zc[0] == "0") {
