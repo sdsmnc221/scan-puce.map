@@ -31,7 +31,7 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
           const loadRecordsInChunks = async () => {
             // Même logique de chunking que useBase
             const chunksOfRecs = chunk(
-              newRecords.map((r) => ({
+              newRecords.map((r: any) => ({
                 ...r,
                 ZipCode: r?.ZipCode?.length < 5 ? `0${r.ZipCode}` : r.ZipCode,
               })),
