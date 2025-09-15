@@ -221,7 +221,7 @@ import { uniqBy } from "lodash";
 type Record = {
   Author: string;
   LinkToPost: string;
-  AccessICAD?: "checked" | "";
+  AccessICAD?: "checked";
   CommuneName?: string;
   Tel?: string;
   Email?: string;
