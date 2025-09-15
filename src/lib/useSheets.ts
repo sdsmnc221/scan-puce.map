@@ -33,7 +33,7 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
             const chunksOfRecs = chunk(
               newRecords.map((r: any) => ({
                 ...r,
-                ZipCode: r?.ZipCode?.length < 5 ? `0${r.ZipCode}` : r.ZipCode,
+                ZipCode: formatZipCode(r.ZipCode),
               })),
               RECORDS_BATCH_SIZE
             );
@@ -62,4 +62,23 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
     loadRecordsDone,
     batchIndex,
   };
+}
+
+function formatZipCode(zc: string) {
+  //   if (zc.length === 5) return zc;
+  if (zc.length === 4) {
+    if (zc[0] == "0") {
+      return `${zc}0`;
+    } else {
+      return `0${zc}`;
+    }
+  } else if (zc.length === 3) {
+    if (zc[0] == "0") {
+      return `${zc}00`;
+    } else {
+      return `00${zc}`;
+    }
+  }
+
+  return zc;
 }
