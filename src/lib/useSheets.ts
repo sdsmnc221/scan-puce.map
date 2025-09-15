@@ -20,7 +20,7 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
       const source = usingFilloutBase.value ? "filloutBase" : "draftBase";
 
       // Appel à votre API Vercel au lieu d'Airtable
-      fetch(`/api/lecteurs-puce?source=${source}`)
+      fetch(`/api/lecteur-puce?source=${source}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
