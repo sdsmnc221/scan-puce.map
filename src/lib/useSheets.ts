@@ -33,7 +33,9 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
             const chunksOfRecs = chunk(
               newRecords.map((r: any) => ({
                 ...r,
-                ZipCode: formatZipCode(r.ZipCode),
+                ZipCode: r.ZipCode.split(",").map((zc: string) =>
+                  formatZipCode(zc)
+                ),
               })),
               RECORDS_BATCH_SIZE
             );
@@ -64,8 +66,7 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
   };
 }
 
-function formatZipCode(zipcode: number) {
-  let zc = `${zipcode}`;
+function formatZipCode(zc: string) {
   //   if (zc.length === 5) return zc;
   if (zc.length === 4) {
     if (zc[0] == "0") {
