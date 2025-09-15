@@ -69,16 +69,18 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
 function formatZipCode(zc: string) {
   if (zc.length === 5) return zc;
   if (zc.length === 4) {
-    if (zc[0] == "0") {
+    if (zc[0] === "0") {
       return `${zc}0`;
     } else {
       return `0${zc}`;
     }
   } else if (zc.length === 3) {
-    if (zc[0] == "0") {
+    if (zc[0] === "0") {
       return `${zc}00`;
     } else {
       return `00${zc}`;
     }
+  } else {
+    return zc;
   }
 }
