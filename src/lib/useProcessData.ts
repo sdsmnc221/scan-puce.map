@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 import { uniqBy } from "lodash";
 
-import useBase from "./useBase";
 import useSheets from "./useSheets";
 import { transformToCapitalize } from "./lexique";
 
@@ -75,7 +74,7 @@ export default function useProcessData(
   pinType: Ref<number[]>,
   loading: Ref<boolean>
 ) {
-  const { records, loadRecordsDone, batchIndex } = useSheets(usingFilloutBase);
+  const { records, loadRecordsDone } = useSheets(usingFilloutBase);
 
   const loadCsvDone = ref(false);
   const cities: Ref<City[]> = ref([]);

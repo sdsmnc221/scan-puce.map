@@ -34,7 +34,7 @@ export default function useSheets(usingFilloutBase: Ref<boolean>) {
 
             for (let index = 0; index < chunksOfRecs.length; index++) {
               batchIndex.value = index;
-              records.value.push(...chunksOfRecs[index]);
+              records.value.push(...(chunksOfRecs[index] as any));
               await delay(100); // Même délai que useBase
             }
 
