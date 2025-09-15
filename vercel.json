@@ -1,8 +1,6 @@
 {
     "functions": {
-        "api/sync-to-sheets.js": {
-            "runtime": "nodejs22.x"
-        }
+        "api/sync-to-sheets.js": {}
     },
     "rewrites": [
         {
