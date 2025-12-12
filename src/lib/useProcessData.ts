@@ -17,6 +17,7 @@ import franceDepartments from "../geojson/dptFr.json";
 
 import csvCommunesContent from "../geojson/communes.csv";
 import csvDeptsWithCoordinates from "../geojson/departementsfrance_with_coordinates.csv";
+import CENTRAL_POSTAL_CODES from "../geojson/central-postcode";
 
 export type CsvStore = {
   dpt: any[];
@@ -124,6 +125,10 @@ export default function useProcessData(
     try {
       // Pre-process all communes for fast lookup by zip code
       zipCodeLookup.value = new Map();
+
+      Object.entries(CENTRAL_POSTAL_CODES).forEach(([zipCode, data]) => {
+        zipCodeLookup.value.set(zipCode, [data]);
+      });
 
       csvCommunesContent.forEach((commune: any) => {
         if (!commune || typeof commune !== "object") return;
@@ -373,31 +378,93 @@ export default function useProcessData(
     return Array.from(cityMap.values());
   };
 
-  // Fetch any missing zip codes
   const fetchMissingZipcodes = async (zipCodes: string[]) => {
-    // Filter out zip codes that we already have data for
     const missingZipCodes = zipCodes.filter(
       (code: string) => !zipCodeLookup.value.has(code)
     );
 
     if (missingZipCodes.length === 0) return;
 
-    // Find communes that match the missing zip codes
-    const communes = [];
+    // ✅ Build a list of zip codes with city names from franceCommunes
+    const communesToFetch: Array<{ postcode: string; city: string }> = [];
+
     for (const zipCode of missingZipCodes) {
-      const communesOfSameZip = (franceCommunes as any[])
+      // Try to find the city name in franceCommunes
+      const matchingCommunes = (franceCommunes as any[])
         .filter((c) => c.CodePostal == zipCode)
         .map((c) => ({
           postcode: c.CodePostal,
           city: transformToCapitalize(c.NomCommune),
         }));
 
-      communes.push(...communesOfSameZip);
+      if (matchingCommunes.length > 0) {
+        communesToFetch.push(...matchingCommunes);
+      } else {
+        // If not found in franceCommunes, make a direct API call
+        console.warn(
+          `Zip code ${zipCode} not found in franceCommunes, attempting direct API lookup`
+        );
+
+        try {
+          // ✅ Search without type filter, use postcode parameter
+          const response = await axios.get(
+            `https://api-adresse.data.gouv.fr/search/?q=${zipCode}&postcode=${zipCode}&limit=20`
+          );
+
+          if (response.data.features && response.data.features.length > 0) {
+            // Initialize array for this zip code
+            if (!zipCodeLookup.value.has(zipCode)) {
+              zipCodeLookup.value.set(zipCode, []);
+            }
+
+            // Add all communes for this postal code
+            response.data.features.forEach((feature: any) => {
+              const [lng, lat] = feature.geometry.coordinates;
+              const cityName =
+                feature.properties.city ||
+                feature.properties.name ||
+                feature.properties.label;
+              const featurePostcode = feature.properties.postcode;
+
+              // Only add if the postcode matches exactly
+              if (featurePostcode === zipCode && cityName) {
+                const existing = zipCodeLookup.value.get(zipCode);
+                if (!existing?.some((c) => c.name === cityName)) {
+                  zipCodeLookup.value.get(zipCode)?.push({
+                    lat,
+                    lng,
+                    name: cityName,
+                  });
+                }
+              }
+            });
+
+            console.log(
+              `✓ Fetched ${zipCode}: ${
+                zipCodeLookup.value.get(zipCode)?.length
+              } communes`
+            );
+          } else {
+            console.warn(`✗ No results for zip code ${zipCode}`);
+          }
+
+          // Small delay to avoid rate limiting
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        } catch (error) {
+          console.error(`Failed to fetch zip code ${zipCode}:`, error);
+        }
+      }
     }
 
-    if (communes.length === 0) return;
+    if (communesToFetch.length === 0) {
+      console.log(
+        "All missing zip codes have been fetched via direct API calls"
+      );
+      return;
+    }
 
-    const csvRows = communes.map(
+    // Now process the ones we found in franceCommunes via CSV batch API
+    const csvRows = communesToFetch.map(
       (match) => `${match.postcode},"${match.city}"`
     );
 
@@ -420,7 +487,6 @@ export default function useProcessData(
         }
       );
 
-      // Process the response and update the lookup
       const newData = response.data.split("\n").slice(1);
 
       newData.forEach((row: string) => {
@@ -446,7 +512,6 @@ export default function useProcessData(
         zipCodeLookup.value.get(postcode)?.push({ lat, lng, name });
       });
 
-      // Update stored CSV data
       storedFilloutCsv.value["zip"] = storedFilloutCsv.value["zip"] || [];
       storedFilloutCsv.value["zip"].push(...newData);
     } catch (error) {

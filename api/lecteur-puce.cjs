@@ -1,8 +1,9 @@
-import https from "https";
-import { URL } from "url";
-import crypto from "crypto";
+// api/lecteur-puce.cjs
+const https = require("https");
+const { URL } = require("url");
+const crypto = require("crypto");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -19,10 +20,8 @@ export default async function handler(req, res) {
   const { source = "filloutBase" } = req.query;
 
   try {
-    // Générer le access token
     const accessToken = await getAccessToken();
 
-    // Appel à l'API Google Sheets
     const sheetName = encodeURIComponent(
       source === "draftBase" ? "draftBase" : "filloutBase"
     );
@@ -41,10 +40,8 @@ export default async function handler(req, res) {
       return res.status(200).json([]);
     }
 
-    // Première ligne = headers
     const headers = rows[0];
 
-    // Convertir les lignes en objets comme Airtable
     const records = rows.slice(1).map((row) => {
       const record = {};
       headers.forEach((header, index) => {
@@ -64,9 +61,8 @@ export default async function handler(req, res) {
       details: error.message,
     });
   }
-}
+};
 
-// Fonction pour obtenir un access token Google
 async function getAccessToken() {
   const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(
     /\\n/g,
@@ -74,15 +70,11 @@ async function getAccessToken() {
   );
   const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
 
-  // Créer le JWT
   const jwt = createJWT(clientEmail, privateKey);
-
-  // Échanger le JWT contre un access token
   const tokenData = await exchangeJWTForToken(jwt);
   return tokenData.access_token;
 }
 
-// Créer un JWT avec les APIs natives Node.js
 function createJWT(clientEmail, privateKey) {
   const now = Math.floor(Date.now() / 1000);
 
@@ -117,7 +109,6 @@ function createJWT(clientEmail, privateKey) {
   return `${signatureInput}.${encodedSignature}`;
 }
 
-// Échanger le JWT contre un access token
 async function exchangeJWTForToken(jwt) {
   const postData = `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`;
 
@@ -134,7 +125,6 @@ async function exchangeJWTForToken(jwt) {
   return JSON.parse(response);
 }
 
-// Fonction générique pour faire des requêtes HTTPS
 function makeHttpsRequest(url, headers = {}, postData = null, method = "GET") {
   return new Promise((resolve, reject) => {
     const parsedUrl = new URL(url);
@@ -175,7 +165,6 @@ function makeHttpsRequest(url, headers = {}, postData = null, method = "GET") {
   });
 }
 
-// Utilitaire pour l'encodage base64url
 function base64urlEscape(str) {
   return str.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 }
