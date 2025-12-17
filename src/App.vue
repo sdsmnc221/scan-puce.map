@@ -415,7 +415,9 @@
         >
           <LIcon
             :icon-url="`/pin${
-              city?.baseRecords?.some((r) => r.AccessICAD === 'checked')
+              city?.baseRecords?.some(
+                (r) => r.AccessICAD === 'checked' || r.AccessICAD === 'TRUE'
+              )
                 ? '-icad'
                 : ''
             }.png`"
