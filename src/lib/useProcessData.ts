@@ -30,6 +30,7 @@ export type BaseRecord = {
   Author: string;
   ZipCode: string;
   LinkToPost: string;
+  LinkFacebook: string;
   Dept: string;
   LinkToUpdate: string;
   CommuneName: string;

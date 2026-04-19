@@ -127,6 +127,30 @@
             </a>
 
             <a
+              v-if="record.contactDetails?.facebook"
+              target="_blank"
+              :href="`${record.contactDetails.facebook}`"
+              class="contact-button flex items-center gap-1 px-2 py-1 bg-white border border-amber-200 rounded-md text-xs text-amber-600 hover:bg-amber-100 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                ></path>
+              </svg>
+              Contact MP Facebook
+            </a>
+
+            <a
               v-if="record.contactDetails?.mail"
               target="_blank"
               :href="`mailto:${record.contactDetails.mail}`"
@@ -223,6 +247,7 @@ import { uniqBy } from "lodash";
 type Record = {
   Author: string;
   LinkToPost: string;
+  LinkFacebook: string;
   AccessICAD?: string;
   CommuneName?: string;
   Tel?: string;
@@ -273,6 +298,7 @@ type ContactDetails = {
   tel?: string;
   mail?: string;
   link?: string;
+  facebook?: string;
   admin?: boolean;
   needUpdate?: boolean;
 };
@@ -292,7 +318,11 @@ const getContactDetails = (record: Record): ContactDetails => {
     contact.link = record.LinkToPost;
   }
 
-  if (!contact.link && !contact.mail && !contact.admin && !contact.tel) {
+  if (record.LinkFacebook && record.LinkFacebook.startsWith("https")) {
+    contact.facebook = record.LinkFacebook;
+  }
+
+  if (!contact.link && !contact.mail && !contact.admin && !contact.tel && !contact.facebook) {
     // console.log(record);
     contact.needUpdate = true;
   } else {
