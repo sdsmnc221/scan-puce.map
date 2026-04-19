@@ -318,7 +318,11 @@ const getContactDetails = (record: Record): ContactDetails => {
     contact.link = record.LinkToPost;
   }
 
-  if (record.LinkFacebook && record.LinkFacebook.startsWith("https")) {
+  if (
+    record.ContactMode === "MpFacebook" &&
+    record.LinkFacebook &&
+    record.LinkFacebook.startsWith("https")
+  ) {
     contact.facebook = record.LinkFacebook;
   }
 
