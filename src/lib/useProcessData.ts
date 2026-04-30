@@ -19,6 +19,20 @@ import csvCommunesContent from "../geojson/communes.csv";
 import csvDeptsWithCoordinates from "../geojson/departementsfrance_with_coordinates.csv";
 import CENTRAL_POSTAL_CODES from "../geojson/central-postcode";
 
+const extractRecId = (linkToUpdate: string): string | null => {
+  const match = linkToUpdate?.match(/[?&]id=(rec[A-Za-z0-9]+)/);
+  return match ? match[1] : null;
+};
+
+// empty → 0, date-only → epoch ms, ISO timestamp (has 'T') → epoch ms + 1e14
+// ensures a full timestamp always beats a date-only string regardless of year
+const getDateScore = (dateStr: string): number => {
+  if (!dateStr?.trim()) return 0;
+  const ts = new Date(dateStr).getTime();
+  if (isNaN(ts)) return 0;
+  return dateStr.includes("T") ? ts + 1e14 : ts;
+};
+
 export type CsvStore = {
   dpt: any[];
   zip: any[];
@@ -77,6 +91,28 @@ export default function useProcessData(
   loading: Ref<boolean>
 ) {
   const { records, loadRecordsDone } = useSheets(usingFilloutBase);
+
+  const deduplicatedRecords = computed(() => {
+    const map = new Map<string, any>();
+    let fallback = 0;
+    records.value.forEach((record) => {
+      const recId = extractRecId(record.LinkToUpdate || "");
+      const key = recId ?? `__noid_${fallback++}`;
+      const existing = map.get(key);
+      if (!existing) {
+        map.set(key, record);
+      } else {
+        const existingScore = getDateScore(
+          existing["Date de MAJ d'informations"] ?? ""
+        );
+        const currentScore = getDateScore(
+          record["Date de MAJ d'informations"] ?? ""
+        );
+        if (currentScore > existingScore) map.set(key, record);
+      }
+    });
+    return Array.from(map.values());
+  });
 
   const loadCsvDone = ref(false);
   const cities: Ref<City[]> = ref([]);
@@ -198,7 +234,7 @@ export default function useProcessData(
   const recordsByZipCode = computed(() => {
     const map = new Map<string, BaseRecord[]>();
 
-    records.value.forEach((record) => {
+    deduplicatedRecords.value.forEach((record) => {
       if (record.ZipCode) {
         const codes = record.ZipCode.replaceAll(" ", "").split(",");
         codes.forEach((code: string) => {
@@ -216,7 +252,7 @@ export default function useProcessData(
   const recordsByDeptCode = computed(() => {
     const map = new Map<string, BaseRecord[]>();
 
-    records.value.forEach((record) => {
+    deduplicatedRecords.value.forEach((record) => {
       if (record.Dept) {
         const codes = record.Dept.replaceAll(" ", "").split(",");
         codes.forEach((code: string) => {
@@ -270,7 +306,7 @@ export default function useProcessData(
 
     if (usingDptCode.value) {
       // Get all unique department codes
-      records.value.forEach((record) => {
+      deduplicatedRecords.value.forEach((record) => {
         if (record.Dept) {
           const deptCodes = record.Dept.replaceAll(" ", "").split(",");
           deptCodes.forEach((code: string) => {
@@ -281,7 +317,7 @@ export default function useProcessData(
       });
     } else {
       // Get all unique zip codes
-      records.value.forEach((record) => {
+      deduplicatedRecords.value.forEach((record) => {
         if (record.ZipCode) {
           const zipCodes = record.ZipCode.replaceAll(" ", "").split(",");
           zipCodes.forEach((code: string) => {
@@ -618,7 +654,7 @@ export default function useProcessData(
   );
 
   return {
-    records,
+    records: deduplicatedRecords,
     cities,
     filteredCities,
     departments,
