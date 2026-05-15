@@ -18,9 +18,12 @@
           <span class="underline"
             >Affichage par {{ usingDptCode ? "Département" : "Commune" }}</span
           >
+          <br />
           <span class="md:ml-1 text-xs text-slate-400">
             (
             <span class="font-bold">{{ mapCities.length }}</span> localisations
+            &middot;
+            <span class="font-bold">{{ totalRecords }}</span> référencements
             )</span
           >
         </h2>
@@ -416,7 +419,7 @@
           <LIcon
             :icon-url="`/pin${
               city?.baseRecords?.some(
-                (r) => r.AccessICAD === 'checked' || r.AccessICAD === 'TRUE'
+                (r) => r.AccessICAD === 'checked' || r.AccessICAD === 'TRUE',
               )
                 ? '-icad'
                 : ''
@@ -585,7 +588,7 @@ const { records, postcodes, cities, filteredCities, processCsv } =
     storedCsv,
     keyword,
     pinType,
-    loading
+    loading,
   );
 
 const processedZones = ref([]);
@@ -602,6 +605,15 @@ const usingZones = computed(() => {
 const installPrompt = ref(null);
 
 const mapCities = ref([]);
+const totalRecords = computed(() => {
+  const seen = new Set();
+  mapCities.value.forEach((city) => {
+    city.baseRecords?.forEach((record) => {
+      seen.add(record._recordKey);
+    });
+  });
+  return seen.size;
+});
 const selectedCity = ref(null);
 
 const selectedCityZip = computed(() => {
@@ -816,7 +828,7 @@ watch(
       reloadMapCount.value++;
     }
   },
-  { deep: true, flush: "sync" }
+  { deep: true, flush: "sync" },
 );
 
 watch(
@@ -828,7 +840,7 @@ watch(
       // loading.value = false;
     }, 480);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
@@ -837,7 +849,7 @@ watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
       (c) =>
         c.departmentCode == newKeyword ||
         c.zipCode == newKeyword ||
-        c.name.toLowerCase() == newKeyword
+        c.name.toLowerCase() == newKeyword,
     );
 
     if (city) {
@@ -956,7 +968,9 @@ nav {
       overflow: hidden;
       flex: unset;
 
-      mask-size: 100vw 56vh, cover;
+      mask-size:
+        100vw 56vh,
+        cover;
 
       #map {
         height: 100% !important;

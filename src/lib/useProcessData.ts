@@ -100,7 +100,7 @@ export default function useProcessData(
       const key = recId ?? `__noid_${fallback++}`;
       const existing = map.get(key);
       if (!existing) {
-        map.set(key, record);
+        map.set(key, { ...record, _recordKey: key });
       } else {
         const existingScore = getDateScore(
           existing["Date de MAJ d'informations"] ?? ""
@@ -108,7 +108,7 @@ export default function useProcessData(
         const currentScore = getDateScore(
           record["Date de MAJ d'informations"] ?? ""
         );
-        if (currentScore > existingScore) map.set(key, record);
+        if (currentScore > existingScore) map.set(key, { ...record, _recordKey: key });
       }
     });
     return Array.from(map.values());
@@ -310,8 +310,8 @@ export default function useProcessData(
         if (record.Dept) {
           const deptCodes = record.Dept.replaceAll(" ", "").split(",");
           deptCodes.forEach((code: string) => {
-            // Add "000" suffix for compatibility with existing code
-            codes.push(code.trim() + "000");
+            const normalized = code.trim().replace(/^0+/, "") || code.trim();
+            codes.push(normalized + "000");
           });
         }
       });
@@ -620,7 +620,7 @@ export default function useProcessData(
         return true;
       } else if (pinTypeArray.includes(0) && !pinTypeArray.includes(1)) {
         // Red pin (without ICAD)
-        return city.baseRecords.some(
+        return !city.baseRecords.some(
           (record) =>
             record.AccessICAD === "checked" || record.AccessICAD === "TRUE"
         );
