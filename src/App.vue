@@ -21,7 +21,7 @@
           <br />
           <span class="md:ml-1 text-xs text-slate-400">
             (
-            <span class="font-bold">{{ mapCities.length }}</span> localisations
+            <span class="font-bold">{{ mapCities.length }}</span> {{ usingDptCode ? "département.s" : "commune.s" }}
             &middot;
             <span class="font-bold">{{ totalRecords }}</span> référencements
             )</span
