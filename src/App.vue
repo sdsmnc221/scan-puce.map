@@ -248,6 +248,14 @@
 
       <div class="flex flex-1 gap-2 justify-end items-center">
         <RippleButton
+          v-if="isDev"
+          @click="exportDebugCsv"
+          class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-red-100 text-red-700 hover:bg-red-200"
+        >
+          ⬇ {{ usingDptCode ? "Dept.csv" : "Comm.csv" }}
+        </RippleButton>
+
+        <RippleButton
           @click="promptingPWA = true"
           class="xs:text-[8px] text-[8px] md:text-[10px] rounded-xl px-2 bg-amber-100 text-secondary hover:bg-amber-200"
         >
@@ -450,7 +458,8 @@
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-black sm:text-sm md:text-xl">
-          Affichage actuel : les {{ usingDptCode ? "départements" : "communes" }}</span
+          Affichage actuel : les
+          {{ usingDptCode ? "départements" : "communes" }}</span
         >
       </RippleButton>
     </LMap>
@@ -529,6 +538,8 @@ import { delay } from "./lib/useBase";
 
 import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
+
+const isDev = import.meta.env.DEV;
 
 const usingDptCode = ref(true);
 const usingFilloutBase = ref(true);
@@ -769,6 +780,34 @@ const onPWAInstalled = () => {
   // installPrompt.value = null;
 };
 
+const exportDebugCsv = () => {
+  const seen = new Set();
+  const rows = ["author,dept,zipcode"];
+
+  mapCities.value.forEach((city) => {
+    city.baseRecords?.forEach((record) => {
+      if (seen.has(record._recordKey)) return;
+      seen.add(record._recordKey);
+      const escape = (v) => `"${(v ?? "").replace(/"/g, '""')}"`;
+      rows.push(
+        [
+          escape(record.Author),
+          escape(record.Dept),
+          escape(record.ZipCode),
+        ].join(","),
+      );
+    });
+  });
+
+  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = usingDptCode.value ? "Dept.csv" : "Comm.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
 const clearCacheAndRefresh = async () => {
   if ("caches" in window) {
     const cacheNames = await caches.keys();
@@ -880,26 +919,30 @@ watch(
 
 watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
   setTimeout(() => {
-    const city = cities.value.find(
-      (c) =>
-        c.departmentCode == newKeyword ||
-        c.zipCode == newKeyword ||
-        c.name.toLowerCase() == newKeyword,
-    );
+    let city = null;
+
+    if (usingDptCode.value) {
+      city = cities.value.find(
+        (c) =>
+          c.departmentCode == newKeyword ||
+          c.zipCode == newKeyword ||
+          c.name.toLowerCase() == newKeyword,
+      );
+    } else if (/^\d{5}$/.test(newKeyword)) {
+      city = cities.value.find((c) => c.zipCode == newKeyword);
+    }
 
     if (city) {
       selectedCity.value = city;
     } else if (newKeyword) {
-      // Ne vide plus le keyword ni ne force le mode
       selectedCity.value = null;
     }
   }, 640);
 });
 
 watch(usingDptCode, () => {
-  // Relance la recherche avec le keyword courant après un switch de mode
+  selectedCity.value = null;
   if (keyword.value) {
-    // Force le déclenchement du filtrage
     keyword.value = keyword.value + " ";
     keyword.value = keyword.value.trim();
   }

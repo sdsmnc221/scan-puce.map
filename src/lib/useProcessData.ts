@@ -24,6 +24,14 @@ const extractRecId = (linkToUpdate: string): string | null => {
   return match ? match[1] : null;
 };
 
+// "34XXX" or "34" → "34000", valid "34490" → "34490" unchanged
+const normalizeZipCode = (zip: string): string => {
+  const trimmed = zip.trim();
+  if (/^\d{5}$/.test(trimmed)) return trimmed;
+  const digits = trimmed.match(/^\d+/)?.[0] ?? "";
+  return digits.length >= 2 ? digits.padEnd(5, "0") : trimmed;
+};
+
 // empty → 0, date-only → epoch ms, ISO timestamp (has 'T') → epoch ms + 1e14
 // ensures a full timestamp always beats a date-only string regardless of year
 const getDateScore = (dateStr: string): number => {
@@ -167,6 +175,18 @@ export default function useProcessData(
         zipCodeLookup.value.set(zipCode, [data]);
       });
 
+      // Backfill dept-centroid codes ("34000", "21000" …) so that wildcard
+      // zip codes normalised by normalizeZipCode always find a coordinate entry.
+      departmentLookup.value.forEach((dept, code) => {
+        if (!/^\d{2,3}$/.test(code)) return; // skip normalised single-digit duplicates
+        const centroidCode = code.padEnd(5, "0");
+        if (!zipCodeLookup.value.has(centroidCode)) {
+          zipCodeLookup.value.set(centroidCode, [
+            { lat: dept.latitude, lng: dept.longitude, name: dept.nom_departement },
+          ]);
+        }
+      });
+
       csvCommunesContent.forEach((commune: any) => {
         if (!commune || typeof commune !== "object") return;
 
@@ -238,10 +258,10 @@ export default function useProcessData(
       if (record.ZipCode) {
         const codes = record.ZipCode.replaceAll(" ", "").split(",");
         codes.forEach((code: string) => {
-          if (!map.has(code)) {
-            map.set(code, []);
-          }
-          map.get(code)?.push(record as any);
+          const trimmed = code.trim();
+          if (!trimmed) return;
+          if (!map.has(trimmed)) map.set(trimmed, []);
+          map.get(trimmed)?.push(record as any);
         });
       }
     });
@@ -256,8 +276,9 @@ export default function useProcessData(
       let deptCodes: string[] = [];
 
       if (record.Dept) {
-        deptCodes = record.Dept.replaceAll(" ", "")
-          .split(",")
+        deptCodes = record.Dept.split(/[\s,]+/)
+          .map((c: string) => c.trim())
+          .filter(Boolean)
           .map((c: string) => c.replace(/^0+/, ""));
       } else if (record.ZipCode) {
         // infer dept from zip when Dept field is not filled
@@ -297,7 +318,11 @@ export default function useProcessData(
         cities.value = deptCities;
       } else {
         // Zip code mode - create commune-based cities
-        await fetchMissingZipcodes(allCodes);
+        try {
+          await fetchMissingZipcodes(allCodes);
+        } catch {
+          // geocoding API unavailable — build cities from whatever is already in the lookup
+        }
         const communeCities = createCommuneCities(allCodes);
         cities.value = communeCities;
       }
@@ -305,7 +330,6 @@ export default function useProcessData(
       loadCsvDone.value = true;
     } catch (error) {
       console.error("Error processing data:", error);
-      cities.value = [];
     } finally {
       loading.value = false;
     }
@@ -319,9 +343,9 @@ export default function useProcessData(
       // Get all unique department codes
       deduplicatedRecords.value.forEach((record) => {
         if (record.Dept) {
-          const deptCodes = record.Dept.replaceAll(" ", "").split(",");
+          const deptCodes = record.Dept.split(/[\s,]+/).map((c: string) => c.trim()).filter(Boolean);
           deptCodes.forEach((code: string) => {
-            const normalized = code.trim().replace(/^0+/, "") || code.trim();
+            const normalized = code.replace(/^0+/, "") || code;
             codes.push(normalized + "000");
           });
         } else if (record.ZipCode) {
@@ -343,7 +367,8 @@ export default function useProcessData(
         if (record.ZipCode) {
           const zipCodes = record.ZipCode.replaceAll(" ", "").split(",");
           zipCodes.forEach((code: string) => {
-            codes.push(code.trim());
+            const trimmed = code.trim();
+            if (trimmed) codes.push(trimmed);
           });
         }
       });
@@ -400,8 +425,19 @@ export default function useProcessData(
       // Skip if we already processed this zip code
       if (cityMap.has(zipCode)) return;
 
-      // Get commune data from lookup
-      const communes = zipCodeLookup.value.get(zipCode) || [];
+      // Get commune data from lookup — fall back to normalised code for
+      // wildcard/partial entries (e.g. "34XXX" → "34000"), then to dept
+      // centroid for valid zip codes not in csvCommunesContent.
+      const deptCentroidFallback = (): { lat: number; lng: number; name: string }[] => {
+        const deptCode = getDepartmentCode(zipCode);
+        if (!deptCode) return [];
+        const centroidKey = deptCode.padEnd(5, "0");
+        return zipCodeLookup.value.get(centroidKey) || [];
+      };
+      const communes =
+        zipCodeLookup.value.get(zipCode) ||
+        zipCodeLookup.value.get(normalizeZipCode(zipCode)) ||
+        deptCentroidFallback();
       if (communes.length === 0) return;
 
       // Get records for this zip code
@@ -437,12 +473,10 @@ export default function useProcessData(
     return Array.from(cityMap.values());
   };
 
-  const fetchMissingZipcodes = async (zipCodes: string[]) => {
-    const missingZipCodes = zipCodes.filter(
-      (code: string) => !zipCodeLookup.value.has(code)
-    );
-
-    if (missingZipCodes.length === 0) return;
+  const fetchMissingZipcodes = async (_zipCodes: string[]) => {
+    // API lookup disabled — coordinates resolved via CSV lookup + dept-centroid
+    // backfill + normalizeZipCode fallback in createCommuneCities.
+    return;
 
     // ✅ Build a list of zip codes with city names from franceCommunes
     const communesToFetch: Array<{ postcode: string; city: string }> = [];
@@ -467,7 +501,8 @@ export default function useProcessData(
         try {
           // ✅ Search without type filter, use postcode parameter
           const response = await axios.get(
-            `https://api-adresse.data.gouv.fr/search/?q=${zipCode}&postcode=${zipCode}&limit=20`
+            `https://api-adresse.data.gouv.fr/search/?q=${zipCode}&postcode=${zipCode}&limit=20`,
+            { timeout: 5000 }
           );
 
           if (response.data.features && response.data.features.length > 0) {
@@ -540,9 +575,8 @@ export default function useProcessData(
         "https://api-adresse.data.gouv.fr/search/csv/",
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
+          timeout: 8000,
         }
       );
 
