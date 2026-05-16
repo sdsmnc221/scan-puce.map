@@ -919,18 +919,18 @@ watch(
 
 watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
   setTimeout(() => {
-    let city = null;
-
-    if (usingDptCode.value) {
-      city = cities.value.find(
-        (c) =>
-          c.departmentCode == newKeyword ||
-          c.zipCode == newKeyword ||
-          c.name.toLowerCase() == newKeyword,
-      );
-    } else if (/^\d{5}$/.test(newKeyword)) {
-      city = cities.value.find((c) => c.zipCode == newKeyword);
-    }
+    const city = usingDptCode.value
+      ? cities.value.find(
+          (c) =>
+            c.departmentCode == newKeyword ||
+            c.zipCode == newKeyword ||
+            c.name.toLowerCase() == newKeyword,
+        )
+      : cities.value.find(
+          (c) =>
+            c.zipCode == newKeyword ||
+            c.name.toLowerCase() == newKeyword,
+        );
 
     if (city) {
       selectedCity.value = city;
