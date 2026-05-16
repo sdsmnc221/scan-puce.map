@@ -446,7 +446,7 @@
       </div>
 
       <RippleButton
-        class="toggle-dpt absolute z-[9999] mb-2 right-2 rounded-full bottom-4 bg-sky-200 border-blue-500 hover:bg-yellow-400"
+        class="toggle-dpt absolute z-[9999] mb-2 right-2 rounded-full bottom-4 bg-white border border-gray-300 hover:bg-gray-100"
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-black sm:text-sm md:text-xl">
