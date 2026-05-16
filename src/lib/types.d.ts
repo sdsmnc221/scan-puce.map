@@ -1,3 +1,5 @@
+declare const __BUILD_TIME__: string;
+
 declare module "*.csv" {
   const content: {
     postcode: string;

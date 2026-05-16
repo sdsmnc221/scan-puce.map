@@ -792,6 +792,12 @@ onMounted(() => {
       installPrompt.value = e.detail.prompt;
     });
 
+    const BUILD_KEY = "scan-puce-build";
+    if (localStorage.getItem(BUILD_KEY) !== __BUILD_TIME__) {
+      updateAvailable.value = true;
+      localStorage.setItem(BUILD_KEY, __BUILD_TIME__);
+    }
+
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.addEventListener("controllerchange", () => {
         updateAvailable.value = true;

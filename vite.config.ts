@@ -9,6 +9,9 @@ import dsv from "@rollup/plugin-dsv";
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],
