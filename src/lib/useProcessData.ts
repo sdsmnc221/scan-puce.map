@@ -253,16 +253,27 @@ export default function useProcessData(
     const map = new Map<string, BaseRecord[]>();
 
     deduplicatedRecords.value.forEach((record) => {
+      let deptCodes: string[] = [];
+
       if (record.Dept) {
-        const codes = record.Dept.replaceAll(" ", "").split(",");
-        codes.forEach((code: string) => {
-          const normalizedCode = code.replace(/^0+/, "");
-          if (!map.has(normalizedCode)) {
-            map.set(normalizedCode, []);
-          }
-          map.get(normalizedCode)?.push(record as any);
-        });
+        deptCodes = record.Dept.replaceAll(" ", "")
+          .split(",")
+          .map((c: string) => c.replace(/^0+/, ""));
+      } else if (record.ZipCode) {
+        // infer dept from zip when Dept field is not filled
+        deptCodes = record.ZipCode.replaceAll(" ", "")
+          .split(",")
+          .map((zip: string) => getDepartmentCode(zip.trim()))
+          .filter((c): c is string => !!c)
+          .map((c) => c.replace(/^0+/, ""));
       }
+
+      deptCodes.forEach((code: string) => {
+        if (!map.has(code)) {
+          map.set(code, []);
+        }
+        map.get(code)?.push(record as any);
+      });
     });
 
     return map;
@@ -313,6 +324,17 @@ export default function useProcessData(
             const normalized = code.trim().replace(/^0+/, "") || code.trim();
             codes.push(normalized + "000");
           });
+        } else if (record.ZipCode) {
+          // infer dept from zip when Dept field is not filled
+          record.ZipCode.replaceAll(" ", "")
+            .split(",")
+            .forEach((zip: string) => {
+              const deptCode = getDepartmentCode(zip.trim());
+              if (deptCode) {
+                const normalized = deptCode.replace(/^0+/, "") || deptCode;
+                codes.push(normalized + "000");
+              }
+            });
         }
       });
     } else {

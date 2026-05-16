@@ -450,8 +450,7 @@
         @click="() => (usingDptCode = !usingDptCode)"
       >
         <span class="font-bold text-black sm:text-sm md:text-xl">
-          Changer en affichage par
-          {{ !usingDptCode ? "Département" : "Commune" }}</span
+          Affichage actuel : les {{ usingDptCode ? "départements" : "communes" }}</span
         >
       </RippleButton>
     </LMap>
