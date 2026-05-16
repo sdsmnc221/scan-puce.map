@@ -53,6 +53,7 @@ module.exports = async function handler(req, res) {
     });
 
     console.log(`Retour de ${records.length} records depuis ${source}`);
+    res.setHeader("Cache-Control", "no-store");
     res.status(200).json(records);
   } catch (error) {
     console.error("Erreur Google Sheets:", error);

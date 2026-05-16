@@ -1,4 +1,17 @@
 <template>
+  <div
+    v-if="updateAvailable"
+    class="fixed top-0 left-0 w-full z-[99999] flex items-center justify-between gap-3 px-4 py-2 bg-amber-400 text-secondary text-sm font-medium shadow-md"
+  >
+    <span>✨ Une nouvelle version est disponible.</span>
+    <button
+      @click="clearCacheAndRefresh"
+      class="rounded-lg bg-white px-3 py-1 text-xs font-bold text-secondary hover:bg-amber-100 transition-colors"
+    >
+      ↺ Actualiser
+    </button>
+  </div>
+
   <nav
     class="px-4 pb-14 md:pb-10 md:p-10 md:pr-0 w-1/3 flex flex-col justify-between font-sans bg-white"
   >
@@ -558,6 +571,7 @@ const reloadMapCount = ref(0);
 
 const loading = ref(true);
 
+const updateAvailable = ref(false);
 const promptingPWA = ref(false);
 const doSupportsPWA = ref(false);
 
@@ -754,6 +768,14 @@ const onPWAInstalled = () => {
   // installPrompt.value = null;
 };
 
+const clearCacheAndRefresh = async () => {
+  if ("caches" in window) {
+    const cacheNames = await caches.keys();
+    await Promise.all(cacheNames.map((name) => caches.delete(name)));
+  }
+  window.location.reload();
+};
+
 const onPWADismissed = () => {
   console.log("Installation PWA refusée ou fermée");
   promptingPWA.value = false;
@@ -767,6 +789,12 @@ onMounted(() => {
     window.addEventListener("pwa:ready", (e) => {
       installPrompt.value = e.detail.prompt;
     });
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        updateAvailable.value = true;
+      });
+    }
 
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({

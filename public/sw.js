@@ -15,6 +15,7 @@ const urlsToCache = [
 
 // Installation du service worker
 self.addEventListener("install", (event) => {
+  self.skipWaiting(); // activate immediately without waiting for old SW to die
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log("Cache ouvert");
@@ -24,7 +25,13 @@ self.addEventListener("install", (event) => {
 });
 
 // Stratégie de cache : Network First avec fallback sur le cache
+// Les routes /api/ sont toujours récupérées depuis le réseau, jamais mises en cache
 self.addEventListener("fetch", (event) => {
+  if (event.request.url.includes("/api/")) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
@@ -48,14 +55,16 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    clients.claim().then(() => // take control of all open pages immediately
+      caches.keys().then((cacheNames) =>
+        Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheWhitelist.indexOf(cacheName) === -1) {
+              return caches.delete(cacheName);
+            }
+          })
+        )
+      )
+    )
   );
 });
