@@ -96,7 +96,7 @@ export default function useProcessData(
   storedFilloutCsv: Ref<CsvStore>,
   keyword: Ref<string>,
   pinType: Ref<number[]>,
-  loading: Ref<boolean>
+  loading: Ref<boolean>,
 ) {
   const { records, loadRecordsDone } = useSheets(usingFilloutBase);
 
@@ -111,12 +111,13 @@ export default function useProcessData(
         map.set(key, { ...record, _recordKey: key });
       } else {
         const existingScore = getDateScore(
-          existing["Date de MAJ d'informations"] ?? ""
+          existing["Date de MAJ d'informations"] ?? "",
         );
         const currentScore = getDateScore(
-          record["Date de MAJ d'informations"] ?? ""
+          record["Date de MAJ d'informations"] ?? "",
         );
-        if (currentScore > existingScore) map.set(key, { ...record, _recordKey: key });
+        if (currentScore > existingScore)
+          map.set(key, { ...record, _recordKey: key });
       }
     });
     return Array.from(map.values());
@@ -182,7 +183,11 @@ export default function useProcessData(
         const centroidCode = code.padEnd(5, "0");
         if (!zipCodeLookup.value.has(centroidCode)) {
           zipCodeLookup.value.set(centroidCode, [
-            { lat: dept.latitude, lng: dept.longitude, name: dept.nom_departement },
+            {
+              lat: dept.latitude,
+              lng: dept.longitude,
+              name: dept.nom_departement,
+            },
           ]);
         }
       });
@@ -285,8 +290,8 @@ export default function useProcessData(
         deptCodes = record.ZipCode.replaceAll(" ", "")
           .split(",")
           .map((zip: string) => getDepartmentCode(zip.trim()))
-          .filter((c): c is string => !!c)
-          .map((c) => c.replace(/^0+/, ""));
+          .filter((c: any): c is string => !!c)
+          .map((c: any) => c.replace(/^0+/, ""));
       }
 
       deptCodes.forEach((code: string) => {
@@ -343,7 +348,9 @@ export default function useProcessData(
       // Get all unique department codes
       deduplicatedRecords.value.forEach((record) => {
         if (record.Dept) {
-          const deptCodes = record.Dept.split(/[\s,]+/).map((c: string) => c.trim()).filter(Boolean);
+          const deptCodes = record.Dept.split(/[\s,]+/)
+            .map((c: string) => c.trim())
+            .filter(Boolean);
           deptCodes.forEach((code: string) => {
             const normalized = code.replace(/^0+/, "") || code;
             codes.push(normalized + "000");
@@ -428,7 +435,11 @@ export default function useProcessData(
       // Get commune data from lookup — fall back to normalised code for
       // wildcard/partial entries (e.g. "34XXX" → "34000"), then to dept
       // centroid for valid zip codes not in csvCommunesContent.
-      const deptCentroidFallback = (): { lat: number; lng: number; name: string }[] => {
+      const deptCentroidFallback = (): {
+        lat: number;
+        lng: number;
+        name: string;
+      }[] => {
         const deptCode = getDepartmentCode(zipCode);
         if (!deptCode) return [];
         const centroidKey = deptCode.padEnd(5, "0");
@@ -481,7 +492,7 @@ export default function useProcessData(
     // ✅ Build a list of zip codes with city names from franceCommunes
     const communesToFetch: Array<{ postcode: string; city: string }> = [];
 
-    for (const zipCode of missingZipCodes) {
+    for (const zipCode of _zipCodes) {
       // Try to find the city name in franceCommunes
       const matchingCommunes = (franceCommunes as any[])
         .filter((c) => c.CodePostal == zipCode)
@@ -495,14 +506,14 @@ export default function useProcessData(
       } else {
         // If not found in franceCommunes, make a direct API call
         console.warn(
-          `Zip code ${zipCode} not found in franceCommunes, attempting direct API lookup`
+          `Zip code ${zipCode} not found in franceCommunes, attempting direct API lookup`,
         );
 
         try {
           // ✅ Search without type filter, use postcode parameter
           const response = await axios.get(
             `https://api-adresse.data.gouv.fr/search/?q=${zipCode}&postcode=${zipCode}&limit=20`,
-            { timeout: 5000 }
+            { timeout: 5000 },
           );
 
           if (response.data.features && response.data.features.length > 0) {
@@ -536,7 +547,7 @@ export default function useProcessData(
             console.log(
               `✓ Fetched ${zipCode}: ${
                 zipCodeLookup.value.get(zipCode)?.length
-              } communes`
+              } communes`,
             );
           } else {
             console.warn(`✗ No results for zip code ${zipCode}`);
@@ -552,14 +563,14 @@ export default function useProcessData(
 
     if (communesToFetch.length === 0) {
       console.log(
-        "All missing zip codes have been fetched via direct API calls"
+        "All missing zip codes have been fetched via direct API calls",
       );
       return;
     }
 
     // Now process the ones we found in franceCommunes via CSV batch API
     const csvRows = communesToFetch.map(
-      (match) => `${match.postcode},"${match.city}"`
+      (match) => `${match.postcode},"${match.city}"`,
     );
 
     const csvContent = csvRows.join("\n");
@@ -567,7 +578,7 @@ export default function useProcessData(
     formData.append(
       "data",
       new Blob([csvContent], { type: "text/csv" }),
-      "zipCodes.csv"
+      "zipCodes.csv",
     );
 
     try {
@@ -577,7 +588,7 @@ export default function useProcessData(
         {
           headers: { "Content-Type": "multipart/form-data" },
           timeout: 8000,
-        }
+        },
       );
 
       const newData = response.data.split("\n").slice(1);
@@ -659,8 +670,8 @@ export default function useProcessData(
             city.zipCode.includes(searchTerm) ||
             city.departmentName?.toLowerCase().includes(searchTerm) ||
             city.communes.some((commune) =>
-              commune.name.toLowerCase().includes(searchTerm)
-            )
+              commune.name.toLowerCase().includes(searchTerm),
+            ),
         );
       }
 
@@ -678,13 +689,13 @@ export default function useProcessData(
         // Red pin (without ICAD)
         return !city.baseRecords.some(
           (record) =>
-            record.AccessICAD === "checked" || record.AccessICAD === "TRUE"
+            record.AccessICAD === "checked" || record.AccessICAD === "TRUE",
         );
       } else if (pinTypeArray.includes(1) && !pinTypeArray.includes(0)) {
         // Blue pin (with ICAD)
         return city.baseRecords.some(
           (record) =>
-            record.AccessICAD === "checked" || record.AccessICAD === "TRUE"
+            record.AccessICAD === "checked" || record.AccessICAD === "TRUE",
         );
       } else {
         return false;
@@ -706,7 +717,7 @@ export default function useProcessData(
         await processAllData();
       }
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   return {
