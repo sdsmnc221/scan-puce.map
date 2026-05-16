@@ -2,13 +2,14 @@
   <div
     v-if="updateAvailable"
     class="fixed top-0 left-0 w-full z-[99999] flex items-center justify-between gap-3 px-4 py-2 bg-amber-400 text-secondary text-sm font-medium shadow-md"
+    style="position: fixed !important"
   >
-    <span>✨ Une nouvelle version est disponible.</span>
+    <span class="text-xs">Une nouvelle version est disponible.</span>
     <button
       @click="clearCacheAndRefresh"
       class="rounded-lg bg-white px-3 py-1 text-xs font-bold text-secondary hover:bg-amber-100 transition-colors"
     >
-      ↺ Actualiser
+      Actualiser
     </button>
   </div>
 
@@ -34,7 +35,8 @@
           <br />
           <span class="md:ml-1 text-xs text-slate-400">
             (
-            <span class="font-bold">{{ mapCities.length }}</span> {{ usingDptCode ? "département.s" : "commune.s" }}
+            <span class="font-bold">{{ mapCities.length }}</span>
+            {{ usingDptCode ? "département.s" : "commune.s" }}
             &middot;
             <span class="font-bold">{{ totalRecords }}</span> référencements
             )</span
