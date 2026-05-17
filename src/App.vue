@@ -45,10 +45,43 @@
 
         <IInput
           id="inputDemo"
-          placeholder="Tapez ici le n° de département recherché (ex. 75)"
+          :placeholder="
+            usingDptCode
+              ? 'Tapez ici le n° de département (ex. 75)'
+              : 'Commune ou code postal (ex. 75001)'
+          "
           container-class="w-full md:w-11/12 search-input md:my-3"
           @update:model-value="onSearchInput"
         ></IInput>
+
+        <!-- Proximity active indicator (commune mode) -->
+        <div
+          v-if="
+            !usingDptCode &&
+            (proximityActive || proximityError || proximityLoading)
+          "
+          class="w-full md:w-11/12 flex items-center gap-2 mt-1"
+        >
+          <span v-if="proximityLoading" class="text-xs text-slate-400"
+            >Recherche en cours...</span
+          >
+          <span v-else-if="proximityError" class="text-xs text-red-500">{{
+            proximityError
+          }}</span>
+          <span
+            v-else-if="proximityActive"
+            class="text-xs text-amber-700 font-medium"
+          >
+            À proximité de {{ proximityZip }}
+          </span>
+          <button
+            v-if="proximityActive"
+            @click="exitProximity"
+            class="ml-auto text-[10px] rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 px-2 py-0.5"
+          >
+            ✕ Annuler
+          </button>
+        </div>
 
         <div
           class="mt-2 md:mt-5 sm:w-full md:w-11/12 sm:text-center md:text-left"
@@ -180,9 +213,55 @@
       <div
         class="my-2 mb-5 md:mt-5 md:mb-0 sm:w-full md:w-11/12 sm:text-center md:text-left"
       >
+        <!-- Proximity results (desktop) -->
+        <div
+          v-if="proximityActive && !selectedCity"
+          class="mt-2 mb-4 max-h-[40vh] overflow-y-auto rounded-lg border border-amber-200 bg-white"
+        >
+          <div
+            v-if="proximityFetching"
+            class="p-4 text-center text-xs text-slate-400"
+          >
+            Calcul des distances en voiture...
+          </div>
+          <div v-else>
+            <p class="px-3 pt-2 pb-1 text-[10px] text-slate-400">
+              {{ sortedCities.length }} lecteur·s triés depuis
+              {{ proximityZip }}
+            </p>
+            <div
+              v-for="city in sortedCities"
+              :key="city.zipCode"
+              class="flex items-start gap-2 px-3 py-2 border-b border-slate-100 last:border-0 hover:bg-amber-50 cursor-pointer"
+              @click="selectFromProximity(city)"
+            >
+              <span
+                class="shrink-0 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 mt-0.5"
+              >
+                {{
+                  isFinite(city.distanceKm ?? Infinity)
+                    ? city.distanceKm + " km"
+                    : "?"
+                }}
+              </span>
+              <div class="min-w-0">
+                <p class="text-sm font-medium text-secondary truncate">
+                  {{ city.name || city.zipCode }}
+                </p>
+                <p class="text-[10px] text-slate-400">
+                  {{ city.departmentName }} ·
+                  {{ city.baseRecords?.length }} lecteur{{
+                    city.baseRecords?.length > 1 ? "s" : ""
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Empty State when no location is selected -->
         <div
-          v-if="!selectedCity"
+          v-else-if="!selectedCity"
           class="md:flex flex-col items-center justify-center p-6 my-4 bg-white rounded-lg border border-dashed border-amber-300 text-center"
         >
           <div class="empty-state-icon mb-4">
@@ -216,23 +295,81 @@
           v-if="selectedCity"
           class="city-details hidden md:block mt-2 mb-4 max-h-[40vh] p-5 md:overflow-scroll bg-white md:rounded-lg md:shadow-lg border border-amber-200"
         >
+          <button
+            v-if="fromProximity"
+            @click="selectedCity = null"
+            class="mb-2 text-xs text-slate-500 hover:text-secondary flex items-center gap-1"
+          >
+            ← Retour aux résultats
+          </button>
           <PinPopup :location="selectedCity" :is-dpt="usingDptCode"> </PinPopup>
         </div>
 
-        <Sheet
-          :open="citySheetOpen"
-          ref="citySheetRef"
-          @update:open="(openState) => onUpdateOpenCitySheet"
-        >
+        <Sheet :open="citySheetOpen" @update:open="onUpdateOpenCitySheet">
           <SheetTrigger class="m-0 p-0 fixed"></SheetTrigger>
           <SheetTitle></SheetTitle>
           <SheetContent class="city-sheet font-sans" side="bottom">
             <SheetHeader>
-              <SheetTitle> </SheetTitle>
+              <SheetTitle class="text-secondary text-sm">
+                {{
+                  proximityActive && !selectedCity
+                    ? `Lecteurs proches de ${proximityZip}`
+                    : " "
+                }}
+              </SheetTitle>
               <SheetDescription
                 class="flex flex-col text-left relative top-[-10px]"
               >
-                <div v-if="selectedCity" class="flex flex-col">
+                <!-- Proximity list on mobile -->
+                <div v-if="proximityActive && !selectedCity" class="mt-1">
+                  <div
+                    v-if="proximityFetching"
+                    class="p-4 text-center text-xs text-slate-400"
+                  >
+                    Calcul des distances...
+                  </div>
+                  <div
+                    v-else
+                    class="max-h-[55vh] overflow-y-auto divide-y divide-slate-100"
+                  >
+                    <div
+                      v-for="city in sortedCities"
+                      :key="city.zipCode"
+                      class="flex items-start gap-2 py-2 px-1 hover:bg-amber-50 cursor-pointer"
+                      @click="selectFromProximity(city)"
+                    >
+                      <span
+                        class="shrink-0 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 mt-0.5"
+                      >
+                        {{
+                          isFinite(city.distanceKm ?? Infinity)
+                            ? city.distanceKm + " km"
+                            : "?"
+                        }}
+                      </span>
+                      <div class="min-w-0">
+                        <p class="text-sm font-medium text-secondary truncate">
+                          {{ city.name || city.zipCode }}
+                        </p>
+                        <p class="text-[10px] text-slate-400">
+                          {{ city.departmentName }} ·
+                          {{ city.baseRecords?.length }} lecteur{{
+                            city.baseRecords?.length > 1 ? "s" : ""
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- City detail on mobile -->
+                <div v-else-if="selectedCity" class="flex flex-col">
+                  <button
+                    v-if="fromProximity"
+                    @click="selectedCity = null"
+                    class="mb-2 text-xs text-slate-500 hover:text-secondary flex items-center gap-1"
+                  >
+                    ← Retour aux résultats
+                  </button>
                   <PinPopup :location="selectedCity" :is-dpt="usingDptCode">
                   </PinPopup>
                 </div>
@@ -304,7 +441,6 @@
         @dismissed="onPWADismissed"
       ></PWAInstallPrompt>
     </div>
-
   </nav>
 
   <Sheet
@@ -312,21 +448,29 @@
     :open="showVerifTable"
     @update:open="(v) => (showVerifTable = v)"
   >
-    <SheetContent side="right" class="font-sans w-full sm:max-w-3xl overflow-y-auto z-[100]">
+    <SheetContent
+      side="right"
+      class="font-sans w-full sm:max-w-3xl overflow-y-auto z-[100]"
+    >
       <SheetHeader>
-        <SheetTitle class="text-secondary">Tableau de vérification (dev)</SheetTitle>
+        <SheetTitle class="text-secondary"
+          >Tableau de vérification (dev)</SheetTitle
+        >
         <SheetDescription>
           <span v-if="activeVerifTab === 'dept'">
-            Comptage par département — Dept vs Commune. Diff = Dept − Exact. Idéalement diff = 0.<br/>
+            Comptage par département — Dept vs Commune. Diff = Dept − Exact.
+            Idéalement diff = 0.<br />
             <span class="text-[10px] text-slate-400">
-              Les lecteurs couvrant plusieurs départements sont comptés dans chaque département.
-              Le total "Dept" reflète les assignments (≥ uniques), le total "Uniques" est le vrai décompte.
+              Les lecteurs couvrant plusieurs départements sont comptés dans
+              chaque département. Le total "Dept" reflète les assignments (≥
+              uniques), le total "Uniques" est le vrai décompte.
             </span>
           </span>
           <span v-else>
             Comptage par code postal — résolution GPS par source.
             <span class="text-[10px] text-slate-400">
-              Vert = coordonnées exactes · Jaune = centroïde département · Rouge = non résolu.
+              Vert = coordonnées exactes · Jaune = centroïde département · Rouge
+              = non résolu.
             </span>
           </span>
         </SheetDescription>
@@ -335,26 +479,44 @@
       <!-- Tab switcher -->
       <div class="mt-3 flex items-center gap-2">
         <button
-          @click="activeVerifTab = 'dept'"
+          type="button"
+          @click="setActiveVerifTab('dept')"
           class="text-[11px] rounded-lg px-3 py-1 font-medium transition-colors"
-          :class="activeVerifTab === 'dept' ? 'bg-secondary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
-        >Départements</button>
+          :class="
+            activeVerifTab === 'dept'
+              ? 'bg-secondary text-white'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          "
+        >
+          Départements
+        </button>
         <button
-          @click="activeVerifTab = 'commune'"
+          type="button"
+          @click="setActiveVerifTab('commune')"
           class="text-[11px] rounded-lg px-3 py-1 font-medium transition-colors"
-          :class="activeVerifTab === 'commune' ? 'bg-secondary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
-        >Communes</button>
+          :class="
+            activeVerifTab === 'commune'
+              ? 'bg-secondary text-white'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          "
+        >
+          Communes
+        </button>
         <div class="ml-auto">
           <button
             v-if="activeVerifTab === 'dept'"
             @click="exportVerifCsv"
             class="text-[10px] rounded-lg px-2 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200"
-          >⬇ Verif.csv</button>
+          >
+            ⬇ Verif.csv
+          </button>
           <button
             v-else
             @click="exportCommuneVerifCsv"
             class="text-[10px] rounded-lg px-2 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200"
-          >⬇ Communes.csv</button>
+          >
+            ⬇ Communes.csv
+          </button>
         </div>
       </div>
 
@@ -363,13 +525,40 @@
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 text-secondary text-left">
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Nom</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Exact</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Centroïde</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Non résolu</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Diff</th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Dept
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Nom
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Auteur(s)
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Dept
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Exact
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Centroïde
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Non résolu
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Diff
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -378,12 +567,36 @@
               :key="row.code"
               class="even:bg-slate-50 hover:bg-amber-50 transition-colors"
             >
-              <td class="px-2 py-1 border border-slate-200 font-mono">{{ row.code }}</td>
+              <td class="px-2 py-1 border border-slate-200 font-mono">
+                {{ row.code }}
+              </td>
               <td class="px-2 py-1 border border-slate-200">{{ row.name }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ row.deptCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700">{{ row.exactCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600">{{ row.centroidCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400">{{ row.unresolvedCount }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 max-w-64 whitespace-normal text-[10px] text-slate-600"
+                :title="row.authors.join(', ')"
+              >
+                {{ row.authors.join(", ") }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{ row.deptCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700"
+              >
+                {{ row.exactCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600"
+              >
+                {{ row.centroidCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400"
+              >
+                {{ row.unresolvedCount }}
+              </td>
               <td
                 class="px-2 py-1 border border-slate-200 text-right font-bold tabular-nums"
                 :class="{
@@ -391,21 +604,47 @@
                   'text-amber-600': row.diff > 0 && row.diff < 5,
                   'text-red-600': row.diff >= 5,
                 }"
-              >{{ row.diff > 0 ? '+' : '' }}{{ row.diff }}</td>
+              >
+                {{ row.diff > 0 ? "+" : "" }}{{ row.diff }}
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="bg-slate-100 font-semibold text-secondary">
-              <td class="px-2 py-1 border border-slate-200 text-[10px]" colspan="2">
+              <td
+                class="px-2 py-1 border border-slate-200 text-[10px]"
+                colspan="3"
+              >
                 Uniques / Assignments
               </td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
                 <span class="text-secondary">{{ records.length }}</span>
-                <span class="text-slate-400 font-normal"> / {{ verificationData.reduce((s, r) => s + r.deptCount, 0) }}</span>
+                <span class="text-slate-400 font-normal">
+                  /
+                  {{
+                    verificationData.reduce((s, r) => s + r.deptCount, 0)
+                  }}</span
+                >
               </td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700">{{ verificationData.reduce((s, r) => s + r.exactCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600">{{ verificationData.reduce((s, r) => s + r.centroidCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400">{{ verificationData.reduce((s, r) => s + r.unresolvedCount, 0) }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700"
+              >
+                {{ verificationData.reduce((s, r) => s + r.exactCount, 0) }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600"
+              >
+                {{ verificationData.reduce((s, r) => s + r.centroidCount, 0) }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400"
+              >
+                {{
+                  verificationData.reduce((s, r) => s + r.unresolvedCount, 0)
+                }}
+              </td>
               <td class="px-2 py-1 border border-slate-200"></td>
             </tr>
           </tfoot>
@@ -417,12 +656,31 @@
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 text-secondary text-left">
-              <th class="px-2 py-1 border border-slate-200 font-semibold">CP</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Commune</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Département</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Réf.</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-center">Source</th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                CP
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Commune
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Dept
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Département
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Réf.
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Auteur(s)
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-center"
+              >
+                Source
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -431,11 +689,29 @@
               :key="row.zipCode"
               class="even:bg-slate-50 hover:bg-amber-50 transition-colors"
             >
-              <td class="px-2 py-1 border border-slate-200 font-mono">{{ row.zipCode }}</td>
+              <td class="px-2 py-1 border border-slate-200 font-mono">
+                {{ row.zipCode }}
+              </td>
               <td class="px-2 py-1 border border-slate-200">{{ row.name }}</td>
-              <td class="px-2 py-1 border border-slate-200 font-mono text-slate-500">{{ row.deptCode }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-slate-500">{{ row.deptName }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ row.recordCount }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 font-mono text-slate-500"
+              >
+                {{ row.deptCode }}
+              </td>
+              <td class="px-2 py-1 border border-slate-200 text-slate-500">
+                {{ row.deptName }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{ row.recordCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 max-w-64 whitespace-normal text-[10px] text-slate-600"
+                :title="row.authors.join(', ')"
+              >
+                {{ row.authors.join(", ") }}
+              </td>
               <td class="px-2 py-1 border border-slate-200 text-center">
                 <span
                   class="inline-block rounded px-1 font-medium text-[10px]"
@@ -444,18 +720,49 @@
                     'bg-amber-100 text-amber-700': row.source === 'centroid',
                     'bg-red-100 text-red-600': row.source === 'unresolved',
                   }"
-                >{{ row.source === 'exact' ? 'exact' : row.source === 'centroid' ? 'centroïde' : 'non résolu' }}</span>
+                  >{{
+                    row.source === "exact"
+                      ? "exact"
+                      : row.source === "centroid"
+                        ? "centroïde"
+                        : "non résolu"
+                  }}</span
+                >
               </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="bg-slate-100 font-semibold text-secondary">
-              <td class="px-2 py-1 border border-slate-200 text-[10px]" colspan="4">Total codes postaux</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ communeVerificationData.reduce((s, r) => s + r.recordCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-center text-[10px] text-slate-400">
-                {{ communeVerificationData.filter(r => r.source === 'exact').length }}✓
-                {{ communeVerificationData.filter(r => r.source === 'centroid').length }}~
-                {{ communeVerificationData.filter(r => r.source === 'unresolved').length }}✗
+              <td
+                class="px-2 py-1 border border-slate-200 text-[10px]"
+                colspan="4"
+              >
+                Total codes postaux
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{
+                  communeVerificationData.reduce((s, r) => s + r.recordCount, 0)
+                }}
+              </td>
+              <td class="px-2 py-1 border border-slate-200"></td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-center text-[10px] text-slate-400"
+              >
+                {{
+                  communeVerificationData.filter((r) => r.source === "exact")
+                    .length
+                }}✓
+                {{
+                  communeVerificationData.filter((r) => r.source === "centroid")
+                    .length
+                }}~
+                {{
+                  communeVerificationData.filter(
+                    (r) => r.source === "unresolved",
+                  ).length
+                }}✗
               </td>
             </tr>
           </tfoot>
@@ -599,7 +906,7 @@
 
       <div>
         <LMarker
-          v-for="city in mapCities"
+          v-for="city in visibleMapCities"
           :key="`commune-${city.zipCode}`"
           :lat-lng="[city.lat, city.lng]"
           @click="onMarkerClick(city)"
@@ -619,15 +926,38 @@
         </LMarker>
       </div>
 
-      <RippleButton
-        class="toggle-dpt absolute z-[9999] mb-2 right-2 rounded-full bottom-4 bg-white border border-gray-300 hover:bg-gray-100"
-        @click="() => (usingDptCode = !usingDptCode)"
+      <div
+        class="absolute z-[9999] bottom-4 right-2 flex flex-col items-end gap-1"
       >
-        <span class="font-bold text-black sm:text-sm md:text-xl">
-          Affichage actuel : les
-          {{ usingDptCode ? "départements" : "communes" }}</span
+        <RippleButton
+          v-if="!usingDptCode"
+          class="toggle-proximity rounded-full border hover:bg-gray-100"
+          :class="
+            proximityActive
+              ? 'border-amber-400 bg-amber-50'
+              : 'border-gray-300 bg-white'
+          "
+          @click="toggleProximityMode"
         >
-      </RippleButton>
+          <span
+            class="font-bold sm:text-sm md:text-xl"
+            :class="proximityActive ? 'text-amber-700' : 'text-black'"
+          >
+            Mode Proximité (en test) :
+            {{ proximityActive ? "actif" : "désactif" }}
+          </span>
+        </RippleButton>
+
+        <RippleButton
+          class="toggle-dpt rounded-full bg-white border border-gray-300 hover:bg-gray-100"
+          @click="() => (usingDptCode = !usingDptCode)"
+        >
+          <span class="font-bold text-black sm:text-sm md:text-xl">
+            Affichage actuel : les
+            {{ usingDptCode ? "départements" : "communes" }}
+          </span>
+        </RippleButton>
+      </div>
     </LMap>
 
     <MapLoader :loading="loading"></MapLoader>
@@ -660,9 +990,7 @@ import {
   watch,
   nextTick,
   onUnmounted,
-  useTemplateRef,
 } from "vue";
-import { onClickOutside } from "@vueuse/core";
 import Airtable from "airtable";
 import axios from "axios";
 import { inject } from "@vercel/analytics";
@@ -704,10 +1032,15 @@ import { delay } from "./lib/useBase";
 
 import useBase from "./lib/useBase";
 import useProcessData from "./lib/useProcessData";
+import useProximity, { fetchOsrmDistances } from "./lib/useProximity";
 
 const isDev = import.meta.env.DEV;
 const showVerifTable = ref(false);
-const activeVerifTab = ref<'dept' | 'commune'>('dept');
+const activeVerifTab = ref("dept");
+
+const setActiveVerifTab = (tab) => {
+  activeVerifTab.value = tab;
+};
 
 const usingDptCode = ref(true);
 const usingFilloutBase = ref(true);
@@ -769,12 +1102,6 @@ const storedFilloutCsv = ref({
   zip: [],
 });
 
-const citySheetRef = useTemplateRef("citySheetRef");
-
-onClickOutside(citySheetRef, () => {
-  citySheetOpen.value = false;
-});
-
 const {
   records,
   postcodes,
@@ -783,6 +1110,7 @@ const {
   processCsv,
   verificationData,
   communeVerificationData,
+  zipCodeLookup,
 } = useProcessData(
   usingFilloutBase,
   usingDptCode,
@@ -806,6 +1134,15 @@ const usingZones = computed(() => {
 const installPrompt = ref(null);
 
 const mapCities = ref([]);
+
+// What the map actually renders: proximity results (30 km, sorted) or the full filtered set.
+const visibleMapCities = computed(() => {
+  if (proximityActive.value && !proximityFetching.value) {
+    return sortedCities.value;
+  }
+  return mapCities.value;
+});
+
 const totalRecords = computed(() => {
   const seen = new Set();
   mapCities.value.forEach((city) => {
@@ -816,6 +1153,82 @@ const totalRecords = computed(() => {
   return seen.size;
 });
 const selectedCity = ref(null);
+
+// ── Proximity search ──────────────────────────────────────────────────────
+const {
+  proximityZip,
+  proximityActive,
+  proximityError,
+  proximityLoading,
+  proximityOrigin,
+  activate: activateProximity,
+  deactivate: deactivateProximity,
+} = useProximity(zipCodeLookup);
+
+const fromProximity = ref(false);
+const lastProximityZip = ref('');
+const proximityFetching = ref(false);
+const sortedCities = ref([]);
+const proximityDistanceMap = ref(new Map());
+
+watch([proximityActive, mapCities], async ([active]) => {
+  if (!active || !proximityOrigin.value) {
+    sortedCities.value = [];
+    proximityDistanceMap.value = new Map();
+    return;
+  }
+  proximityFetching.value = true;
+  try {
+    const dests = mapCities.value.map((c) => ({ lat: c.lat, lng: c.lng }));
+    const distances = await fetchOsrmDistances(proximityOrigin.value, dests);
+    const newMap = new Map();
+    const enriched = mapCities.value.map((c, i) => {
+      const d = distances[i] ?? Infinity;
+      newMap.set(c.zipCode, d);
+      return { ...c, distanceKm: d };
+    });
+    enriched.sort(
+      (a, b) => (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity),
+    );
+    sortedCities.value = enriched.filter(
+      (c) => (c.distanceKm ?? Infinity) <= 30,
+    );
+    proximityDistanceMap.value = newMap;
+  } catch {
+    sortedCities.value = mapCities.value.map((c) => ({
+      ...c,
+      distanceKm: undefined,
+    }));
+  } finally {
+    proximityFetching.value = false;
+  }
+});
+
+const exitProximity = () => {
+  if (proximityZip.value) lastProximityZip.value = proximityZip.value;
+  deactivateProximity();
+  fromProximity.value = false;
+  selectedCity.value = null;
+};
+
+const toggleProximityMode = () => {
+  if (proximityActive.value) {
+    exitProximity();
+  } else if (lastProximityZip.value) {
+    keyword.value = "";
+    selectedCity.value = null;
+    activateProximity(lastProximityZip.value);
+  } else {
+    document.getElementById('inputDemo')?.querySelector('input')?.focus();
+  }
+};
+
+const selectFromProximity = (city) => {
+  fromProximity.value = true;
+  selectedCity.value = city;
+};
+
+// ─────────────────────────────────────────────────────────────────────────
 
 const selectedCityZip = computed(() => {
   if (!selectedCity.value) return "";
@@ -829,28 +1242,31 @@ const selectedCityZip = computed(() => {
 });
 
 const usingCities = computed(() => {
-  let toUse;
-
-  const pinTypeArray = Array.isArray(pinType.value) ? pinType.value : [];
+  // Proximity is a separate mode — give OSRM the full city set, never keyword-filtered.
+  if (proximityActive.value || proximityLoading.value) {
+    return cities.value;
+  }
 
   if (
     pinType.value.length ||
     (Array.isArray(pinType.value) && !pinType.value.includes(2)) ||
     keyword.value
   ) {
-    toUse = filteredCities.value;
-  } else {
-    toUse = cities.value;
+    return filteredCities.value;
   }
-
-  return toUse;
+  return cities.value;
 });
 
 const citySheetOpen = computed({
-  get: () => (isMobile() ? selectedCity.value !== null : false),
+  get: () =>
+    isMobile() ? selectedCity.value !== null || proximityActive.value : false,
   set: (open) => {
     if (!open) {
-      selectedCity.value = null;
+      if (selectedCity.value !== null) {
+        selectedCity.value = null; // back to proximity list, keep active
+      } else {
+        exitProximity(); // close sheet entirely
+      }
     }
   },
 });
@@ -897,6 +1313,11 @@ const loadRecordByDeptCode = (deptCode) => {
 const onSearchInput = (inputValue) => {
   if (searchTimeout.value) clearTimeout(searchTimeout.value);
 
+  // Track 5-digit ZIPs so the proximity button can use them, but don't auto-activate
+  if (!usingDptCode.value && /^\d{5}$/.test(inputValue.trim())) {
+    lastProximityZip.value = inputValue.trim();
+  }
+
   searchTimeout.value = setTimeout(() => {
     keyword.value = inputValue;
   }, 480);
@@ -930,11 +1351,16 @@ const resetMapViewGlobal = async () => {
 
 const onMarkerClick = (city, zoneOptions = null) => {
   // centerOnMarker(zoneOptions ? zoneOptions.coordinates : [city.lat, city.lng]);
+  if (proximityActive.value) {
+    fromProximity.value = true;
+  }
   selectedCity.value = city;
 };
 
 const onUpdateOpenCitySheet = (open) => {
   if (!open) {
+    // Backdrop tap or Escape → close everything
+    exitProximity();
     selectedCity.value = null;
   }
 };
@@ -984,13 +1410,35 @@ const exportDebugCsv = () => {
 };
 
 const exportVerifCsv = () => {
-  const rows = ["code,nom,dept,exact,centroide,non_resolu,diff"];
+  const rows = ["code,nom,auteurs,dept,exact,centroide,non_resolu,diff"];
   verificationData.value.forEach((r) => {
     const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-    rows.push([esc(r.code), esc(r.name), r.deptCount, r.exactCount, r.centroidCount, r.unresolvedCount, r.diff].join(","));
+    rows.push(
+      [
+        esc(r.code),
+        esc(r.name),
+        esc(r.authors.join(", ")),
+        r.deptCount,
+        r.exactCount,
+        r.centroidCount,
+        r.unresolvedCount,
+        r.diff,
+      ].join(","),
+    );
   });
   const total = verificationData.value.reduce((s, r) => s + r.deptCount, 0);
-  rows.push([`"UNIQUES"`, `"${records.value.length} uniques / ${total} assignments"`, "", "", "", "", ""].join(","));
+  rows.push(
+    [
+      `"UNIQUES"`,
+      `"${records.value.length} uniques / ${total} assignments"`,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+    ].join(","),
+  );
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -1000,15 +1448,43 @@ const exportVerifCsv = () => {
 };
 
 const exportCommuneVerifCsv = () => {
-  const rows = ["code_postal,commune,dept_code,dept_nom,referencements,source"];
+  const rows = [
+    "code_postal,commune,dept_code,dept_nom,referencements,auteurs,source",
+  ];
   communeVerificationData.value.forEach((r) => {
     const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-    rows.push([esc(r.zipCode), esc(r.name), esc(r.deptCode), esc(r.deptName), r.recordCount, esc(r.source)].join(","));
+    rows.push(
+      [
+        esc(r.zipCode),
+        esc(r.name),
+        esc(r.deptCode),
+        esc(r.deptName),
+        r.recordCount,
+        esc(r.authors.join(", ")),
+        esc(r.source),
+      ].join(","),
+    );
   });
-  const exact = communeVerificationData.value.filter(r => r.source === 'exact').length;
-  const centroid = communeVerificationData.value.filter(r => r.source === 'centroid').length;
-  const unresolved = communeVerificationData.value.filter(r => r.source === 'unresolved').length;
-  rows.push([`"TOTAL"`, `"${communeVerificationData.value.length} codes postaux"`, `""`, `"exact:${exact} centroide:${centroid} non_resolu:${unresolved}"`, communeVerificationData.value.reduce((s, r) => s + r.recordCount, 0), `""`].join(","));
+  const exact = communeVerificationData.value.filter(
+    (r) => r.source === "exact",
+  ).length;
+  const centroid = communeVerificationData.value.filter(
+    (r) => r.source === "centroid",
+  ).length;
+  const unresolved = communeVerificationData.value.filter(
+    (r) => r.source === "unresolved",
+  ).length;
+  rows.push(
+    [
+      `"TOTAL"`,
+      `"${communeVerificationData.value.length} codes postaux"`,
+      `""`,
+      `"exact:${exact} centroide:${centroid} non_resolu:${unresolved}"`,
+      communeVerificationData.value.reduce((s, r) => s + r.recordCount, 0),
+      `""`,
+      `""`,
+    ].join(","),
+  );
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -1126,8 +1602,9 @@ watch(
   { immediate: true },
 );
 
-watch([() => keyword.value, () => cities.value], ([newKeyword, newCities]) => {
+watch([() => keyword.value, () => cities.value], ([newKeyword]) => {
   setTimeout(() => {
+    // 5-digit ZIPs in commune mode are handled by onSearchInput → never reach here as keyword
     const city = usingDptCode.value
       ? cities.value.find(
           (c) =>
@@ -1158,6 +1635,22 @@ watch(usingDptCode, () => {
 
 <style lang="scss">
 @import "./output.css";
+
+.pin-dist-tooltip {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  color: #1a1a1a;
+  white-space: nowrap;
+
+  &::before {
+    display: none;
+  }
+}
 
 body,
 * {

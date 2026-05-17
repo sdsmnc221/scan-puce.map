@@ -10,9 +10,6 @@ import axios from "axios";
 import { uniqBy } from "lodash";
 
 import useSheets from "./useSheets";
-import { transformToCapitalize } from "./lexique";
-
-import franceCommunes from "../geojson/communesFr.json";
 import franceDepartments from "../geojson/dptFr.json";
 
 import csvCommunesContent from "../geojson/communes.csv";
@@ -44,6 +41,7 @@ const getDateScore = (dateStr: string): number => {
 export type VerificationRow = {
   code: string;
   name: string;
+  authors: string[];
   deptCount: number;
   exactCount: number;
   centroidCount: number;
@@ -56,6 +54,7 @@ export type CommuneVerificationRow = {
   name: string;
   deptCode: string;
   deptName: string;
+  authors: string[];
   recordCount: number;
   source: "exact" | "centroid" | "unresolved";
 };
@@ -66,6 +65,7 @@ export type CsvStore = {
 };
 
 export type BaseRecord = {
+  _recordKey?: string;
   id: string;
   createTime: string;
   Author: string;
@@ -81,7 +81,7 @@ export type BaseRecord = {
   AccessICAD?: "checked" | "TRUE" | "";
 };
 
-type City = {
+export type City = {
   zipCode: string;
   lat: number;
   lng: number;
@@ -109,10 +109,29 @@ type Department = {
 type ZipCodeMap = Map<string, { lat: number; lng: number; name: string }[]>;
 type DepartmentMap = Map<string, Department>;
 
+const getUniqueAuthors = (records: BaseRecord[]): string[] => {
+  const authorsByKey = new Map<string, string>();
+
+  records.forEach((record) => {
+    const key = getRecordKey(record);
+    if (authorsByKey.has(key)) return;
+
+    const author = record.Author?.trim();
+    authorsByKey.set(key, author || "—");
+  });
+
+  return Array.from(authorsByKey.values()).sort((a, b) =>
+    a.localeCompare(b, "fr", { sensitivity: "base" }),
+  );
+};
+
+const getRecordKey = (record: BaseRecord): string =>
+  record._recordKey ?? record.id ?? record.Author ?? "";
+
 export default function useProcessData(
   usingFilloutBase: Ref<boolean>,
   usingDptCode: Ref<boolean>,
-  storedFilloutCsv: Ref<CsvStore>,
+  _storedFilloutCsv: Ref<CsvStore>,
   keyword: Ref<string>,
   pinType: Ref<number[]>,
   loading: Ref<boolean>,
@@ -278,7 +297,7 @@ export default function useProcessData(
 
     deduplicatedRecords.value.forEach((record) => {
       if (record.ZipCode) {
-        const codes = record.ZipCode.replaceAll(" ", "").split(",");
+        const codes = record.ZipCode.replace(/ /g, "").split(",");
         codes.forEach((code: string) => {
           const trimmed = code.trim();
           if (!trimmed) return;
@@ -304,7 +323,7 @@ export default function useProcessData(
           .map((c: string) => c.replace(/^0+/, ""));
       } else if (record.ZipCode) {
         // infer dept from zip when Dept field is not filled
-        deptCodes = record.ZipCode.replaceAll(" ", "")
+        deptCodes = record.ZipCode.replace(/ /g, "")
           .split(",")
           .map((zip: string) => getDepartmentCode(zip.trim()))
           .filter((c: any): c is string => !!c)
@@ -336,44 +355,45 @@ export default function useProcessData(
       const unresolvedKeys = new Set<string>();
 
       deptRecords.forEach((record) => {
-        const key = record._recordKey;
+        const key = getRecordKey(record);
         if (!record.ZipCode) {
           unresolvedKeys.add(key);
           return;
         }
 
-        const rawZips = record.ZipCode.replaceAll(" ", "").split(",");
+        const rawZips = record.ZipCode.replace(/ /g, "").split(",");
         let bestTier: "exact" | "centroid" | "unresolved" = "unresolved";
 
-        rawZips.forEach((rawZip: string) => {
+        for (const rawZip of rawZips) {
           const trimmed = rawZip.trim();
-          if (!trimmed || bestTier === "exact") return;
+          if (!trimmed || bestTier === "exact") continue;
 
           if (zipCodeLookup.value.has(trimmed)) {
             bestTier = "exact";
-            return;
+            continue;
           }
           const normalized = normalizeZipCode(trimmed);
           if (zipCodeLookup.value.has(normalized)) {
             bestTier = "centroid";
-            return;
+            continue;
           }
           const deptCode = getDepartmentCode(trimmed);
           if (deptCode && zipCodeLookup.value.has(deptCode.padEnd(5, "0"))) {
             bestTier = "centroid";
           }
-        });
+        }
 
         if (bestTier === "exact") exactKeys.add(key);
         else if (bestTier === "centroid") centroidKeys.add(key);
         else unresolvedKeys.add(key);
       });
 
-      const deptCount = new Set(deptRecords.map((r) => r._recordKey)).size;
+      const deptCount = new Set(deptRecords.map(getRecordKey)).size;
 
       rows.push({
         code,
         name,
+        authors: getUniqueAuthors(deptRecords),
         deptCount,
         exactCount: exactKeys.size,
         centroidCount: centroidKeys.size,
@@ -393,7 +413,7 @@ export default function useProcessData(
     const rows: CommuneVerificationRow[] = [];
 
     recordsByZipCode.value.forEach((zipRecords, zipCode) => {
-      const recordCount = new Set(zipRecords.map((r) => r._recordKey)).size;
+      const recordCount = new Set(zipRecords.map(getRecordKey)).size;
 
       // Classify source using same three-tier logic as createCommuneCities
       let source: CommuneVerificationRow["source"] = "unresolved";
@@ -422,7 +442,15 @@ export default function useProcessData(
         departmentLookup.value.get(normalizedDept);
       const deptName = dept?.nom_departement ?? deptCode;
 
-      rows.push({ zipCode, name, deptCode: normalizedDept, deptName, recordCount, source });
+      rows.push({
+        zipCode,
+        name,
+        deptCode: normalizedDept,
+        deptName,
+        authors: getUniqueAuthors(zipRecords),
+        recordCount,
+        source,
+      });
     });
 
     const sourceOrder = { unresolved: 0, centroid: 1, exact: 2 };
@@ -486,7 +514,7 @@ export default function useProcessData(
           });
         } else if (record.ZipCode) {
           // infer dept from zip when Dept field is not filled
-          record.ZipCode.replaceAll(" ", "")
+          record.ZipCode.replace(/ /g, "")
             .split(",")
             .forEach((zip: string) => {
               const deptCode = getDepartmentCode(zip.trim());
@@ -501,7 +529,7 @@ export default function useProcessData(
       // Get all unique zip codes
       deduplicatedRecords.value.forEach((record) => {
         if (record.ZipCode) {
-          const zipCodes = record.ZipCode.replaceAll(" ", "").split(",");
+          const zipCodes = record.ZipCode.replace(/ /g, "").split(",");
           zipCodes.forEach((code: string) => {
             const trimmed = code.trim();
             if (trimmed) codes.push(trimmed);
@@ -798,5 +826,6 @@ export default function useProcessData(
     loadCsvDone,
     verificationData,
     communeVerificationData,
+    zipCodeLookup,
   };
 }
