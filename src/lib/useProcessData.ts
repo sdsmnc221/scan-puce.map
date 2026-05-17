@@ -784,12 +784,8 @@ export default function useProcessData(
 
   // Execute data processing when records are loaded
   watch(
-    [
-      () => loadRecordsDone.value,
-      () => usingDptCode.value,
-      () => keyword.value,
-    ],
-    async ([recordsLoaded, _]) => {
+    [() => loadRecordsDone.value, () => usingDptCode.value],
+    async ([recordsLoaded]) => {
       if (recordsLoaded) {
         await processAllData();
       }

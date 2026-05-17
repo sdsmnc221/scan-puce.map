@@ -143,20 +143,6 @@
                 </div>
               </div>
             </button>
-
-            <!-- <button
-            class="mb-2 flex flex-col md:flex-row sm:text-center md:text-left md:justify-start items-center text-[8px] md:text-[12px] text-700"
-            :class="{ 'line-through': !pinType.includes(2) }"
-            @click="togglePinType(2)"
-          >
-            <img class="w-[24px] h-[24px] inline-block" src="/pin-zone.png" />
-            <span
-              >Localisation des lecteurs de puce
-              <span class="font-bold"
-                >sur une Zone (multi-communale ou multi-départementale)</span
-              >.</span
-            >
-          </button> -->
           </div>
         </div>
       </div>
@@ -304,7 +290,6 @@
         @dismissed="onPWADismissed"
       ></PWAInstallPrompt>
     </div>
-
   </nav>
 
   <Sheet
@@ -312,21 +297,29 @@
     :open="showVerifTable"
     @update:open="(v) => (showVerifTable = v)"
   >
-    <SheetContent side="right" class="font-sans w-full sm:max-w-3xl overflow-y-auto z-[100]">
+    <SheetContent
+      side="right"
+      class="font-sans w-full sm:max-w-3xl overflow-y-auto z-[100]"
+    >
       <SheetHeader>
-        <SheetTitle class="text-secondary">Tableau de vérification (dev)</SheetTitle>
+        <SheetTitle class="text-secondary"
+          >Tableau de vérification (dev)</SheetTitle
+        >
         <SheetDescription>
           <span v-if="activeVerifTab === 'dept'">
-            Comptage par département — Dept vs Commune. Diff = Dept − Exact. Idéalement diff = 0.<br/>
+            Comptage par département — Dept vs Commune. Diff = Dept − Exact.
+            Idéalement diff = 0.<br />
             <span class="text-[10px] text-slate-400">
-              Les lecteurs couvrant plusieurs départements sont comptés dans chaque département.
-              Le total "Dept" reflète les assignments (≥ uniques), le total "Uniques" est le vrai décompte.
+              Les lecteurs couvrant plusieurs départements sont comptés dans
+              chaque département. Le total "Dept" reflète les assignments (≥
+              uniques), le total "Uniques" est le vrai décompte.
             </span>
           </span>
           <span v-else>
             Comptage par code postal — résolution GPS par source.
             <span class="text-[10px] text-slate-400">
-              Vert = coordonnées exactes · Jaune = centroïde département · Rouge = non résolu.
+              Vert = coordonnées exactes · Jaune = centroïde département · Rouge
+              = non résolu.
             </span>
           </span>
         </SheetDescription>
@@ -337,24 +330,40 @@
         <button
           @click="activeVerifTab = 'dept'"
           class="text-[11px] rounded-lg px-3 py-1 font-medium transition-colors"
-          :class="activeVerifTab === 'dept' ? 'bg-secondary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
-        >Départements</button>
+          :class="
+            activeVerifTab === 'dept'
+              ? 'bg-secondary text-white'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          "
+        >
+          Départements
+        </button>
         <button
           @click="activeVerifTab = 'commune'"
           class="text-[11px] rounded-lg px-3 py-1 font-medium transition-colors"
-          :class="activeVerifTab === 'commune' ? 'bg-secondary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
-        >Communes</button>
+          :class="
+            activeVerifTab === 'commune'
+              ? 'bg-secondary text-white'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          "
+        >
+          Communes
+        </button>
         <div class="ml-auto">
           <button
             v-if="activeVerifTab === 'dept'"
             @click="exportVerifCsv"
             class="text-[10px] rounded-lg px-2 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200"
-          >⬇ Verif.csv</button>
+          >
+            ⬇ Verif.csv
+          </button>
           <button
             v-else
             @click="exportCommuneVerifCsv"
             class="text-[10px] rounded-lg px-2 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200"
-          >⬇ Communes.csv</button>
+          >
+            ⬇ Communes.csv
+          </button>
         </div>
       </div>
 
@@ -363,13 +372,37 @@
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 text-secondary text-left">
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Nom</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Exact</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Centroïde</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Non résolu</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Diff</th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Dept
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Nom
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Dept
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Exact
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Centroïde
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Non résolu
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Diff
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -378,12 +411,30 @@
               :key="row.code"
               class="even:bg-slate-50 hover:bg-amber-50 transition-colors"
             >
-              <td class="px-2 py-1 border border-slate-200 font-mono">{{ row.code }}</td>
+              <td class="px-2 py-1 border border-slate-200 font-mono">
+                {{ row.code }}
+              </td>
               <td class="px-2 py-1 border border-slate-200">{{ row.name }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ row.deptCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700">{{ row.exactCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600">{{ row.centroidCount }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400">{{ row.unresolvedCount }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{ row.deptCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700"
+              >
+                {{ row.exactCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600"
+              >
+                {{ row.centroidCount }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400"
+              >
+                {{ row.unresolvedCount }}
+              </td>
               <td
                 class="px-2 py-1 border border-slate-200 text-right font-bold tabular-nums"
                 :class="{
@@ -391,21 +442,47 @@
                   'text-amber-600': row.diff > 0 && row.diff < 5,
                   'text-red-600': row.diff >= 5,
                 }"
-              >{{ row.diff > 0 ? '+' : '' }}{{ row.diff }}</td>
+              >
+                {{ row.diff > 0 ? "+" : "" }}{{ row.diff }}
+              </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="bg-slate-100 font-semibold text-secondary">
-              <td class="px-2 py-1 border border-slate-200 text-[10px]" colspan="2">
+              <td
+                class="px-2 py-1 border border-slate-200 text-[10px]"
+                colspan="2"
+              >
                 Uniques / Assignments
               </td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
                 <span class="text-secondary">{{ records.length }}</span>
-                <span class="text-slate-400 font-normal"> / {{ verificationData.reduce((s, r) => s + r.deptCount, 0) }}</span>
+                <span class="text-slate-400 font-normal">
+                  /
+                  {{
+                    verificationData.reduce((s, r) => s + r.deptCount, 0)
+                  }}</span
+                >
               </td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700">{{ verificationData.reduce((s, r) => s + r.exactCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600">{{ verificationData.reduce((s, r) => s + r.centroidCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400">{{ verificationData.reduce((s, r) => s + r.unresolvedCount, 0) }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-green-700"
+              >
+                {{ verificationData.reduce((s, r) => s + r.exactCount, 0) }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-amber-600"
+              >
+                {{ verificationData.reduce((s, r) => s + r.centroidCount, 0) }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums text-slate-400"
+              >
+                {{
+                  verificationData.reduce((s, r) => s + r.unresolvedCount, 0)
+                }}
+              </td>
               <td class="px-2 py-1 border border-slate-200"></td>
             </tr>
           </tfoot>
@@ -417,12 +494,28 @@
         <table class="w-full text-xs border-collapse">
           <thead>
             <tr class="bg-slate-100 text-secondary text-left">
-              <th class="px-2 py-1 border border-slate-200 font-semibold">CP</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Commune</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Dept</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold">Département</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-right">Réf.</th>
-              <th class="px-2 py-1 border border-slate-200 font-semibold text-center">Source</th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                CP
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Commune
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Dept
+              </th>
+              <th class="px-2 py-1 border border-slate-200 font-semibold">
+                Département
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-right"
+              >
+                Réf.
+              </th>
+              <th
+                class="px-2 py-1 border border-slate-200 font-semibold text-center"
+              >
+                Source
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -431,11 +524,23 @@
               :key="row.zipCode"
               class="even:bg-slate-50 hover:bg-amber-50 transition-colors"
             >
-              <td class="px-2 py-1 border border-slate-200 font-mono">{{ row.zipCode }}</td>
+              <td class="px-2 py-1 border border-slate-200 font-mono">
+                {{ row.zipCode }}
+              </td>
               <td class="px-2 py-1 border border-slate-200">{{ row.name }}</td>
-              <td class="px-2 py-1 border border-slate-200 font-mono text-slate-500">{{ row.deptCode }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-slate-500">{{ row.deptName }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ row.recordCount }}</td>
+              <td
+                class="px-2 py-1 border border-slate-200 font-mono text-slate-500"
+              >
+                {{ row.deptCode }}
+              </td>
+              <td class="px-2 py-1 border border-slate-200 text-slate-500">
+                {{ row.deptName }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{ row.recordCount }}
+              </td>
               <td class="px-2 py-1 border border-slate-200 text-center">
                 <span
                   class="inline-block rounded px-1 font-medium text-[10px]"
@@ -444,18 +549,48 @@
                     'bg-amber-100 text-amber-700': row.source === 'centroid',
                     'bg-red-100 text-red-600': row.source === 'unresolved',
                   }"
-                >{{ row.source === 'exact' ? 'exact' : row.source === 'centroid' ? 'centroïde' : 'non résolu' }}</span>
+                  >{{
+                    row.source === "exact"
+                      ? "exact"
+                      : row.source === "centroid"
+                        ? "centroïde"
+                        : "non résolu"
+                  }}</span
+                >
               </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="bg-slate-100 font-semibold text-secondary">
-              <td class="px-2 py-1 border border-slate-200 text-[10px]" colspan="4">Total codes postaux</td>
-              <td class="px-2 py-1 border border-slate-200 text-right tabular-nums">{{ communeVerificationData.reduce((s, r) => s + r.recordCount, 0) }}</td>
-              <td class="px-2 py-1 border border-slate-200 text-center text-[10px] text-slate-400">
-                {{ communeVerificationData.filter(r => r.source === 'exact').length }}✓
-                {{ communeVerificationData.filter(r => r.source === 'centroid').length }}~
-                {{ communeVerificationData.filter(r => r.source === 'unresolved').length }}✗
+              <td
+                class="px-2 py-1 border border-slate-200 text-[10px]"
+                colspan="4"
+              >
+                Total codes postaux
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-right tabular-nums"
+              >
+                {{
+                  communeVerificationData.reduce((s, r) => s + r.recordCount, 0)
+                }}
+              </td>
+              <td
+                class="px-2 py-1 border border-slate-200 text-center text-[10px] text-slate-400"
+              >
+                {{
+                  communeVerificationData.filter((r) => r.source === "exact")
+                    .length
+                }}✓
+                {{
+                  communeVerificationData.filter((r) => r.source === "centroid")
+                    .length
+                }}~
+                {{
+                  communeVerificationData.filter(
+                    (r) => r.source === "unresolved",
+                  ).length
+                }}✗
               </td>
             </tr>
           </tfoot>
@@ -707,7 +842,7 @@ import useProcessData from "./lib/useProcessData";
 
 const isDev = import.meta.env.DEV;
 const showVerifTable = ref(false);
-const activeVerifTab = ref<'dept' | 'commune'>('dept');
+const activeVerifTab = (ref < "dept") | ("commune" > "dept");
 
 const usingDptCode = ref(true);
 const usingFilloutBase = ref(true);
@@ -777,16 +912,13 @@ onClickOutside(citySheetRef, () => {
 
 const {
   records,
-  postcodes,
   cities,
   filteredCities,
-  processCsv,
   verificationData,
   communeVerificationData,
 } = useProcessData(
   usingFilloutBase,
   usingDptCode,
-  storedCsv,
   keyword,
   pinType,
   loading,
@@ -987,10 +1119,30 @@ const exportVerifCsv = () => {
   const rows = ["code,nom,dept,exact,centroide,non_resolu,diff"];
   verificationData.value.forEach((r) => {
     const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-    rows.push([esc(r.code), esc(r.name), r.deptCount, r.exactCount, r.centroidCount, r.unresolvedCount, r.diff].join(","));
+    rows.push(
+      [
+        esc(r.code),
+        esc(r.name),
+        r.deptCount,
+        r.exactCount,
+        r.centroidCount,
+        r.unresolvedCount,
+        r.diff,
+      ].join(","),
+    );
   });
   const total = verificationData.value.reduce((s, r) => s + r.deptCount, 0);
-  rows.push([`"UNIQUES"`, `"${records.value.length} uniques / ${total} assignments"`, "", "", "", "", ""].join(","));
+  rows.push(
+    [
+      `"UNIQUES"`,
+      `"${records.value.length} uniques / ${total} assignments"`,
+      "",
+      "",
+      "",
+      "",
+      "",
+    ].join(","),
+  );
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -1003,12 +1155,36 @@ const exportCommuneVerifCsv = () => {
   const rows = ["code_postal,commune,dept_code,dept_nom,referencements,source"];
   communeVerificationData.value.forEach((r) => {
     const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-    rows.push([esc(r.zipCode), esc(r.name), esc(r.deptCode), esc(r.deptName), r.recordCount, esc(r.source)].join(","));
+    rows.push(
+      [
+        esc(r.zipCode),
+        esc(r.name),
+        esc(r.deptCode),
+        esc(r.deptName),
+        r.recordCount,
+        esc(r.source),
+      ].join(","),
+    );
   });
-  const exact = communeVerificationData.value.filter(r => r.source === 'exact').length;
-  const centroid = communeVerificationData.value.filter(r => r.source === 'centroid').length;
-  const unresolved = communeVerificationData.value.filter(r => r.source === 'unresolved').length;
-  rows.push([`"TOTAL"`, `"${communeVerificationData.value.length} codes postaux"`, `""`, `"exact:${exact} centroide:${centroid} non_resolu:${unresolved}"`, communeVerificationData.value.reduce((s, r) => s + r.recordCount, 0), `""`].join(","));
+  const exact = communeVerificationData.value.filter(
+    (r) => r.source === "exact",
+  ).length;
+  const centroid = communeVerificationData.value.filter(
+    (r) => r.source === "centroid",
+  ).length;
+  const unresolved = communeVerificationData.value.filter(
+    (r) => r.source === "unresolved",
+  ).length;
+  rows.push(
+    [
+      `"TOTAL"`,
+      `"${communeVerificationData.value.length} codes postaux"`,
+      `""`,
+      `"exact:${exact} centroide:${centroid} non_resolu:${unresolved}"`,
+      communeVerificationData.value.reduce((s, r) => s + r.recordCount, 0),
+      `""`,
+    ].join(","),
+  );
   const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
