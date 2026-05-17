@@ -132,12 +132,10 @@ export default function useProcessData(
   const departmentLookup: Ref<DepartmentMap> = ref(new Map());
 
   // Initialize data structures
-  onMounted(() => {
-    // Pre-process department data once
+  onMounted(async () => {
     initDepartmentsData();
-
-    // Pre-process commune data once
     initCommunesData();
+    await loadZipCache();
   });
 
   // Process the departments data when the component is initialized
@@ -495,142 +493,64 @@ export default function useProcessData(
     return Array.from(locationMap.values());
   };
 
-  const fetchMissingZipcodes = async (_zipCodes: string[]) => {
-    // API lookup disabled — coordinates resolved via CSV lookup + dept-centroid
-    // backfill + normalizeZipCode fallback in createCommuneCities.
-    return;
+  const blobAvailable = ref(false);
 
-    // ✅ Build a list of zip codes with city names from franceCommunes
-    const communesToFetch: Array<{ postcode: string; city: string }> = [];
-
-    for (const zipCode of _zipCodes) {
-      // Try to find the city name in franceCommunes
-      const matchingCommunes = (franceCommunes as any[])
-        .filter((c) => c.CodePostal == zipCode)
-        .map((c) => ({
-          postcode: c.CodePostal,
-          city: transformToCapitalize(c.NomCommune),
-        }));
-
-      if (matchingCommunes.length > 0) {
-        communesToFetch.push(...matchingCommunes);
-      } else {
-        // If not found in franceCommunes, make a direct API call
-        console.warn(
-          `Zip code ${zipCode} not found in franceCommunes, attempting direct API lookup`,
-        );
-
-        try {
-          // ✅ Search without type filter, use postcode parameter
-          const response = await axios.get(
-            `https://api-adresse.data.gouv.fr/search/?q=${zipCode}&postcode=${zipCode}&limit=20`,
-            { timeout: 5000 },
-          );
-
-          if (response.data.features && response.data.features.length > 0) {
-            // Initialize array for this zip code
-            if (!zipCodeLookup.value.has(zipCode)) {
-              zipCodeLookup.value.set(zipCode, []);
-            }
-
-            // Add all communes for this postal code
-            response.data.features.forEach((feature: any) => {
-              const [lng, lat] = feature.geometry.coordinates;
-              const cityName =
-                feature.properties.city ||
-                feature.properties.name ||
-                feature.properties.label;
-              const featurePostcode = feature.properties.postcode;
-
-              // Only add if the postcode matches exactly
-              if (featurePostcode === zipCode && cityName) {
-                const existing = zipCodeLookup.value.get(zipCode);
-                if (!existing?.some((c) => c.name === cityName)) {
-                  zipCodeLookup.value.get(zipCode)?.push({
-                    lat,
-                    lng,
-                    name: cityName,
-                  });
-                }
-              }
-            });
-
-            console.log(
-              `✓ Fetched ${zipCode}: ${
-                zipCodeLookup.value.get(zipCode)?.length
-              } communes`,
-            );
-          } else {
-            console.warn(`✗ No results for zip code ${zipCode}`);
-          }
-
-          // Small delay to avoid rate limiting
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        } catch (error) {
-          console.error(`Failed to fetch zip code ${zipCode}:`, error);
+  const loadZipCache = async () => {
+    try {
+      const res = await axios.get("/api/zip-cache", { timeout: 5000 });
+      if (res.status === 503) return;
+      const cache: Record<string, { lat: number; lng: number; name: string }[]> = res.data ?? {};
+      Object.entries(cache).forEach(([zip, coords]) => {
+        if (!zipCodeLookup.value.has(zip)) {
+          zipCodeLookup.value.set(zip, coords);
         }
+      });
+      blobAvailable.value = true;
+    } catch {
+      // blob unavailable — skip fetchMissingZipcodes too
+    }
+  };
+
+  const fetchMissingZipcodes = async (zipCodes: string[]) => {
+    if (!blobAvailable.value) return;
+
+    const missing = zipCodes.filter(
+      (zip) => /^\d{5}$/.test(zip) && !zipCodeLookup.value.has(zip),
+    );
+    if (missing.length === 0) return;
+
+    const newEntries: Record<string, { lat: number; lng: number; name: string }[]> = {};
+
+    for (const zip of missing) {
+      try {
+        const response = await axios.get(
+          `https://geo.api.gouv.fr/communes?codePostal=${zip}&fields=nom,centre`,
+          { timeout: 5000 },
+        );
+        const communes: { nom: string; centre: { coordinates: [number, number] } }[] =
+          response.data ?? [];
+        if (communes.length === 0) continue;
+
+        const coords = communes
+          .filter((c) => c.centre?.coordinates)
+          .map((c) => ({
+            name: c.nom,
+            lng: c.centre.coordinates[0],
+            lat: c.centre.coordinates[1],
+          }));
+
+        zipCodeLookup.value.set(zip, coords);
+        newEntries[zip] = coords;
+      } catch {
+        // silently skip — dept-centroid fallback covers this zip
       }
     }
 
-    if (communesToFetch.length === 0) {
-      console.log(
-        "All missing zip codes have been fetched via direct API calls",
-      );
-      return;
-    }
-
-    // Now process the ones we found in franceCommunes via CSV batch API
-    const csvRows = communesToFetch.map(
-      (match) => `${match.postcode},"${match.city}"`,
-    );
-
-    const csvContent = csvRows.join("\n");
-    const formData = new FormData();
-    formData.append(
-      "data",
-      new Blob([csvContent], { type: "text/csv" }),
-      "zipCodes.csv",
-    );
-
-    try {
-      const response = await axios.post(
-        "https://api-adresse.data.gouv.fr/search/csv/",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          timeout: 8000,
-        },
-      );
-
-      const newData = response.data.split("\n").slice(1);
-
-      newData.forEach((row: string) => {
-        if (
-          !row ||
-          row.includes("not-found") ||
-          row.includes("longitude,latitude")
-        )
-          return;
-
-        const parts = row.split(",");
-        const postcode = parts[0];
-        const name = parts[1].replace(/"/g, "");
-        const lng = parseFloat(parts[2]);
-        const lat = parseFloat(parts[3]);
-
-        if (isNaN(lat) || isNaN(lng)) return;
-
-        if (!zipCodeLookup.value.has(postcode)) {
-          zipCodeLookup.value.set(postcode, []);
-        }
-
-        zipCodeLookup.value.get(postcode)?.push({ lat, lng, name });
-      });
-
-      storedFilloutCsv.value["zip"] = storedFilloutCsv.value["zip"] || [];
-      storedFilloutCsv.value["zip"].push(...newData);
-    } catch (error) {
-      console.error("Error fetching missing zipcodes:", error);
+    // Persist newly resolved entries to Vercel Blob so future loads skip the API
+    if (Object.keys(newEntries).length > 0) {
+      axios
+        .post("/api/zip-cache", newEntries, { timeout: 8000 })
+        .catch(() => {/* non-blocking — cache write failure is acceptable */});
     }
   };
 
