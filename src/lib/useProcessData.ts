@@ -481,7 +481,18 @@ export default function useProcessData(
       });
     });
 
-    return Array.from(cityMap.values());
+    // Merge cities that share the same coordinates (dept-centroid fallback stacking)
+    const locationMap = new Map<string, City>();
+    Array.from(cityMap.values()).forEach((city) => {
+      const key = `${city.lat},${city.lng}`;
+      const existing = locationMap.get(key);
+      if (!existing) {
+        locationMap.set(key, { ...city, baseRecords: [...city.baseRecords] });
+      } else {
+        existing.baseRecords.push(...city.baseRecords);
+      }
+    });
+    return Array.from(locationMap.values());
   };
 
   const fetchMissingZipcodes = async (_zipCodes: string[]) => {
