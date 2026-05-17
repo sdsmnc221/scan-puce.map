@@ -10,9 +10,6 @@ import axios from "axios";
 import { uniqBy } from "lodash";
 
 import useSheets from "./useSheets";
-import { transformToCapitalize } from "./lexique";
-
-import franceCommunes from "../geojson/communesFr.json";
 import franceDepartments from "../geojson/dptFr.json";
 
 import csvCommunesContent from "../geojson/communes.csv";
@@ -79,6 +76,7 @@ export type BaseRecord = {
   ContactMode: string;
   ContactModeUnfilled: number;
   AccessICAD?: "checked" | "TRUE" | "";
+  _recordKey?: string; // internal use only, not from Airtable
 };
 
 type City = {
@@ -338,16 +336,15 @@ export default function useProcessData(
       deptRecords.forEach((record) => {
         const key = record._recordKey;
         if (!record.ZipCode) {
-          unresolvedKeys.add(key);
+          unresolvedKeys.add(key as string);
           return;
         }
 
-        const rawZips = record.ZipCode.replaceAll(" ", "").split(",");
+        const rawZips = record.ZipCode.split(" ").join("").split(",");
         let bestTier: "exact" | "centroid" | "unresolved" = "unresolved";
 
         rawZips.forEach((rawZip: string) => {
           const trimmed = rawZip.trim();
-          if (!trimmed || bestTier === "exact") return;
 
           if (zipCodeLookup.value.has(trimmed)) {
             bestTier = "exact";
@@ -364,12 +361,15 @@ export default function useProcessData(
           }
         });
 
+        // ts-ignore because we know _recordKey is always set in deduplicatedRecords
+        // @ts-ignore
         if (bestTier === "exact") exactKeys.add(key);
+        // @ts-ignore
         else if (bestTier === "centroid") centroidKeys.add(key);
-        else unresolvedKeys.add(key);
+        else unresolvedKeys.add(key as string);
       });
 
-      const deptCount = new Set(deptRecords.map((r) => r._recordKey)).size;
+      const deptCount = new Set(deptRecords.map((r: any) => r._recordKey)).size;
 
       rows.push({
         code,
@@ -393,7 +393,8 @@ export default function useProcessData(
     const rows: CommuneVerificationRow[] = [];
 
     recordsByZipCode.value.forEach((zipRecords, zipCode) => {
-      const recordCount = new Set(zipRecords.map((r) => r._recordKey)).size;
+      const recordCount = new Set(zipRecords.map((r: any) => r._recordKey))
+        .size;
 
       // Classify source using same three-tier logic as createCommuneCities
       let source: CommuneVerificationRow["source"] = "unresolved";
@@ -422,7 +423,14 @@ export default function useProcessData(
         departmentLookup.value.get(normalizedDept);
       const deptName = dept?.nom_departement ?? deptCode;
 
-      rows.push({ zipCode, name, deptCode: normalizedDept, deptName, recordCount, source });
+      rows.push({
+        zipCode,
+        name,
+        deptCode: normalizedDept,
+        deptName,
+        recordCount,
+        source,
+      });
     });
 
     const sourceOrder = { unresolved: 0, centroid: 1, exact: 2 };
