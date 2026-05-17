@@ -41,6 +41,25 @@ const getDateScore = (dateStr: string): number => {
   return dateStr.includes("T") ? ts + 1e14 : ts;
 };
 
+export type VerificationRow = {
+  code: string;
+  name: string;
+  deptCount: number;
+  exactCount: number;
+  centroidCount: number;
+  unresolvedCount: number;
+  diff: number;
+};
+
+export type CommuneVerificationRow = {
+  zipCode: string;
+  name: string;
+  deptCode: string;
+  deptName: string;
+  recordCount: number;
+  source: "exact" | "centroid" | "unresolved";
+};
+
 export type CsvStore = {
   dpt: any[];
   zip: any[];
@@ -303,6 +322,118 @@ export default function useProcessData(
     return map;
   });
 
+  const verificationData = computed((): VerificationRow[] => {
+    const rows: VerificationRow[] = [];
+
+    recordsByDeptCode.value.forEach((deptRecords, code) => {
+      const dept =
+        departmentLookup.value.get(code) ||
+        departmentLookup.value.get(code.padStart(2, "0"));
+      const name = dept?.nom_departement ?? code;
+
+      const exactKeys = new Set<string>();
+      const centroidKeys = new Set<string>();
+      const unresolvedKeys = new Set<string>();
+
+      deptRecords.forEach((record) => {
+        const key = record._recordKey;
+        if (!record.ZipCode) {
+          unresolvedKeys.add(key);
+          return;
+        }
+
+        const rawZips = record.ZipCode.replaceAll(" ", "").split(",");
+        let bestTier: "exact" | "centroid" | "unresolved" = "unresolved";
+
+        rawZips.forEach((rawZip: string) => {
+          const trimmed = rawZip.trim();
+          if (!trimmed || bestTier === "exact") return;
+
+          if (zipCodeLookup.value.has(trimmed)) {
+            bestTier = "exact";
+            return;
+          }
+          const normalized = normalizeZipCode(trimmed);
+          if (zipCodeLookup.value.has(normalized)) {
+            bestTier = "centroid";
+            return;
+          }
+          const deptCode = getDepartmentCode(trimmed);
+          if (deptCode && zipCodeLookup.value.has(deptCode.padEnd(5, "0"))) {
+            bestTier = "centroid";
+          }
+        });
+
+        if (bestTier === "exact") exactKeys.add(key);
+        else if (bestTier === "centroid") centroidKeys.add(key);
+        else unresolvedKeys.add(key);
+      });
+
+      const deptCount = new Set(deptRecords.map((r) => r._recordKey)).size;
+
+      rows.push({
+        code,
+        name,
+        deptCount,
+        exactCount: exactKeys.size,
+        centroidCount: centroidKeys.size,
+        unresolvedCount: unresolvedKeys.size,
+        diff: deptCount - exactKeys.size,
+      });
+    });
+
+    return rows.sort((a, b) =>
+      b.diff !== a.diff
+        ? b.diff - a.diff
+        : a.code.localeCompare(b.code, "fr", { numeric: true }),
+    );
+  });
+
+  const communeVerificationData = computed((): CommuneVerificationRow[] => {
+    const rows: CommuneVerificationRow[] = [];
+
+    recordsByZipCode.value.forEach((zipRecords, zipCode) => {
+      const recordCount = new Set(zipRecords.map((r) => r._recordKey)).size;
+
+      // Classify source using same three-tier logic as createCommuneCities
+      let source: CommuneVerificationRow["source"] = "unresolved";
+      if (zipCodeLookup.value.has(zipCode)) {
+        source = "exact";
+      } else if (zipCodeLookup.value.has(normalizeZipCode(zipCode))) {
+        source = "centroid";
+      } else {
+        const deptCode = getDepartmentCode(zipCode);
+        if (deptCode && zipCodeLookup.value.has(deptCode.padEnd(5, "0"))) {
+          source = "centroid";
+        }
+      }
+
+      // Commune name from lookup
+      const coords =
+        zipCodeLookup.value.get(zipCode) ||
+        zipCodeLookup.value.get(normalizeZipCode(zipCode));
+      const name = coords?.[0]?.name ?? "—";
+
+      // Dept info
+      const deptCode = getDepartmentCode(zipCode) ?? "";
+      const normalizedDept = deptCode.replace(/^0+/, "");
+      const dept =
+        departmentLookup.value.get(deptCode) ||
+        departmentLookup.value.get(normalizedDept);
+      const deptName = dept?.nom_departement ?? deptCode;
+
+      rows.push({ zipCode, name, deptCode: normalizedDept, deptName, recordCount, source });
+    });
+
+    const sourceOrder = { unresolved: 0, centroid: 1, exact: 2 };
+    return rows.sort((a, b) =>
+      sourceOrder[a.source] !== sourceOrder[b.source]
+        ? sourceOrder[a.source] - sourceOrder[b.source]
+        : a.deptCode.localeCompare(b.deptCode, "fr", { numeric: true }) ||
+          a.zipCode.localeCompare(b.zipCode),
+    );
+  });
+
   // Process all data at once instead of in batches
   const processAllData = async () => {
     try {
@@ -499,7 +630,10 @@ export default function useProcessData(
     try {
       const res = await axios.get("/api/zip-cache", { timeout: 5000 });
       if (res.status === 503) return;
-      const cache: Record<string, { lat: number; lng: number; name: string }[]> = res.data ?? {};
+      const cache: Record<
+        string,
+        { lat: number; lng: number; name: string }[]
+      > = res.data ?? {};
       Object.entries(cache).forEach(([zip, coords]) => {
         if (!zipCodeLookup.value.has(zip)) {
           zipCodeLookup.value.set(zip, coords);
@@ -519,7 +653,10 @@ export default function useProcessData(
     );
     if (missing.length === 0) return;
 
-    const newEntries: Record<string, { lat: number; lng: number; name: string }[]> = {};
+    const newEntries: Record<
+      string,
+      { lat: number; lng: number; name: string }[]
+    > = {};
 
     for (const zip of missing) {
       try {
@@ -527,8 +664,10 @@ export default function useProcessData(
           `https://geo.api.gouv.fr/communes?codePostal=${zip}&fields=nom,centre`,
           { timeout: 5000 },
         );
-        const communes: { nom: string; centre: { coordinates: [number, number] } }[] =
-          response.data ?? [];
+        const communes: {
+          nom: string;
+          centre: { coordinates: [number, number] };
+        }[] = response.data ?? [];
         if (communes.length === 0) continue;
 
         const coords = communes
@@ -548,9 +687,9 @@ export default function useProcessData(
 
     // Persist newly resolved entries to Vercel Blob so future loads skip the API
     if (Object.keys(newEntries).length > 0) {
-      axios
-        .post("/api/zip-cache", newEntries, { timeout: 8000 })
-        .catch(() => {/* non-blocking — cache write failure is acceptable */});
+      axios.post("/api/zip-cache", newEntries, { timeout: 8000 }).catch(() => {
+        /* non-blocking — cache write failure is acceptable */
+      });
     }
   };
 
@@ -657,5 +796,7 @@ export default function useProcessData(
     filteredCities,
     departments,
     loadCsvDone,
+    verificationData,
+    communeVerificationData,
   };
 }
