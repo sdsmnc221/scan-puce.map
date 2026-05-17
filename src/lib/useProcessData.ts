@@ -110,7 +110,6 @@ type DepartmentMap = Map<string, Department>;
 export default function useProcessData(
   usingFilloutBase: Ref<boolean>,
   usingDptCode: Ref<boolean>,
-  storedFilloutCsv: Ref<CsvStore>,
   keyword: Ref<string>,
   pinType: Ref<number[]>,
   loading: Ref<boolean>,
